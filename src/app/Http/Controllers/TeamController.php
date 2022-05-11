@@ -42,11 +42,16 @@ class TeamController extends Controller {
     ]);
 
     Auth::guard('team')->login($team, true);
+    $request->session()->regenerate();
+
     return redirect()->route('trail');
   }
 
   public function clone(Request $request, $id) {
     Auth::guard('team')->loginUsingId($id, true);
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
     return redirect()->route('trail');
   }
 
@@ -54,6 +59,7 @@ class TeamController extends Controller {
     Auth::guard('team')->logout();
     $request->session()->invalidate();
     $request->session()->regenerateToken();
+    
     return redirect()->route('start');
   }
 
