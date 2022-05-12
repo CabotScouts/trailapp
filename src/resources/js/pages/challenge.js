@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Submit from '@/layouts/submit';
 import ValidationErrors from '@/components/validationerrors';
 import { Head, useForm } from '@inertiajs/inertia-react';
@@ -6,19 +6,29 @@ import { CameraIcon } from '@heroicons/react/solid'
 
 export default function Challenge({ challenge, submission }) {
 
+  const [ doUpload, triggerUpload ] = useState(false);
+
   const { data, setData, post, processing, errors, reset } = useForm({
-    photo: '',
+    photo: null,
   });
 
   const triggerFileBrowser = () => {
     const input = document.getElementById('file');
-    if(input) input.click();
+    if(input && !processing) input.click();
   }
 
   const uploadFile = (e) => {
     setData('photo', e.target.files[0]);
-    post(route('submit-challenge'));
+    triggerUpload(true);
   }
+
+  useEffect(() => {
+    // force data to update before posting, must be a better way to do this?!
+    if(data.photo != null && !processing && doUpload) {
+      triggerUpload(false)
+      post(route('submit-challenge', challenge.id));
+    }
+  });
 
   return (
     <>
@@ -32,16 +42,22 @@ export default function Challenge({ challenge, submission }) {
           </div>
 
           <div className="flex-grow flex items-center px-10 py-5">
-            <div className="flex-grow bg-white rounded-xl shadow-lg overflow-auto">
-              <p>submission</p>
+          { submission && (
+            <div className="flex-grow overflow-auto">
+              <a href={ submission } target="_blank">
+                <img className="rounded-xl shadow-lg mx-auto" src={ submission } />
+              </a>
             </div>
+          )}
           </div>
 
           <div className="flex-none pb-10">
-            <ValidationErrors errors={errors} />
+          { errors && (
+            <ValidationErrors errors={ errors } />
+          )}
 
-            <div className="w-1/4 mx-auto rounded-full bg-purple-800">
-              <CameraIcon className="w-full p-3 text-neutral-100" onClick={ triggerFileBrowser }/>
+            <div className={`w-1/4 mx-auto rounded-full bg-purple-800 ${ processing && 'opacity-25'}`}>
+              <CameraIcon className="w-full p-4 text-neutral-100" onClick={ triggerFileBrowser }/>
             </div>
           </div>
         </div>
@@ -52,7 +68,7 @@ export default function Challenge({ challenge, submission }) {
           type="file"
           id="file"
           className="hidden"
-          accept="image/png image/jpeg"
+          accept="image/*"
           onChange={ (e) => uploadFile(e) }
         />
       </form>
