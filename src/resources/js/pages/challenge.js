@@ -42,8 +42,8 @@ export default function Challenge({ challenge, submission }) {
           </div>
 
           <div>
-            <div className={`w-24 mx-auto rounded-full bg-purple-800 ${ processing && 'opacity-25'}`}>
-              <CameraIcon className="p-4 text-neutral-100" onClick={ triggerFileBrowser }/>
+            <div className={`w-24 mx-auto p-4 rounded-full bg-purple-800 text-center${ processing && 'opacity-25'}`}>
+              <CameraIcon className="text-neutral-100" onClick={ triggerFileBrowser }/>
             </div>
             { errors && (
               <ValidationErrors errors={ errors } />
