@@ -21,7 +21,7 @@ export default function Start(props) {
   return (
     <>
       <Head title="Create a team" />
-      <div className="min-h-screen max-h-screen flex items-center bg-slate-900 px-8">
+      <div className="flex items-center p-8">
         <div className="p-5 bg-white rounded-xl shadow-lg w-full">
           <div className="mb-2">
             <h1 className="block mb-2 font-serif text-3xl text-purple-800">Heritage Trail</h1>
