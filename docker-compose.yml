@@ -17,7 +17,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik"
-      - "traefik.http.routers.${CONTAINER}.rule=Host(${HOST})"
+      - "traefik.http.routers.${CONTAINER}.rule=Host(`${HOST}`)"
       - "traefik.http.middlewares.${CONTAINER}.compress=true"
       - "traefik.http.routers.${CONTAINER}.middlewares=${CONTAINER}"
       - "traefik.http.services.${CONTAINER}.loadBalancer.server.port=80"
