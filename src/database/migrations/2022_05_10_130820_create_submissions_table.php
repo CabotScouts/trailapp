@@ -16,7 +16,7 @@ return new class extends Migration {
       $table->foreignIdFor(Team::class);
       $table->foreignIdFor(Challenge::class);
       $table->string('filename');
-      $table->boolean('accepted');
+      $table->boolean('accepted')->default(false);
     });
   }
 
