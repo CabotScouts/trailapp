@@ -1,6 +1,7 @@
 import React from 'react';
 import ValidationErrors from '@/components/validationerrors';
 import { Head, useForm } from '@inertiajs/inertia-react';
+import Div100vh from 'react-div-100vh';
 
 export default function Start(props) {
 
@@ -21,7 +22,7 @@ export default function Start(props) {
   return (
     <>
       <Head title="Create a team" />
-      <div className="min-h-screen flex items-center bg-slate-900 px-8">
+      <Div100vh className="flex items-center bg-slate-900 px-8">
         <div className="p-5 bg-white rounded-xl shadow-lg w-full">
           <div className="mb-2">
             <h1 className="block mb-2 font-serif text-3xl text-purple-800">Heritage Trail</h1>
@@ -74,7 +75,7 @@ export default function Start(props) {
             </div>
           </form>
         </div>
-      </div>
+      </Div100vh>
     </>
   );
 }

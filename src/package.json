@@ -27,6 +27,7 @@
         "tailwindcss": "^3.0.18"
     },
     "dependencies": {
-        "@heroicons/react": "^1.0.6"
+        "@heroicons/react": "^1.0.6",
+        "react-div-100vh": "^0.7.0"
     }
 }
