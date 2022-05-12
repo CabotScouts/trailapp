@@ -34,14 +34,23 @@ export default function Challenge({ challenge, submission }) {
     <>
       <Head title={ challenge.name } />
       <Submit>
-        <div className="flex-grow flex flex-col">
-          <div className="flex-none p-10 pb-0 text-neutral-50">
-            <div className="font-serif text-4xl font-bold">{ challenge.name }</div>
+        <div className="w-full">
+          <div className="p-10 text-neutral-50">
+            <div className="pt-5 font-serif text-4xl font-bold">{ challenge.name }</div>
             <div className="text-neutral-100">{ challenge.points } points</div>
             <div className="text-lg font-medium mt-5">{ challenge.description }</div>
           </div>
 
-          <div className="flex-grow flex items-center px-10 py-5">
+          <div>
+            <div className={`w-24 mx-auto rounded-full bg-purple-800 ${ processing && 'opacity-25'}`}>
+              <CameraIcon className="p-4 text-neutral-100" onClick={ triggerFileBrowser }/>
+            </div>
+            { errors && (
+              <ValidationErrors errors={ errors } />
+            )}
+          </div>
+
+          <div className="p-10">
           { submission && (
             <div className="flex-grow overflow-auto">
               <a href={ submission } target="_blank">
@@ -49,16 +58,6 @@ export default function Challenge({ challenge, submission }) {
               </a>
             </div>
           )}
-          </div>
-
-          <div className="flex-none pb-10">
-          { errors && (
-            <ValidationErrors errors={ errors } />
-          )}
-
-            <div className={`w-1/4 mx-auto rounded-full bg-purple-800 ${ processing && 'opacity-25'}`}>
-              <CameraIcon className="w-full p-4 text-neutral-100" onClick={ triggerFileBrowser }/>
-            </div>
           </div>
         </div>
       </Submit>
