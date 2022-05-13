@@ -1,6 +1,11 @@
-#!/bin/sh
+#!/bin/bash
+source .env
 composer install
-php artisan key:generate
+
+if [[ -z "${APP_KEY}" ]]; then
+  php artisan key:generate
+fi
+
 php artisan storage:link
 php artisan config:cache
 php artisan route:cache
