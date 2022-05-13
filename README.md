@@ -1,2 +1,2 @@
-# HeritageTrail
-Web app to run a photo heritage trail event
+# Trail App
+A web app to run a wide game/scavenger hunt type event, featuring questions and photo challenges.
