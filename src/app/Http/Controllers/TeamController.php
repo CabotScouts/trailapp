@@ -49,17 +49,22 @@ class TeamController extends Controller {
   }
 
   public function clone(Request $request, $id) {
-    Auth::guard('team')->loginUsingId($id, true);
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
+    if(!App::environment('production')) {
+      Auth::guard('team')->loginUsingId($id, true);
+      $request->session()->invalidate();
+      $request->session()->regenerateToken();
+      return redirect()->route('trail');
+    }
 
-    return redirect()->route('trail');
+    return redirect()->route('start');
   }
 
   public function destroy(Request $request) {
-    Auth::guard('team')->logout();
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
+    if(!App::environment('production')) {
+      Auth::guard('team')->logout();
+      $request->session()->invalidate();
+      $request->session()->regenerateToken();
+    }
 
     return redirect()->route('start');
   }
