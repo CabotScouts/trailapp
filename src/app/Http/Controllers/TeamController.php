@@ -15,7 +15,7 @@ class TeamController extends Controller {
 
   public function index(Request $request) {
     return Inertia::render('start', [
-      'groups' => Group::all()->map(function($group) {
+      'groups' => Group::orderBy('number')->orderBy('name')->get()->map(function($group) {
         return [ 'id' => $group->id, 'name' => $group->name ];
       }),
     ]);
@@ -59,7 +59,7 @@ class TeamController extends Controller {
     Auth::guard('team')->logout();
     $request->session()->invalidate();
     $request->session()->regenerateToken();
-    
+
     return redirect()->route('start');
   }
 
