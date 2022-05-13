@@ -9,7 +9,7 @@ use App\Http\Controllers\TrailController;
 Route::get('/', [TeamController::class, 'index'])->middleware(['checkteam'])->name('start');
 Route::post('/create-team', [TeamController::class, 'create'])->name('create-team');
 
-if(App:environment(['local', 'staging'])) {
+if(App::environment(['local', 'staging'])) {
   Route::get('/clone/{id}', [TeamController::class, 'clone']);
   Route::get('/destroy', [TeamController::class, 'destroy'])->middleware(['auth:team']);
 }
