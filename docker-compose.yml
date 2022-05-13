@@ -4,27 +4,15 @@ services:
   app:
     container_name: ${CONTAINER}
     user: "${UID}:${GID}"
-    build: .
     restart: unless-stopped
+    build: .
     networks:
       - mysql
-      - traefik
-    # ports:
-    #   - 8080:80
     volumes:
       - ./src:/var/www
       - ./apache.conf:/etc/apache2/sites-enabled/000-default.conf
       - ./php.ini:/usr/local/etc/php/conf.d/additional.ini
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=traefik"
-      - "traefik.http.routers.${CONTAINER}.rule=Host(`${HOST}`)"
-      - "traefik.http.middlewares.${CONTAINER}.compress=true"
-      - "traefik.http.routers.${CONTAINER}.middlewares=${CONTAINER}"
-      - "traefik.http.services.${CONTAINER}.loadBalancer.server.port=80"
 
 networks:
   mysql:
-    external: true
-  traefik:
     external: true
