@@ -4,7 +4,7 @@ import Frame from '@/layouts/form/frame';
 import InputGroup from '@/layouts/form/group';
 import Header from '@/components/form/header';
 import ValidationErrors from '@/components/form/validationerrors';
-import TextInput from '@/components/form/text';
+import Input from '@/components/form/input';
 import SelectInput from '@/components/form/select';
 import Button from '@/components/form/button';
 
@@ -38,7 +38,7 @@ export default function Start(props) {
           <SelectInput title="Scout Group" name="group" placeholder="Select your Group" onChange={ handleChange } required>
             { props.groups.map(g => (<option key={ g.id } value={ g.id }>{ g.name }</option>)) }
           </SelectInput>
-          <TextInput title="Team Name" name="name" placeholder="Pick a team name" onChange={ handleChange } required />
+          <Input type="text" title="Team Name" name="name" placeholder="Pick a team name" onChange={ handleChange } required />
           <Button processing={ processing }>Start Trail</Button>
         </InputGroup>
       </Frame>
