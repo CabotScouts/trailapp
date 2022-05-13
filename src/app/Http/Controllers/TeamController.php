@@ -15,6 +15,7 @@ class TeamController extends Controller {
 
   public function index(Request $request) {
     return Inertia::render('start', [
+      'name' => config('app.name'),
       'groups' => Group::orderBy('number')->orderBy('name')->get()->map(function($group) {
         return [ 'id' => $group->id, 'name' => $group->name ];
       }),

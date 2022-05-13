@@ -24,7 +24,7 @@ export default function Start(props) {
       <div className="flex items-center p-8">
         <div className="p-5 bg-white rounded-xl shadow-lg w-full">
           <div className="mb-2">
-            <h1 className="block mb-2 font-serif text-3xl text-purple-800">Heritage Trail</h1>
+            <h1 className="block mb-2 font-serif text-3xl text-purple-800">{ props.name }</h1>
             <p>Pick your Scout Group and decide on a team name to start the trail</p>
           </div>
 
