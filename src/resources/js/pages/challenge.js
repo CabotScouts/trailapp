@@ -6,7 +6,6 @@ import PhotoUpload from '@/components/photo-upload';
 import PhotoSubmission from '@/components/photo-submission';
 
 export default function Challenge({ challenge, submission }) {
-
   return (
     <>
       <Head title={ challenge.name } />
@@ -17,5 +16,4 @@ export default function Challenge({ challenge, submission }) {
       </SubmitModal>
     </>
   );
-
 }
