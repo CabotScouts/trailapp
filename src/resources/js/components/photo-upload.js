@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ValidationErrors from '@/components/validationerrors';
+import ValidationErrors from '@/components/form/validationerrors';
 import { Head, useForm } from '@inertiajs/inertia-react';
 import { CameraIcon } from '@heroicons/react/solid'
 
