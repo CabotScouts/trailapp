@@ -37,7 +37,7 @@ class TrailController extends Controller {
     $challenge = Challenge::findOrFail($id);
     $submission = Auth::user()->submissions()->where('challenge_id', $challenge->id)->first();
 
-    return Inertia::render('challenge', [
+    return Inertia::render('challenge-view', [
       'challenge' => $challenge,
       'submission' => $submission ? url("storage/uploads/{$submission->filename}") : false,
     ]);
