@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from '@inertiajs/inertia-react';
 
-export default function Challenge({ data }) {
+export default function ChallengeListItem({ data }) {
   return (
     <Link preserveScroll href={ route('challenge', data.id) }>
       <div className="p-5 flex items-center border border-b-slate-500">
-        <div className="flex-grow">
+        <div className="flex-grow pr-5">
           <p className="text-medium text-lg text-slate-800">{ data.name }</p>
         </div>
         <div className="flex-none">

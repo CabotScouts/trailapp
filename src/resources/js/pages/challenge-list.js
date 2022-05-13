@@ -1,15 +1,15 @@
 import React from 'react';
 import { Head, useForm } from '@inertiajs/inertia-react';
-import Frame from '@/layouts/frame';
-import Challenge from '@/components/challenge';
+import ListFrame from '@/layouts/list-frame';
+import ChallengeListItem from '@/components/challenge-list-item';
 
 export default function ChallengeList({ team, group, challenges }) {
   return (
     <>
       <Head title="Challenges" />
-      <Frame team={ team } group={ group }>
-        { challenges.map(p => (<Challenge key={ p.id } data={ p } />)) }
-      </Frame>
+      <ListFrame team={ team } group={ group }>
+        { challenges.map(p => (<ChallengeListItem key={ p.id } data={ p } />)) }
+      </ListFrame>
     </>
   );
 }

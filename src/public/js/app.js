@@ -4303,16 +4303,16 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/js/components/challenge.js":
-/*!**********************************************!*\
-  !*** ./resources/js/components/challenge.js ***!
-  \**********************************************/
+/***/ "./resources/js/components/challenge-list-item.js":
+/*!********************************************************!*\
+  !*** ./resources/js/components/challenge-list-item.js ***!
+  \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Challenge)
+/* harmony export */   "default": () => (/* binding */ ChallengeListItem)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/inertia-react */ "./node_modules/@inertiajs/inertia-react/dist/index.js");
@@ -4321,7 +4321,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function Challenge(_ref) {
+function ChallengeListItem(_ref) {
   var data = _ref.data;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
     preserveScroll: true,
@@ -4329,7 +4329,7 @@ function Challenge(_ref) {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
       className: "p-5 flex items-center border border-b-slate-500",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-        className: "flex-grow",
+        className: "flex-grow pr-5",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
           className: "text-medium text-lg text-slate-800",
           children: data.name
@@ -4547,23 +4547,23 @@ function ValidationErrors(_ref) {
 
 /***/ }),
 
-/***/ "./resources/js/layouts/frame.js":
-/*!***************************************!*\
-  !*** ./resources/js/layouts/frame.js ***!
-  \***************************************/
+/***/ "./resources/js/layouts/list-frame.js":
+/*!********************************************!*\
+  !*** ./resources/js/layouts/list-frame.js ***!
+  \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Frame)
+/* harmony export */   "default": () => (/* binding */ ListFrame)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
 
-function Frame(_ref) {
+function ListFrame(_ref) {
   var team = _ref.team,
       group = _ref.group,
       children = _ref.children;
@@ -4641,9 +4641,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ ChallengeList)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _layouts_frame__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/layouts/frame */ "./resources/js/layouts/frame.js");
-/* harmony import */ var _components_challenge__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/challenge */ "./resources/js/components/challenge.js");
-/* harmony import */ var _inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @inertiajs/inertia-react */ "./node_modules/@inertiajs/inertia-react/dist/index.js");
+/* harmony import */ var _inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/inertia-react */ "./node_modules/@inertiajs/inertia-react/dist/index.js");
+/* harmony import */ var _layouts_list_frame__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/layouts/list-frame */ "./resources/js/layouts/list-frame.js");
+/* harmony import */ var _components_challenge_list_item__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/challenge-list-item */ "./resources/js/components/challenge-list-item.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
@@ -4652,15 +4652,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function ChallengeList(props) {
+function ChallengeList(_ref) {
+  var team = _ref.team,
+      group = _ref.group,
+      challenges = _ref.challenges;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_3__.Head, {
-      title: "Challenge List"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_layouts_frame__WEBPACK_IMPORTED_MODULE_1__["default"], {
-      team: props.team,
-      group: props.group,
-      children: props.challenges.map(function (p) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_challenge__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_1__.Head, {
+      title: "Challenges"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_layouts_list_frame__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      team: team,
+      group: group,
+      children: challenges.map(function (p) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_challenge_list_item__WEBPACK_IMPORTED_MODULE_3__["default"], {
           data: p
         }, p.id);
       })

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Frame({ team, group, children }) {
+export default function ListFrame({ team, group, children }) {
   return (
     <div className="flex flex-col bg-neutral-100">
       <div className="flex-none px-5 py-4 bg-purple-900 shadow-sm">
