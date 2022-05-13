@@ -17,9 +17,9 @@ class TrailController extends Controller {
 
   public function index() {
     return Inertia::render('challenge-list', [
-      'challenges' => Challenge::all()
-        ->sortByDesc('points')
-        ->values()
+      'challenges' => Challenge::orderBy('points', 'desc')
+        ->orderBy('name')
+        ->get()
         ->map(function($challenge) {
           return [
             'id' => $challenge->id,
