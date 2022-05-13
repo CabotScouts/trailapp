@@ -1,4 +1,4 @@
 services:
   app:
     ports:
-      - 8080:80
+      - ${LOCAL_PORT}:80
