@@ -1,11 +1,11 @@
 import React from 'react';
 import { Head, useForm } from '@inertiajs/inertia-react';
 import Frame from '@/layouts/form/frame';
-import InputGroup from '@/layouts/form/group';
+import Group from '@/layouts/form/group';
 import Header from '@/components/form/header';
-import ValidationErrors from '@/components/form/validationerrors';
+import Errors from '@/components/form/validationerrors';
 import Input from '@/components/form/input';
-import SelectInput from '@/components/form/select';
+import Select from '@/components/form/select';
 import Button from '@/components/form/button';
 
 export default function Start(props) {
@@ -31,16 +31,16 @@ export default function Start(props) {
         <Header title={ props.name }>
           <p>Pick your Scout Group and decide on a team name to start the trail</p>
         </Header>
-
-        <ValidationErrors errors={errors} />
-
-        <InputGroup onSubmit={ submit }>
-          <SelectInput title="Scout Group" name="group" placeholder="Select your Group" onChange={ handleChange } required>
+        
+        <Errors errors={errors} />
+        
+        <Group onSubmit={ submit }>
+          <Select title="Scout Group" name="group" placeholder="Select your Group" onChange={ handleChange } required>
             { props.groups.map(g => (<option key={ g.id } value={ g.id }>{ g.name }</option>)) }
-          </SelectInput>
+          </Select>
           <Input type="text" title="Team Name" name="name" placeholder="Pick a team name" onChange={ handleChange } required />
           <Button processing={ processing }>Start Trail</Button>
-        </InputGroup>
+        </Group>
       </Frame>
     </>
   );

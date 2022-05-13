@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function SelectInput({ title, name, onChange, required, placeholder, children }) {
+export default function Select({ title, name, onChange, required, placeholder, children }) {
   return (
     <div>
       <label htmlFor="group" className="block font-medium text-sm text-slate-700">{ title }</label>

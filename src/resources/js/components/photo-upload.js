@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import ValidationErrors from '@/components/form/validationerrors';
 import { Head, useForm } from '@inertiajs/inertia-react';
 import { CameraIcon } from '@heroicons/react/solid'
+import Errors from '@/components/form/errors';
 
 export default function PhotoUpload(props) {
 
@@ -44,9 +44,8 @@ export default function PhotoUpload(props) {
       <div className={`w-24 mx-auto p-4 rounded-full bg-purple-800 text-center ${ processing && 'opacity-25'} cursor-pointer`}>
         <CameraIcon className="text-neutral-100" onClick={ triggerFileBrowser }/>
       </div>
-      { errors && (
-        <ValidationErrors errors={ errors } />
-      )}
+      
+      <Errors errors={ errors } />
     </div>
   );
 
