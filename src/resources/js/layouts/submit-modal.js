@@ -8,7 +8,7 @@ export default function SubmitModal(props) {
       <div className="p-4 absolute top-0 right-0">
         <Link href={ route('trail') }><XIcon className="w-10 h-10 text-slate-300" /></Link>
       </div>
-      <div class="w-full">
+      <div className="w-full">
         { props.children }
       </div>
     </div>
