@@ -3,7 +3,7 @@ import { Head, useForm } from '@inertiajs/inertia-react';
 import Frame from '@/layouts/form/frame';
 import Group from '@/layouts/form/group';
 import Header from '@/components/form/header';
-import Errors from '@/components/form/validationerrors';
+import Errors from '@/components/form/errors';
 import Input from '@/components/form/input';
 import Select from '@/components/form/select';
 import Button from '@/components/form/button';
