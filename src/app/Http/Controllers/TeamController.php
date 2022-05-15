@@ -28,7 +28,7 @@ class TeamController extends Controller {
       $request->all(),
       [
         'group' => 'required|exists:groups,id',
-        'name' => ['required', 'string', Rule::unique('teams')->where(fn ($query) => $query->where('group_id', $request->group))],
+        'name' => ['required', 'string', 'max:255', Rule::unique('teams')->where(fn ($query) => $query->where('group_id', $request->group))],
       ],
       [
         'group.required' => 'You need to choose your Scout Group',
