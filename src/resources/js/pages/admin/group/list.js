@@ -2,11 +2,16 @@ import React from 'react';
 import { Link } from '@inertiajs/inertia-react';
 import Frame from '@/layouts/admin/frame';
 import ListItem from '@/components/admin/list-item';
+import { Button, ButtonBar } from '@/components/admin/button-bar';
 import { PencilIcon } from '@heroicons/react/solid';
 
 export default function List({ groups }) {
   return (
     <Frame title="Groups">
+      <ButtonBar>
+        <Button href={ route('add-group') }>Add Group</Button>
+      </ButtonBar>
+      
       { groups.map((g) => <ListItem key={ g.id } target={ route('view-group-teams', g.id) }>
         <div className="flex-grow pr-5">
           <p className="text-xl text-medium">{ g.name }</p>
