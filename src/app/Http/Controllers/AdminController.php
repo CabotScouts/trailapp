@@ -55,18 +55,23 @@ class AdminController extends Controller {
   }
 
   public function submissions() {
+    return Inertia::render('admin/submission/list', [
+      'submissions' => Submission::orderBy('created_at', 'desc')->get()->map(fn($submission) => [
+        'id' => $submission->id,
+        'file' => url("storage/uploads/{$submission->filename}"),
+        'challenge' => $submission->challenge->name,
+        'time' => $submission->time,
+        'team' => $submission->team->name,
+        'group' => $submission->team->group->name,
+      ]),
+    ]);
+  }
+
+  public function acceptSubmission($id) {
 
   }
 
-  public function viewSubmission() {
-
-  }
-
-  public function acceptSubmission() {
-
-  }
-
-  public function deleteSubmission() {
+  public function deleteSubmission($id) {
 
   }
 
@@ -75,14 +80,27 @@ class AdminController extends Controller {
       'teams' => Team::orderBy('name')->get()->map(fn($team) => [
         'id' => $team->id,
         'name' => $team->name,
-        'group' => $team->group()->name,
+        'group' => $team->group->name,
         'submissions' => $team->submissions()->count()
       ]),
     ]);
   }
 
-  public function viewTeam() {
+  public function viewTeamSubmissions($id) {
+    $team = Team::findOrFail($id);
 
+    return Inertia::render('admin/team/submissions', [
+      'team' => [
+        'name' => $team->name,
+        'group' => $team->group->name,
+      ],
+      'submissions' => Submission::where('team_id', $id)->orderBy('created_at', 'desc')->get()->map(fn($submission) => [
+        'id' => $submission->id,
+        'file' => url("storage/uploads/{$submission->filename}"),
+        'challenge' => $submission->challenge->name,
+        'time' => $submission->time,
+      ]),
+    ]);
   }
 
   public function deleteTeam() {
@@ -102,6 +120,20 @@ class AdminController extends Controller {
 
   public function viewChallenge() {
 
+  }
+
+  public function viewChallengeSubmissions($id) {
+    $challenge = Challenge::findOrFail($id);
+
+    return Inertia::render('admin/challenge/submissions', [
+      'challenge' => $challenge->name,
+      'submissions' => Submission::where('challenge_id', $id)->orderBy('created_at', 'desc')->get()->map(fn($submission) => [
+        'id' => $submission->id,
+        'file' => url("storage/uploads/{$submission->filename}"),
+        'challenge' => $submission->challenge->name,
+        'time' => $submission->time,
+      ]),
+    ]);
   }
 
   public function addChallenge() {
