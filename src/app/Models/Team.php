@@ -9,7 +9,7 @@ class Team extends Authenticatable {
   public $fillable = ['name', 'group_id'];
 
   public function group() {
-    return $this->belongsTo(Group::class)->first();
+    return $this->belongsTo(Group::class);
   }
 
   public function submissions() {

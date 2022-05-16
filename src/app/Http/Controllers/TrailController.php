@@ -29,7 +29,7 @@ class TrailController extends Controller {
           ];
         }),
       'team' => Auth::user()->name,
-      'group' => Auth::user()->group()->name,
+      'group' => Auth::user()->group->name,
     ]);
   }
 
