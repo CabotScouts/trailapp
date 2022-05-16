@@ -37,10 +37,6 @@ class AdminController extends Controller {
 
       return back()->withErrors(['username' => 'The username or password is incorrect']);
     }
-    else {
-      // how?
-      return redirect()->route('login');
-    }
   }
 
   public function logout(Request $request) {
@@ -68,7 +64,7 @@ class AdminController extends Controller {
   }
 
   public function acceptSubmission($id) {
-
+    
   }
 
   public function deleteSubmission($id) {
