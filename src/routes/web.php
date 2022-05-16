@@ -22,23 +22,24 @@ Route::get('/logout', [AdminController::class, 'logout'])->middleware(['auth:use
 
 Route::prefix('dashboard')->middleware(['auth:user'])->controller(AdminController::class)->group(function(){
   Route::get('', 'dashboard')->name('dashboard');
+
   Route::get('/submissions', 'submissions')->name('submissions');
-  Route::get('/submission/{id}', 'viewSubmission')->name('view-submission');
   Route::post('/submission/{id}/accept', 'acceptSubmission')->name('accept-submission');
   Route::match(['get', 'post'], '/submission/{id}/delete', 'deleteSubmission')->name('delete-submission');
 
   Route::get('/teams', 'teams')->name('teams');
-  Route::get('/team/{id}', 'viewTeam')->name('view-team');
+  Route::get('/team/{id}/submissions', 'viewTeamSubmissions')->name('view-team-submissions');
   Route::match(['get', 'post'], '/team/{id}/delete', 'deleteTeam')->name('delete-team');
 
   Route::get('/challenges', 'challenges')->name('challenges');
   Route::get('/challenge/{id}', 'viewChallenge')->name('view-challenge');
+  Route::get('/challenge/{id}/submissions', 'viewChallengeSubmissions')->name('view-challenge-submissions');
   Route::match(['get', 'post'], '/challenge/new', 'addChallenge')->name('add-challenge');
   Route::match(['get', 'post'], '/challenge/{id}/edit', 'editChallenge')->name('edit-challenge');
   Route::match(['get', 'post'], '/challenge/{id}/delete', 'deleteChallenge')->name('delete-challenge');
 
   Route::get('/groups', 'groups')->name('groups');
-  Route::get('/group/{id}', 'viewGroup')->name('view-group');
+  Route::get('/group/{id}/teams', 'viewGroupTeams')->name('view-group-teams');
   Route::match(['get', 'post'], '/group/new', 'addGroup')->name('add-group');
   Route::match(['get', 'post'], '/group/{id}/edit', 'editGroup')->name('edit-group');
   Route::match(['get', 'post'], '/group/{id}/delete', 'deleteGroup')->name('delete-group');
