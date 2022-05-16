@@ -9,8 +9,12 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
+use App\Models\Group;
 use App\Models\Team;
+use App\Models\Challenge;
+use App\Models\Submission;
 
 class AdminController extends Controller {
 
@@ -67,7 +71,14 @@ class AdminController extends Controller {
   }
 
   public function teams() {
-
+    return Inertia::render('admin/team/list', [
+      'teams' => Team::orderBy('name')->get()->map(fn($team) => [
+        'id' => $team->id,
+        'name' => $team->name,
+        'group' => $team->group()->name,
+        'submissions' => $team->submissions()->count()
+      ]),
+    ]);
   }
 
   public function viewTeam() {
@@ -79,7 +90,14 @@ class AdminController extends Controller {
   }
 
   public function challenges() {
-
+    return Inertia::render('admin/challenge/list', [
+      'challenges' => Challenge::orderBy('points', 'desc')->orderBy('name')->get()->map(fn($challenge) => [
+        'id' => $challenge->id,
+        'name' => $challenge->name,
+        'description' => Str::limit($challenge->description, 30),
+        'points' => $challenge->points
+      ]),
+    ]);
   }
 
   public function viewChallenge() {
@@ -99,7 +117,13 @@ class AdminController extends Controller {
   }
 
   public function groups() {
-
+    return Inertia::render('admin/group/list', [
+      'groups' => Group::orderBy('number')->orderBy('name')->get()->map(fn($group) => [
+        'id' => $group->id,
+        'name' => $group->name,
+        'teams' => $group->teams()->count()
+      ]),
+    ]);
   }
 
   public function viewGroup() {
@@ -115,7 +139,7 @@ class AdminController extends Controller {
   }
 
   public function deleteGroup() {
-    
+
   }
 
 }
