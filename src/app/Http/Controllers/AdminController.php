@@ -108,14 +108,18 @@ class AdminController extends Controller {
       'challenges' => Challenge::orderBy('points', 'desc')->orderBy('name')->get()->map(fn($challenge) => [
         'id' => $challenge->id,
         'name' => $challenge->name,
-        'description' => Str::limit($challenge->description, 30),
-        'points' => $challenge->points
+        'points' => $challenge->points,
+        'submissions' => $challenge->submissions->count()
       ]),
     ]);
   }
 
-  public function viewChallenge() {
-
+  public function viewChallenge($id) {
+    $challenge = Challenge::findOrFail($id);
+    
+    return Inertia::render('admin/challenge/view', [
+      'challenge' => $challenge
+    ]);
   }
 
   public function viewChallengeSubmissions($id) {
@@ -132,16 +136,73 @@ class AdminController extends Controller {
     ]);
   }
 
-  public function addChallenge() {
-
+  public function addChallenge(Request $request) {
+    if($request->isMethod('get')) {
+      return Inertia::render('admin/challenge/form', [
+        'data' => [
+          'id' => null,
+          'name' => null,
+          'description' => null,
+          'points' => null,
+        ],
+      ]);
+    }
+    elseif($request->isMethod('post')) {
+      $data = $request->validate([
+        'name' => 'required|string|max:255|unique:challenges',
+        'description' => 'required|string|max:255',
+        'points' => 'required|numeric',
+      ]);
+      
+      Challenge::insert($data);
+      return redirect()->route('challenges');
+    }
   }
 
-  public function editChallenge() {
-
+  public function editChallenge(Request $request, $id) {
+    if($request->isMethod('get')) {
+      $challenge = Challenge::findOrFail($id);
+      return Inertia::render('admin/challenge/form', [
+        'data' => [
+          'id' => $challenge->id,
+          'name' => $challenge->name,
+          'description' => $challenge->description,
+          'points' => $challenge->points,
+        ],
+      ]);
+    }
+    elseif($request->isMethod('post')) {
+      $challenge = Challenge::findOrFail($id);
+      
+      $data = $request->validate([
+        'id' => 'required|exists:challenges',
+        'name' => ['required', 'string', 'max:255', Rule::unique('challenges')->ignore($challenge->id)],
+        'description' => 'required|string|max:255',
+        'points' => 'required|numeric',
+      ]);
+      
+      Challenge::where('id', $request->id)->update($data);
+      return redirect()->route('challenges');
+    }
   }
 
-  public function deleteChallenge() {
-
+  public function deleteChallenge(Request $request, $id) {
+    if($request->isMethod('get')) {
+      $challenge = Challenge::findOrFail($id);
+      return Inertia::render('admin/challenge/delete', [
+        'id' => $challenge->id,
+        'name' => $challenge->name,
+      ]);
+    }
+    elseif($request->isMethod('post')) {
+      if($request->id == $id) {
+        Challenge::destroy($id);
+        return redirect()->route('challenges');
+      }
+      else {
+        return back()->withErrors(['id' => 'The challenge ID is invalid']);
+      }
+    }
   }
 
   public function groups() {
@@ -196,9 +257,11 @@ class AdminController extends Controller {
       ]);
     }
     elseif($request->isMethod('post')) {
+      $group = Group::findOrFail($id);
+      
       $data = $request->validate([
         'id' => 'required|exists:groups',
-        'name' => 'required|string|max:255|unique:groups',
+        'name' => ['required', 'string', 'max:255', Rule::unique('groups')->ignore($group->id)],
         'number' => 'required|numeric',
       ]);
       
