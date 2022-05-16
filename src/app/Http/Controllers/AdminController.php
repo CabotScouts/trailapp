@@ -99,8 +99,24 @@ class AdminController extends Controller {
     ]);
   }
 
-  public function deleteTeam() {
-
+  public function deleteTeam(Request $request, $id) {
+    if($request->isMethod('get')) {
+      $team = Team::findOrFail($id);
+      
+      return Inertia::render('admin/team/delete', [
+        'id' => $team->id,
+        'name' => $team->name,
+      ]);
+    }
+    elseif($request->isMethod('post')) {
+      if($request->id == $id) {
+        Team::destroy($id);
+        return redirect()->route('teams');
+      }
+      else {
+        return back()->withErrors(['id' => 'The team ID is invalid']);
+      }
+    }
   }
 
   public function challenges() {

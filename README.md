@@ -5,7 +5,7 @@ A web app to run a wide game/scavenger hunt type event, featuring questions and 
 ### Short term
 #### Admin panel
 * ~~Add/edit/delete Groups~~
-* ~~View~~/delete teams
+* ~~View/delete teams~~
 * ~~View~~/approve submissions
 * ~~Add/edit/delete challenges~~
   
