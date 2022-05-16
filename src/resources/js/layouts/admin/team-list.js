@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from '@inertiajs/inertia-react';
 import Frame from '@/layouts/admin/frame';
 import ListItem from '@/components/admin/list-item';
 
@@ -10,10 +11,12 @@ export default function List({ teams, children=false }) {
           <p className="text-lg">{ children }</p>
         </div>
       }
-      { (teams.length > 0) && teams.map((t) => <ListItem key={ t.id } target={ route('view-team-submissions', t.id)}>
+      { (teams.length > 0) && teams.map((t) => <ListItem key={ t.id }>
         <div className="flex-grow pr-5">
-          <p className="font-serif text-xl text-medium text-blue-800">{ t.name }</p>
-          <p className="text-sm">{ t.group }</p>
+          <Link href={ route('view-team-submissions', t.id) }>
+            <p className="font-serif text-xl text-medium text-blue-800">{ t.name }</p>
+            <p className="text-sm">{ t.group }</p>
+          </Link>
         </div>
         <div className="flex-none">
         { (t.submissions > 0) &&

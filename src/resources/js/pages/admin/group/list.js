@@ -12,9 +12,11 @@ export default function List({ groups }) {
         <Button href={ route('add-group') }>Add Group</Button>
       </ButtonBar>
       
-      { groups.map((g) => <ListItem key={ g.id } target={ route('view-group-teams', g.id) }>
+      { groups.map((g) => <ListItem key={ g.id }>
         <div className="flex-grow pr-5">
-          <p className="text-xl text-medium">{ g.name }</p>
+          <Link href={ route('view-group-teams', g.id) }>
+            <p className="text-xl text-medium">{ g.name }</p>
+          </Link>
         </div>
         <div className="flex-none flex">
           <div className="w-8 mr-2 rounded-full text-center text-neutral-100 text-medium text-sm p-2 bg-cyan-600">
