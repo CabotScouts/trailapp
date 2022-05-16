@@ -130,8 +130,9 @@ class AdminController extends Controller {
       'submissions' => Submission::where('challenge_id', $id)->orderBy('created_at', 'desc')->get()->map(fn($submission) => [
         'id' => $submission->id,
         'file' => url("storage/uploads/{$submission->filename}"),
-        'challenge' => $submission->challenge->name,
         'time' => $submission->time,
+        'team' => $submission->team->name,
+        'group' => $submission->team->group->name,
       ]),
     ]);
   }

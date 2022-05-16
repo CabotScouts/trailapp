@@ -12,10 +12,10 @@ export default function List({ submissions, children }) {
       }
       { (submissions.length > 0) && submissions.map((s) =>
         <div key={ s.id } className="p-5 border border-b-blue-200">
-          <p className="font-serif text-xl text-medium text-blue-800">{ s.challenge }</p>
-          { s.team && <p className="text-sm">{ s.team } ({ s.group })</p> }
+          { s.challenge && <p className="font-serif text-2xl font-bold text-blue-800">{ s.challenge }</p> }
+          { s.team && <p className="text-sm font-medium">{ s.team } ({ s.group })</p> }
           <PhotoSubmission submission={ s.file } />
-          <p className="text-xs text-bold">{ s.time }</p>
+          <p className="text-xs">{ s.time }</p>
         </div>
       ) }
       { (submissions.length === 0) &&
