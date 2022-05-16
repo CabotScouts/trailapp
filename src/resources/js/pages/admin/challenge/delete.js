@@ -24,7 +24,7 @@ export default function DeleteChallenge({ id, name }) {
         <div className="p-10 pt-20">
           <div className="p-5 bg-white rounded-xl shadow-lg w-full">
             <Header title="Delete Challenge">
-              <p className="text-red-500 font-medium">Are you sure you want to delete <span className="font-bold">{ name }</span>? This will also delete all submissions associated with it.</p>
+              <p className="text-red-500 font-medium">Are you sure you want to delete challenge <span className="font-bold">{ name }</span>? This will also delete all submissions associated with it.</p>
             </Header>
             
             <Errors errors={errors} />

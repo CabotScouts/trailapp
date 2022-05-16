@@ -9,7 +9,7 @@ import Button from '@/components/form/button';
 export default function DeleteGroup({ id, name }) {
 
   const { data, setData, post, processing, errors, reset } = useForm({
-    name: id,
+    id: id,
   });
 
   const deleteGroup = (e) => {
@@ -24,7 +24,7 @@ export default function DeleteGroup({ id, name }) {
         <div className="p-10 pt-20">
           <div className="p-5 bg-white rounded-xl shadow-lg w-full">
             <Header title="Delete Group">
-              <p className="text-red-500 font-medium">Are you sure you want to delete <span className="font-bold">{ name }</span>? This will delete all teams (and all submissions) associated with it.</p>
+              <p className="text-red-500 font-medium">Are you sure you want to delete group <span className="font-bold">{ name }</span>? This will delete all teams (and all submissions) associated with it.</p>
             </Header>
             
             <Errors errors={errors} />
