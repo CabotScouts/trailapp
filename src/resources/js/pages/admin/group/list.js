@@ -5,7 +5,7 @@ import ListItem from '@/components/admin/list-item';
 export default function List({ groups }) {
   return (
     <Frame title="Groups">
-      { groups.map((g) => <ListItem key={ g.id } target={ route('view-group', g.id) }>
+      { groups.map((g) => <ListItem key={ g.id } target={ route('view-group-teams', g.id) }>
         <div className="flex-grow pr-5">
           <p className="text-xl text-medium">{ g.name }</p>
         </div>
