@@ -27,6 +27,12 @@ export default function List({ groups }) {
           </div>
         </div>
       </ListItem>) }
+      
+      { (groups.length === 0) && 
+        <div className="p-5 text-center">
+          <p className="text-medium text-xl">No groups</p>
+        </div>
+      }
     </Frame>
   )
 }

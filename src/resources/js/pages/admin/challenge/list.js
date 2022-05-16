@@ -32,6 +32,13 @@ export default function List({ challenges }) {
           </Link>
         </div>
       </ListItem>) }
+      
+      { (challenges.length === 0) && 
+        <div className="p-5 text-center">
+          <p className="text-medium text-xl">No challenges</p>
+        </div>
+      }
+      
     </Frame>
   )
 }
