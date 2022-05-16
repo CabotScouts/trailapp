@@ -2,11 +2,16 @@ import React from 'react';
 import { Link } from '@inertiajs/inertia-react';
 import Frame from '@/layouts/admin/frame';
 import ListItem from '@/components/admin/list-item';
+import { Button, ButtonBar } from '@/components/admin/button-bar';
 import { PencilIcon } from '@heroicons/react/solid';
 
 export default function List({ challenges }) {
   return (
     <Frame title="Challenges">
+      <ButtonBar>
+        <Button href={ route('add-challenge') }>Add Challenge</Button>
+      </ButtonBar>
+    
       { challenges.map((c) => <ListItem key={ c.id }>
         <div className="flex-grow pr-5">
           <Link href={ route('view-challenge-submissions', c.id) }>
