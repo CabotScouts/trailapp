@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from '@inertiajs/inertia-react';
 import Frame from '@/layouts/admin/frame';
 import ListItem from '@/components/admin/list-item';
+import { XIcon } from '@heroicons/react/solid';
 
 export default function List({ teams, children=false }) {
   return (
@@ -18,15 +19,24 @@ export default function List({ teams, children=false }) {
             <p className="text-sm">{ t.group }</p>
           </Link>
         </div>
-        <div className="flex-none">
+        <div className="flex-none flex items-center">
         { (t.submissions > 0) &&
-          <div className="w-8 rounded-full text-center text-neutral-100 text-medium text-sm p-2 bg-orange-600">
+          <div className="w-8 mr-2 rounded-full text-center text-neutral-100 text-medium text-sm p-2 bg-orange-600">
             <p>{ t.submissions }</p>
           </div>
         }
+          <Link href={ route('delete-team', t.id) }>
+            <div className="w-8 rounded-xl text-center text-neutral-100 text-medium text-sm p-2 bg-red-600">
+              <XIcon />
+            </div>
+          </Link>
         </div>
       </ListItem>) }
-      { (teams.length == 0) && <p>No teams</p>}
+      { (teams.length === 0) && 
+        <div className="p-5 text-center">
+          <p className="text-medium text-xl">No teams</p>
+        </div>
+      }
     </Frame>
   )
 }
