@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Challenge extends Model {
 
+  public $timestamps = false;
+
   public function submissions() {
     return $this->hasMany(Submission::class);
   }
