@@ -158,19 +158,29 @@ class AdminController extends Controller {
     ]);
   }
 
-  public function viewGroup() {
+  public function viewGroupTeams($id) {
+    $group = Group::findOrFail($id);
 
+    return Inertia::render('admin/group/teams', [
+      'group' => $group->name,
+      'teams' => Team::where('group_id', $id)->orderBy('name')->get()->map(fn($team) => [
+        'id' => $team->id,
+        'name' => $team->name,
+        'group' => $team->group->name,
+        'submissions' => $team->submissions()->count()
+      ]),
+    ]);
   }
 
   public function addGroup() {
 
   }
 
-  public function editGroup() {
+  public function editGroup($id) {
 
   }
 
-  public function deleteGroup() {
+  public function deleteGroup($id) {
 
   }
 
