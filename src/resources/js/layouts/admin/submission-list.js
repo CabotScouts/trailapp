@@ -13,7 +13,7 @@ export default function List({ submissions, children }) {
       { (submissions.length > 0) && submissions.map((s) =>
         <div key={ s.id } className="p-5 border border-b-blue-200">
           <p className="font-serif text-xl text-medium text-blue-800">{ s.challenge }</p>
-          <p className="text-sm">{ s.team } ({ s.group })</p>
+          { s.team && <p className="text-sm">{ s.team } ({ s.group })</p> }
           <PhotoSubmission submission={ s.file } />
           <p className="text-xs text-bold">{ s.time }</p>
         </div>
