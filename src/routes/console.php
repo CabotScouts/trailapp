@@ -7,13 +7,18 @@ use Illuminate\Support\Str;
 
 use App\Models\User;
 
-Artisan::command('user:make {username}', function ($username) {
-  $password = Str::random(10);
-  
+Artisan::command("user:make {username} {--password}", function ($username, $password=false) {
+  $p = $password ? $this->secret("Enter a password") : Str::random(10);
+
   User::create([
     'username' => $username,
-    'password' => Hash::make($password),
+    'password' => Hash::make($p),
   ]);
-  
-  $this->info("Created new user {$username} with password {$password}");
+
+  if($password) {
+      $this->info("Created new user {$username}");
+  }
+  else {
+      $this->info("Created new user {$username} with password {$p}");
+  }
 });
