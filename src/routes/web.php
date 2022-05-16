@@ -14,7 +14,7 @@ Route::get('/clone/{id}', [TeamController::class, 'clone'])->middleware(['auth:u
 Route::get('/destroy', [TeamController::class, 'destroy'])->middleware(['auth:user', 'auth:team']);
 
 Route::get('/trail', [TrailController::class, 'index'])->middleware(['auth:team'])->name('trail');
-Route::get('/challenges/{id}', [TrailController::class, 'viewChallenge'])->middleware(['auth:team'])->name('challenge');
+Route::get('/challenges/{id}', [TrailController::class, 'viewChallenge'])->middleware(['auth:team'])->whereNumber('id')->name('challenge');
 Route::post('/challenges/{id}/submit', [TrailController::class, 'challengeSubmission'])->middleware(['auth:team'])->name('submit-challenge');
 
 Route::match(['get', 'post'], '/login', [AdminController::class, 'login'])->middleware(['guest'])->name('login');
@@ -24,23 +24,23 @@ Route::prefix('dashboard')->middleware(['auth:user'])->controller(AdminControlle
   Route::get('', 'dashboard')->name('dashboard');
 
   Route::get('/submissions', 'submissions')->name('submissions');
-  Route::post('/submission/{id}/accept', 'acceptSubmission')->name('accept-submission');
-  Route::match(['get', 'post'], '/submission/{id}/delete', 'deleteSubmission')->name('delete-submission');
+  Route::post('/submission/{id}/accept', 'acceptSubmission')->whereNumber('id')->name('accept-submission');
+  Route::match(['get', 'post'], '/submission/{id}/delete', 'deleteSubmission')->whereNumber('id')->name('delete-submission');
 
   Route::get('/teams', 'teams')->name('teams');
-  Route::get('/team/{id}/submissions', 'viewTeamSubmissions')->name('view-team-submissions');
-  Route::match(['get', 'post'], '/team/{id}/delete', 'deleteTeam')->name('delete-team');
+  Route::get('/team/{id}/submissions', 'viewTeamSubmissions')->whereNumber('id')->name('view-team-submissions');
+  Route::match(['get', 'post'], '/team/{id}/delete', 'deleteTeam')->whereNumber('id')->name('delete-team');
 
   Route::get('/challenges', 'challenges')->name('challenges');
-  Route::get('/challenge/{id}', 'viewChallenge')->name('view-challenge');
-  Route::get('/challenge/{id}/submissions', 'viewChallengeSubmissions')->name('view-challenge-submissions');
+  Route::get('/challenge/{id}', 'viewChallenge')->whereNumber('id')->name('view-challenge');
+  Route::get('/challenge/{id}/submissions', 'viewChallengeSubmissions')->whereNumber('id')->name('view-challenge-submissions');
   Route::match(['get', 'post'], '/challenge/new', 'addChallenge')->name('add-challenge');
-  Route::match(['get', 'post'], '/challenge/{id}/edit', 'editChallenge')->name('edit-challenge');
-  Route::match(['get', 'post'], '/challenge/{id}/delete', 'deleteChallenge')->name('delete-challenge');
+  Route::match(['get', 'post'], '/challenge/{id}/edit', 'editChallenge')->whereNumber('id')->name('edit-challenge');
+  Route::match(['get', 'post'], '/challenge/{id}/delete', 'deleteChallenge')->whereNumber('id')->name('delete-challenge');
 
   Route::get('/groups', 'groups')->name('groups');
-  Route::get('/group/{id}/teams', 'viewGroupTeams')->name('view-group-teams');
+  Route::get('/group/{id}/teams', 'viewGroupTeams')->whereNumber('id')->name('view-group-teams');
   Route::match(['get', 'post'], '/group/new', 'addGroup')->name('add-group');
-  Route::match(['get', 'post'], '/group/{id}/edit', 'editGroup')->name('edit-group');
-  Route::match(['get', 'post'], '/group/{id}/delete', 'deleteGroup')->name('delete-group');
+  Route::match(['get', 'post'], '/group/{id}/edit', 'editGroup')->whereNumber('id')->name('edit-group');
+  Route::match(['get', 'post'], '/group/{id}/delete', 'deleteGroup')->whereNumber('id')->name('delete-group');
 });
