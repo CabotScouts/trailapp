@@ -6,14 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Submission extends Model {
 
-  public $fillable = [ 'challenge_id', 'team_id', 'filename' ];
+  protected $fillable = [ 'challenge_id', 'team_id', 'filename' ];
 
   public function challenge() {
-    return $this->hasOne(Challenge::class);
+    return $this->belongsTo(Challenge::class);
   }
 
   public function team() {
-    return $this->hasOne(Team::class);
+    return $this->belongsTo(Team::class);
+  }
+
+  public function getTimeAttribute() {
+    $date = date_create($this->created_at);
+    return date_format($date, "d/j/Y g:i");
   }
 
 }
