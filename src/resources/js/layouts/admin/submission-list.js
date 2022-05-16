@@ -6,7 +6,7 @@ export default function List({ submissions, children }) {
   return (
     <Frame title="Submissions">
       { children &&
-        <div className="p-5 bg-blue-600 text-neutral-100">
+        <div className="p-3 bg-blue-600 text-neutral-100">
           <p className="text-lg">{ children }</p>
         </div>
       }
