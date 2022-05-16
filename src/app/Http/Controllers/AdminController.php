@@ -168,16 +168,62 @@ class AdminController extends Controller {
     ]);
   }
 
-  public function addGroup() {
-
+  public function addGroup(Request $request) {
+    if($request->isMethod('get')) {
+      return Inertia::render('admin/group/form', [
+        'data' => [ 'name' => null, 'number' => null ],
+      ]);
+    }
+    elseif($request->isMethod('post')) {
+      $data = $request->validate([
+        'name' => 'required|string|max:255|unique:groups',
+        'number' => 'required|numeric',
+      ]);
+      
+      Group::insert($data);
+      return redirect()->route('groups');
+    }
   }
 
-  public function editGroup($id) {
-
+  public function editGroup(Request $request, $id) {
+    if($request->isMethod('get')) {
+      $group = Group::findOrFail($id);
+      return Inertia::render('admin/group/form', [
+        'data' => [ 
+          'id' => $group->id,
+          'name' => $group->name,
+          'number' => $group->number ],
+      ]);
+    }
+    elseif($request->isMethod('post')) {
+      $data = $request->validate([
+        'id' => 'required|exists:groups',
+        'name' => 'required|string|max:255|unique:groups',
+        'number' => 'required|numeric',
+      ]);
+      
+      Group::where('id', $request->id)->update($data);
+      return redirect()->route('groups');
+    }
   }
 
-  public function deleteGroup($id) {
-
+  public function deleteGroup(Request $request, $id) {
+    if($request->isMethod('get')) {
+      $group = Group::findOrFail($id);
+      return Inertia::render('admin/group/delete', [
+        'id' => $group->id,
+        'name' => $group->name,
+      ]);
+    }
+    elseif($request->isMethod('post')) {
+      if($request->id == $id) {
+        Group::destroy($id);
+        return redirect()->route('groups');
+      }
+      else {
+        return back()->withErrors(['id' => 'The group ID is invalid']);
+      }
+    }
   }
 
 }
