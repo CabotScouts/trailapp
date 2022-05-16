@@ -14,15 +14,22 @@ export default function List({ challenges }) {
     
       { challenges.map((c) => <ListItem key={ c.id }>
         <div className="flex-grow pr-5">
-          <Link href={ route('view-challenge-submissions', c.id) }>
+          <Link href={ route('view-challenge', c.id) }>
             <p className="text-xl text-medium">{ c.name }</p>
-            <p className="text-sm">{ c.description }</p>
+            <p className="text-sm">{ c.points } points</p>
           </Link>
         </div>
-        <div className="flex-none flex">
-          <div className="w-8 rounded-xl text-center text-neutral-100 text-medium text-sm p-2 bg-emerald-600">
-            <Link href={ route('edit-challenge', c.id) }><PencilIcon /></Link>
-          </div>
+        <div className="flex-none flex items-center">
+          <Link href={ route('view-challenge-submissions', c.id) }>
+            <div className="w-8 mr-2 rounded-full text-center text-neutral-100 text-medium text-sm p-2 bg-indigo-600">
+              <p>{ c.submissions }</p>
+            </div>
+          </Link>
+          <Link href={ route('edit-challenge', c.id) }>
+            <div className="w-8 rounded-xl text-center text-neutral-100 text-medium text-sm p-2 bg-emerald-600">
+              <PencilIcon />
+            </div>
+          </Link>
         </div>
       </ListItem>) }
     </Frame>
