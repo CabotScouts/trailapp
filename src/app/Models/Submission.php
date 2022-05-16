@@ -18,7 +18,7 @@ class Submission extends Model {
 
   public function getTimeAttribute() {
     $date = date_create($this->created_at);
-    return date_format($date, "d/j/Y g:i");
+    return date_format($date, "d/m/Y H:i");
   }
 
 }
