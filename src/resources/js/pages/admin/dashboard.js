@@ -4,7 +4,7 @@ import { Grid, GridItem } from '@/components/grid';
 
 export default function Dashboard(props) {
   return (
-    <Frame title="Dashboard">
+    <Frame title="Dashboard" back="false">
       <Grid>
         <GridItem className="bg-green-600" href={ route('submissions') }>Submissions</GridItem>
         <GridItem className="bg-orange-600" href={ route('teams') }>Teams</GridItem>
