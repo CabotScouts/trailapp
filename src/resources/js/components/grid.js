@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/inertia-react';
 
 export function Grid({ children }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 p-3">
       { children }
     </div>
   )
