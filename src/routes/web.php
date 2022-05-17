@@ -23,13 +23,18 @@ Route::get('/logout', [AdminController::class, 'logout'])->middleware(['auth:use
 Route::prefix('dashboard')->middleware(['auth:user'])->controller(AdminController::class)->group(function(){
   Route::get('', 'dashboard')->name('dashboard');
 
+  Route::get('/leaderboard', 'leaderboard')->name('leaderboard');
+
   Route::get('/submissions', 'submissions')->name('submissions');
   Route::post('/submission/{id}/accept', 'acceptSubmission')->whereNumber('id')->name('accept-submission');
   Route::match(['get', 'post'], '/submission/{id}/delete', 'deleteSubmission')->whereNumber('id')->name('delete-submission');
 
-  Route::get('/teams', 'teams')->name('teams');
-  Route::get('/team/{id}/submissions', 'viewTeamSubmissions')->whereNumber('id')->name('view-team-submissions');
-  Route::match(['get', 'post'], '/team/{id}/delete', 'deleteTeam')->whereNumber('id')->name('delete-team');
+  Route::get('/questions', 'questions')->name('questions');
+  Route::get('/question/{id}', 'viewQuestion')->whereNumber('id')->name('view-question');
+  Route::get('/question/{id}/submissions', 'viewQuestionSubmissions')->whereNumber('id')->name('view-question-submissions');
+  Route::match(['get', 'post'], '/question/new', 'addQuestion')->name('add-question');
+  Route::match(['get', 'post'], '/question/{id}/edit', 'editQuestion')->whereNumber('id')->name('edit-question');
+  Route::match(['get', 'post'], '/question/{id}/delete', 'deleteQuestion')->whereNumber('id')->name('delete-question');
 
   Route::get('/challenges', 'challenges')->name('challenges');
   Route::get('/challenge/{id}', 'viewChallenge')->whereNumber('id')->name('view-challenge');
@@ -38,9 +43,20 @@ Route::prefix('dashboard')->middleware(['auth:user'])->controller(AdminControlle
   Route::match(['get', 'post'], '/challenge/{id}/edit', 'editChallenge')->whereNumber('id')->name('edit-challenge');
   Route::match(['get', 'post'], '/challenge/{id}/delete', 'deleteChallenge')->whereNumber('id')->name('delete-challenge');
 
+  Route::get('/teams', 'teams')->name('teams');
+  Route::get('/team/{id}/submissions', 'viewTeamSubmissions')->whereNumber('id')->name('view-team-submissions');
+  Route::match(['get', 'post'], '/team/{id}/delete', 'deleteTeam')->whereNumber('id')->name('delete-team');
+
   Route::get('/groups', 'groups')->name('groups');
   Route::get('/group/{id}/teams', 'viewGroupTeams')->whereNumber('id')->name('view-group-teams');
   Route::match(['get', 'post'], '/group/new', 'addGroup')->name('add-group');
   Route::match(['get', 'post'], '/group/{id}/edit', 'editGroup')->whereNumber('id')->name('edit-group');
   Route::match(['get', 'post'], '/group/{id}/delete', 'deleteGroup')->whereNumber('id')->name('delete-group');
+  
+  Route::get('/users', 'users')->name('users');
+  Route::match(['get', 'post'], '/user/new', 'addUser')->name('add-user');
+  Route::match(['get', 'post'], '/user/{id}/edit', 'editUser')->whereNumber('id')->name('edit-user');
+  Route::match(['get', 'post'], '/user/{id}/delete', 'deleteUser')->whereNumber('id')->name('delete-user');
+  
+  Route::match(['get', 'post'], '/settings', 'settings')->name('settings');
 });

@@ -46,8 +46,20 @@ class AdminController extends Controller {
     return redirect()->route('login');
   }
 
-  public function dashboard(Request $request) {
+  public function dashboard() {
     return Inertia::render('admin/dashboard');
+  }
+  
+  public function leaderboard() {
+    $teams = Team::all()->map(fn($team) => [
+      'id' => $team->id,
+      'name' => $team->name,
+      'points' => $team->points,
+    ])->sortByDesc('points');
+
+    return Inertia::render('admin/leaderboard', [
+      'teams' => $teams,
+    ]);
   }
 
   public function submissions() {
@@ -117,6 +129,30 @@ class AdminController extends Controller {
         return back()->withErrors(['id' => 'The team ID is invalid']);
       }
     }
+  }
+
+  public function questions() {
+    
+  }
+
+  public function viewQuestion() {
+    
+  }
+  
+  public function viewQuestionSubmissions() {
+    
+  }
+  
+  public function addQuestion() {
+    
+  }
+  
+  public function editQuestion() {
+    
+  }
+  
+  public function deleteQuestion() {
+    
   }
 
   public function challenges() {
