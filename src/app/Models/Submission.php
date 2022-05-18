@@ -12,6 +12,10 @@ class Submission extends Model {
     return $this->belongsTo(Challenge::class);
   }
 
+  public function question() {
+    return $this->belongsTo(Question::class);
+  }
+
   public function team() {
     return $this->belongsTo(Team::class);
   }
