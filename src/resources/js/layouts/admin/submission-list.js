@@ -1,6 +1,7 @@
 import React from 'react';
 import Frame from '@/layouts/admin/frame';
 import PhotoSubmission from '@/components/photo-submission';
+import TextSubmission from '@/components/text-submission';
 
 export default function List({ submissions, children }) {
   return (
@@ -13,8 +14,10 @@ export default function List({ submissions, children }) {
       { (submissions.length > 0) && submissions.map((s) =>
         <div key={ s.id } className="p-5 border border-b-blue-200">
           { s.challenge && <p className="font-serif text-2xl font-bold text-blue-800">{ s.challenge }</p> }
+          { s.question && <p className="font-serif text-2xl font-bold text-blue-800">{ s.question.name }</p> }
           { s.team && <p className="text-sm font-medium">{ s.team } ({ s.group })</p> }
-          <PhotoSubmission submission={ s.file } />
+          { s.file && <PhotoSubmission submission={ s.file } /> }
+          { s.answer && <TextSubmission submission={ s.answer } /> }
           <p className="text-xs">{ s.time }</p>
         </div>
       ) }
