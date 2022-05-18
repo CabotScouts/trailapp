@@ -54,6 +54,7 @@ class AdminController extends Controller {
     $teams = Team::all()->map(fn($team) => [
       'id' => $team->id,
       'name' => $team->name,
+      'group' => $team->group->name,
       'points' => $team->points,
     ])->sortByDesc('points');
 
@@ -62,9 +63,12 @@ class AdminController extends Controller {
     ]);
   }
 
-  public function submissions() {
+  public function submissions($filter=false) {
+    $submissions = Submission::orderBy('created_at', 'desc');
+    $submissions = ($filter == "pending") ? $submissions->where('accepted', [false, null]) : $submissions;
+
     return Inertia::render('admin/submission/list', [
-      'submissions' => Submission::orderBy('created_at', 'desc')->get()->map(fn($submission) => [
+      'submissions' => $submissions->get()->map(fn($submission) => [
         'id' => $submission->id,
         'file' => ($submission->filename) ? url("storage/uploads/{$submission->filename}") : false,
         'answer' => ($submission->answer) ? $submission->answer : false,
@@ -73,12 +77,19 @@ class AdminController extends Controller {
         'time' => $submission->time,
         'team' => $submission->team->name,
         'group' => $submission->team->group->name,
+        'accepted' => $submission->accepted,
       ]),
     ]);
   }
 
-  public function acceptSubmission($id) {
+  public function acceptSubmission(Request $request) {
+    $s = Submission::where('id', $request->id)->firstOrFail();
+    $points = ($s->challenge) ? $s->challenge->points : $s->question->points;
+    $s->points = $points;
+    $s->accepted = true;
+    $s->save();
 
+    return redirect()->back();
   }
 
   public function deleteSubmission($id) {
@@ -106,9 +117,14 @@ class AdminController extends Controller {
       ],
       'submissions' => Submission::where('team_id', $id)->orderBy('created_at', 'desc')->get()->map(fn($submission) => [
         'id' => $submission->id,
-        'file' => url("storage/uploads/{$submission->filename}"),
-        'challenge' => $submission->challenge->name,
+        'file' => ($submission->filename) ? url("storage/uploads/{$submission->filename}") : false,
+        'answer' => ($submission->answer) ? $submission->answer : false,
+        'challenge' => ($submission->challenge) ? $submission->challenge->name : false,
+        'question' => ($submission->question) ? ['name' => $submission->question->name, 'text' => $submission->question->question] : false,
         'time' => $submission->time,
+        'team' => $submission->team->name,
+        'group' => $submission->team->group->name,
+        'accepted' => $submission->accepted,
       ]),
     ]);
   }
