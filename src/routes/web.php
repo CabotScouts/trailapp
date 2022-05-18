@@ -25,7 +25,7 @@ Route::prefix('dashboard')->middleware(['auth:user'])->controller(AdminControlle
 
   Route::get('/leaderboard', 'leaderboard')->name('leaderboard');
 
-  Route::get('/submissions', 'submissions')->name('submissions');
+  Route::get('/submissions/{filter?}/{page?}', 'submissions')->whereAlpha('filter')->whereNumber('page')->name('submissions');
   Route::post('/submission/{id}/accept', 'acceptSubmission')->whereNumber('id')->name('accept-submission');
   Route::match(['get', 'post'], '/submission/{id}/delete', 'deleteSubmission')->whereNumber('id')->name('delete-submission');
 
@@ -52,11 +52,11 @@ Route::prefix('dashboard')->middleware(['auth:user'])->controller(AdminControlle
   Route::match(['get', 'post'], '/group/new', 'addGroup')->name('add-group');
   Route::match(['get', 'post'], '/group/{id}/edit', 'editGroup')->whereNumber('id')->name('edit-group');
   Route::match(['get', 'post'], '/group/{id}/delete', 'deleteGroup')->whereNumber('id')->name('delete-group');
-  
+
   Route::get('/users', 'users')->name('users');
   Route::match(['get', 'post'], '/user/new', 'addUser')->name('add-user');
   Route::match(['get', 'post'], '/user/{id}/edit', 'editUser')->whereNumber('id')->name('edit-user');
   Route::match(['get', 'post'], '/user/{id}/delete', 'deleteUser')->whereNumber('id')->name('delete-user');
-  
+
   Route::match(['get', 'post'], '/settings', 'settings')->name('settings');
 });
