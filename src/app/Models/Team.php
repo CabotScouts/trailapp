@@ -16,9 +16,9 @@ class Team extends Authenticatable {
   public function submissions() {
     return $this->hasMany(Submission::class);
   }
-  
+
   protected function getPointsAttribute() {
-    return $this->submissions()->where('accepted', true)->join('challenges', 'challenges.id', '=', 'submissions.challenge_id')->sum('challenges.points');
+    return $this->submissions()->where('accepted', true)->sum('points');
   }
 
 }
