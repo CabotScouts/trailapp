@@ -49,7 +49,7 @@ class AdminController extends Controller {
   public function dashboard() {
     return Inertia::render('admin/dashboard');
   }
-  
+
   public function leaderboard() {
     $teams = Team::all()->map(fn($team) => [
       'id' => $team->id,
@@ -66,8 +66,10 @@ class AdminController extends Controller {
     return Inertia::render('admin/submission/list', [
       'submissions' => Submission::orderBy('created_at', 'desc')->get()->map(fn($submission) => [
         'id' => $submission->id,
-        'file' => url("storage/uploads/{$submission->filename}"),
-        'challenge' => $submission->challenge->name,
+        'file' => ($submission->filename) ? url("storage/uploads/{$submission->filename}") : false,
+        'answer' => ($submission->answer) ? $submission->answer : false,
+        'challenge' => ($submission->challenge) ? $submission->challenge->name : false,
+        'question' => ($submission->question) ? ['name' => $submission->question->name, 'text' => $submission->question->question] : false,
         'time' => $submission->time,
         'team' => $submission->team->name,
         'group' => $submission->team->group->name,
@@ -76,7 +78,7 @@ class AdminController extends Controller {
   }
 
   public function acceptSubmission($id) {
-    
+
   }
 
   public function deleteSubmission($id) {
@@ -114,7 +116,7 @@ class AdminController extends Controller {
   public function deleteTeam(Request $request, $id) {
     if($request->isMethod('get')) {
       $team = Team::findOrFail($id);
-      
+
       return Inertia::render('admin/team/delete', [
         'id' => $team->id,
         'name' => $team->name,
@@ -132,27 +134,27 @@ class AdminController extends Controller {
   }
 
   public function questions() {
-    
+
   }
 
   public function viewQuestion() {
-    
+
   }
-  
+
   public function viewQuestionSubmissions() {
-    
+
   }
-  
+
   public function addQuestion() {
-    
+
   }
-  
+
   public function editQuestion() {
-    
+
   }
-  
+
   public function deleteQuestion() {
-    
+
   }
 
   public function challenges() {
@@ -168,7 +170,7 @@ class AdminController extends Controller {
 
   public function viewChallenge($id) {
     $challenge = Challenge::findOrFail($id);
-    
+
     return Inertia::render('admin/challenge/view', [
       'challenge' => $challenge
     ]);
@@ -206,7 +208,7 @@ class AdminController extends Controller {
         'description' => 'required|string|max:255',
         'points' => 'required|numeric',
       ]);
-      
+
       Challenge::insert($data);
       return redirect()->route('challenges');
     }
@@ -226,14 +228,14 @@ class AdminController extends Controller {
     }
     elseif($request->isMethod('post')) {
       $challenge = Challenge::findOrFail($id);
-      
+
       $data = $request->validate([
         'id' => 'required|exists:challenges',
         'name' => ['required', 'string', 'max:255', Rule::unique('challenges')->ignore($challenge->id)],
         'description' => 'required|string|max:255',
         'points' => 'required|numeric',
       ]);
-      
+
       Challenge::where('id', $request->id)->update($data);
       return redirect()->route('challenges');
     }
@@ -293,7 +295,7 @@ class AdminController extends Controller {
         'name' => 'required|string|max:255|unique:groups',
         'number' => 'required|numeric',
       ]);
-      
+
       Group::insert($data);
       return redirect()->route('groups');
     }
@@ -303,7 +305,7 @@ class AdminController extends Controller {
     if($request->isMethod('get')) {
       $group = Group::findOrFail($id);
       return Inertia::render('admin/group/form', [
-        'data' => [ 
+        'data' => [
           'id' => $group->id,
           'name' => $group->name,
           'number' => $group->number ],
@@ -311,13 +313,13 @@ class AdminController extends Controller {
     }
     elseif($request->isMethod('post')) {
       $group = Group::findOrFail($id);
-      
+
       $data = $request->validate([
         'id' => 'required|exists:groups',
         'name' => ['required', 'string', 'max:255', Rule::unique('groups')->ignore($group->id)],
         'number' => 'required|numeric',
       ]);
-      
+
       Group::where('id', $request->id)->update($data);
       return redirect()->route('groups');
     }
