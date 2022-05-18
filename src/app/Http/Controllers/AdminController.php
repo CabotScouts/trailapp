@@ -122,8 +122,6 @@ class AdminController extends Controller {
         'challenge' => ($submission->challenge) ? $submission->challenge->name : false,
         'question' => ($submission->question) ? ['name' => $submission->question->name, 'text' => $submission->question->question] : false,
         'time' => $submission->time,
-        'team' => $submission->team->name,
-        'group' => $submission->team->group->name,
         'accepted' => $submission->accepted,
       ]),
     ]);
