@@ -8,7 +8,7 @@ return new class extends Migration {
 
   public function up() {
     Schema::table('submissions', function (Blueprint $table) {
-      $table->integer('points')->after('accepted');
+      $table->integer('points')->after('accepted')->nullable();
     });
   }
 
