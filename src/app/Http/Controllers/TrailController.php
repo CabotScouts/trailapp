@@ -21,11 +21,13 @@ class TrailController extends Controller {
         ->orderBy('name')
         ->get()
         ->map(function($challenge) {
+          $submissions = Auth::user()->submissions()->where('challenge_id', $challenge->id);
           return [
             'id' => $challenge->id,
             'name' => $challenge->name,
             'points' => $challenge->points,
-            'submitted' => (Auth::user()->submissions()->where('challenge_id', $challenge->id)->count() > 0),
+            'submitted' => ($submissions->count() > 0),
+            'accepted' => ($submissions->where('accepted', true)->count() > 0),
           ];
         }),
       'team' => Auth::user()->name,
