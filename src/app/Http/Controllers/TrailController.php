@@ -93,7 +93,7 @@ class TrailController extends Controller {
 
     return Inertia::render('challenge/view', [
       'challenge' => $challenge,
-      'submission' => $submission ? url("storage/uploads/{$submission->filename}") : false,
+      'submission' => $submission ? [ 'file' => url("storage/uploads/{$submission->filename}"), 'accepted' => $submission->accepted ] : [ 'file' => false, 'accepted' => false ],
     ]);
   }
 
