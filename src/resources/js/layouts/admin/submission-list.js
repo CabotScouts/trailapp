@@ -11,7 +11,10 @@ export default function List({ submissions, children }) {
 
   const acceptSubmission = (e) => {
     e.preventDefault();
-    post(route('accept-submission', data.id))
+    post(
+      route('accept-submission', data.id),
+      { preserveScroll: true }
+    )
   }
 
   return (
