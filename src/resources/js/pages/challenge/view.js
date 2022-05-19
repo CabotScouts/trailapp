@@ -10,8 +10,15 @@ export default function Challenge({ challenge, submission }) {
       <Head title={ challenge.name } />
       <Modal back={ route('trail-challenges') }>
         <Header data={ challenge } />
-        { (submission.accepted == false) && <PhotoUpload target={ route('submit-challenge', challenge.id) } /> }
-        <PhotoSubmission submission={ submission } />
+        
+        <div className="mb-32">
+          <PhotoSubmission submission={ submission } />
+        </div>
+        
+        <div className="fixed bottom-0 h-32 w-full">
+          { (submission.accepted == false) && <PhotoUpload target={ route('submit-challenge', challenge.id) } /> }
+        </div>
+        
       </Modal>
     </>
   );
