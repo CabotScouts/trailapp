@@ -18,6 +18,9 @@ class TrailController extends Controller {
 
   public function questions() {
     return Inertia::render('question/list', [
+      'team' => Auth::user()->name,
+      'group' => Auth::user()->group->name,
+      'points' => Auth::user()->points,
       'questions' => Question::orderBy('points', 'desc')->get()
         ->map(function($question) {
           $submissions = Auth::user()->submissions()->where('question_id', $question->id);
@@ -30,9 +33,6 @@ class TrailController extends Controller {
             'accepted' => ($submissions->where('accepted', true)->count() > 0),
           ];
         }),
-      'team' => Auth::user()->name,
-      'points' => 100,
-      'group' => Auth::user()->group->name,
     ]);
   }
 
@@ -70,6 +70,9 @@ class TrailController extends Controller {
 
   public function challenges() {
     return Inertia::render('challenge/list', [
+      'team' => Auth::user()->name,
+      'group' => Auth::user()->group->name,
+      'points' => Auth::user()->points,
       'challenges' => Challenge::orderBy('points', 'desc')
         ->orderBy('name')
         ->get()
@@ -83,9 +86,6 @@ class TrailController extends Controller {
             'accepted' => ($submissions->where('accepted', true)->count() > 0),
           ];
         }),
-      'team' => Auth::user()->name,
-      'points' => Auth::user()->points,
-      'group' => Auth::user()->group->name,
     ]);
   }
 
