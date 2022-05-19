@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Submission extends Model {
 
-  protected $fillable = [ 'challenge_id', 'team_id', 'filename' ];
+  protected $fillable = [ 'question_id', 'challenge_id', 'team_id', 'filename', 'answer' ];
 
   public function challenge() {
     return $this->belongsTo(Challenge::class);
