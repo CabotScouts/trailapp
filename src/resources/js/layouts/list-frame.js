@@ -21,13 +21,13 @@ export default function ListFrame({ team, group, points, children }) {
       </div>
       
       <div className="flex-none w-full fixed flex items-stretch bottom-0 h-14 font-medium font-serif text-xl text-purple-900">
-        <Link href={ route('trail') } className={`flex-auto h-full ${ component === 'question/list' ? 'bg-slate-900' : 'bg-neutral-100' }`}>
+        <Link href={ route('trail') } className={`flex-auto h-full ${ component === 'question/list' ? 'bg-slate-900' : 'bg-neutral-100' }`} preserveScroll>
           <div className={`h-full flex items-center ${ component === 'question/list' ? 'bg-neutral-100 rounded-b-lg' : 'bg-slate-900 rounded-tr-lg text-neutral-100' }`}>
             <div className="w-full text-center">Questions</div>
           </div>
         </Link>
         
-        <Link href={ route('trail-challenges') } className={`flex-auto h-full ${ component === 'challenge/list' ? 'bg-slate-900' : 'bg-neutral-100' }`}>
+        <Link href={ route('trail-challenges') } className={`flex-auto h-full ${ component === 'challenge/list' ? 'bg-slate-900' : 'bg-neutral-100' }`} preserveScroll>
         <div className={`h-full flex items-center ${ component === 'challenge/list' ? 'bg-neutral-100 rounded-b-lg' : 'bg-slate-900 rounded-tl-lg text-neutral-100' }`}>
           <div className="w-full text-center">Challenges</div>
         </div>
