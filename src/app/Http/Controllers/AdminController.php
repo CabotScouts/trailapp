@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 use App\Models\Group;
 use App\Models\Team;
@@ -93,8 +94,12 @@ class AdminController extends Controller {
     return redirect()->back();
   }
 
-  public function deleteSubmission($id) {
-
+  public function rejectSubmission(Request $request, $id) {
+    $s = Submission::where('id', $request->id)->firstOrFail();
+    Storage::delete("public/uploads/{$s->filename}");
+    $s->delete();
+    
+    return redirect()->back();
   }
 
   public function teams() {

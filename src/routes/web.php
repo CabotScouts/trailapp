@@ -33,6 +33,7 @@ Route::prefix('dashboard')->middleware(['auth:user'])->controller(AdminControlle
 
   Route::get('/submissions/{filter?}/{page?}', 'submissions')->whereAlpha('filter')->name('submissions');
   Route::post('/submission/{id}/accept', 'acceptSubmission')->name('accept-submission');
+  Route::post('/submission/{id}/reject', 'rejectSubmission')->name('reject-submission');
   Route::match(['get', 'post'], '/submission/{id}/delete', 'deleteSubmission')->name('delete-submission');
 
   Route::get('/questions', 'questions')->name('questions');

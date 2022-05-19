@@ -3,7 +3,7 @@ import { useForm } from '@inertiajs/inertia-react';
 import Frame from '@/layouts/admin/frame';
 import PhotoSubmission from '@/components/photo-submission';
 import TextSubmission from '@/components/text-submission';
-import { ThumbUpIcon } from '@heroicons/react/solid';
+import { ThumbUpIcon, ThumbDownIcon } from '@heroicons/react/solid';
 
 export default function List({ submissions, children }) {
 
@@ -13,6 +13,14 @@ export default function List({ submissions, children }) {
     e.preventDefault();
     post(
       route('accept-submission', data.id),
+      { preserveScroll: true }
+    )
+  }
+  
+  const rejectSubmission = (e) => {
+    e.preventDefault();
+    post(
+      route('reject-submission', data.id),
       { preserveScroll: true }
     )
   }
@@ -37,7 +45,15 @@ export default function List({ submissions, children }) {
               <p className="text-xs">{ s.time }</p>
             </div>
             { (s.accepted === 0) &&
-            <div className="flex-none">
+            <div className="flex-none flex">
+              <form onSubmit={ rejectSubmission }>
+                <button type="submit"
+                  className="w-8 mr-1 rounded-xl text-center text-neutral-100 font-bold text-sm p-2 bg-orange-600"
+                  onClick={ (e) => setData('id', s.id) }>
+                  <ThumbDownIcon />
+                </button>
+              </form>
+              
               <form onSubmit={ acceptSubmission }>
                 <button type="submit"
                   className="w-8 rounded-xl text-center text-neutral-100 font-bold text-sm p-2 bg-green-600"
