@@ -124,7 +124,7 @@ class TrailController extends Controller {
     $submission->filename = $filename;
     $submission->save();
 
-    return redirect()->route('trail-challenges');
+    return redirect()->route('challenge', $id);
   }
 
 }
