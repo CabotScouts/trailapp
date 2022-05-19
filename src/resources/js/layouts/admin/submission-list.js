@@ -40,7 +40,7 @@ export default function List({ submissions, children }) {
             <div className="flex-none">
               <form onSubmit={ acceptSubmission }>
                 <button type="submit"
-                  className="w-8 rounded-xl text-center text-neutral-100 text-medium text-sm p-2 bg-green-600"
+                  className="w-8 rounded-xl text-center text-neutral-100 font-bold text-sm p-2 bg-green-600"
                   onClick={ (e) => setData('id', s.id) }>
                   <ThumbUpIcon />
                 </button>
