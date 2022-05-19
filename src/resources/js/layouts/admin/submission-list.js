@@ -27,7 +27,7 @@ export default function List({ submissions, children }) {
           { s.question && <p className="font-serif text-2xl font-bold text-blue-800">{ s.question.name }</p> }
           { s.team && <p className="text-sm font-medium">{ s.team } ({ s.group })</p> }
           { s.question && <p className="test-lg pt-4 italic">{ s.question.text }</p> }
-          { s.file && <PhotoSubmission submission={ s.file } /> }
+          { s.file && <PhotoSubmission submission={ s } /> }
           { s.answer && <div className="my-5"><TextSubmission submission={ s.answer } /></div> }
           <div className="flex">
             <div className="flex-grow">
