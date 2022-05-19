@@ -21,18 +21,18 @@ export default function List({ title="Teams", teams, children=false, simple=fals
         </div>
         <div className="flex-none flex items-center">
         { (teams[key].points > 0) &&
-          <div className="w-8 mr-2 rounded-full text-center text-neutral-100 text-medium text-sm p-2 bg-green-600">
+          <div className="mr-2 rounded-full text-center text-neutral-100 font-bold text-sm p-3 bg-green-600">
             <p>{ teams[key].points }</p>
           </div>
         }
         { (teams[key].submissions > 0) &&
-          <div className="w-8 mr-2 rounded-full text-center text-neutral-100 text-medium text-sm p-2 bg-orange-600">
+          <div className="mr-1 rounded-full text-center text-neutral-100 font-bold text-sm px-3 py-2 bg-orange-600">
             <p>{ teams[key].submissions }</p>
           </div>
         }
         { !simple && 
           <Link href={ route('delete-team', teams[key].id) }>
-            <div className="w-8 rounded-xl text-center text-neutral-100 text-medium text-sm p-2 bg-red-600">
+            <div className="w-8 rounded-xl text-center text-neutral-100 p-2 bg-red-600">
               <XIcon />
             </div>
           </Link>

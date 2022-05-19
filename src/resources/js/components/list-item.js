@@ -9,9 +9,9 @@ export default function ListItem({ type, data }) {
           <p className="text-medium text-lg text-slate-800">{ data.number && ( data.number + ' - ' ) }{ data.name }</p>
         </div>
         <div className="flex-none">
-          <div className={`w-8 rounded-full text-center
-              text-neutral-100 text-medium text-sm
-              p-2 ${ data.accepted && 'bg-green-500'} ${ (!data.accepted && data.submitted) && 'bg-orange-500'} ${ !data.submitted && 'bg-red-500'}`}>
+          <div className={`rounded-full text-center
+              text-neutral-100 font-bold text-sm
+              p-3 ${ data.accepted && 'bg-green-500'} ${ (!data.accepted && data.submitted) && 'bg-orange-500'} ${ !data.submitted && 'bg-red-500'}`}>
             <p>{ data.points }</p>
           </div>
         </div>

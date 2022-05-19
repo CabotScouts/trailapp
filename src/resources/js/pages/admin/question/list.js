@@ -21,12 +21,12 @@ export default function List({ questions }) {
         </div>
         <div className="flex-none flex items-center">
           <Link href={ route('view-question-submissions', c.id) }>
-            <div className="w-8 mr-2 rounded-full text-center text-neutral-100 text-medium text-sm p-2 bg-indigo-600">
+            <div className="mr-1 rounded-full text-center text-neutral-100 font-bold text-sm px-3 py-2 bg-indigo-600">
               <p>{ c.submissions }</p>
             </div>
           </Link>
           <Link href={ route('edit-question', c.id) }>
-            <div className="w-8 rounded-xl text-center text-neutral-100 text-medium text-sm p-2 bg-emerald-600">
+            <div className="w-8 rounded-xl text-center text-neutral-100 text-sm p-2 bg-emerald-600">
               <PencilIcon />
             </div>
           </Link>
