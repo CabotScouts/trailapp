@@ -6,11 +6,11 @@ A web app to run a wide game/scavenger hunt type event, featuring questions and 
 #### Admin panel
 * ~~Add/edit/delete Groups~~
 * ~~View/delete teams~~
-* ~~View~~/approve submissions
+* ~~View/approve submissions~~
 * ~~Add/edit/delete challenges~~
   
 #### Questions
-* Add/edit/delete questions
+* ~~Add/edit/delete questions~~
 * UI for viewing questions and submitting answers
   
 #### Multiple Submissions
