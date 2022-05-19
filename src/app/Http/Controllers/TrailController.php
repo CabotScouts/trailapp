@@ -65,7 +65,7 @@ class TrailController extends Controller {
     $submission->answer = $request->answer;
     $submission->save();
 
-    return redirect()->route('question', $id);
+    return redirect()->route('trail');
   }
 
   public function challenges() {
@@ -124,7 +124,7 @@ class TrailController extends Controller {
     $submission->filename = $filename;
     $submission->save();
 
-    return redirect()->route('challenge', $id);
+    return redirect()->route('trail-challenges');
   }
 
 }
