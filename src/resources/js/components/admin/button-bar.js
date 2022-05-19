@@ -4,7 +4,7 @@ import { Link, usePage } from '@inertiajs/inertia-react';
 
 export function ButtonBar({ children }) {
   return (
-    <div className="p-2 flex justify-end bg-blue-600">
+    <div className="p-3 flex justify-end bg-blue-600">
       { children }
     </div>
   );
