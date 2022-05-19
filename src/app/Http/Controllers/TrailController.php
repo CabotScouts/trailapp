@@ -31,6 +31,7 @@ class TrailController extends Controller {
           ];
         }),
       'team' => Auth::user()->name,
+      'points' => 100,
       'group' => Auth::user()->group->name,
     ]);
   }
@@ -83,6 +84,7 @@ class TrailController extends Controller {
           ];
         }),
       'team' => Auth::user()->name,
+      'points' => Auth::user()->points,
       'group' => Auth::user()->group->name,
     ]);
   }
