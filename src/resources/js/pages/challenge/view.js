@@ -8,9 +8,9 @@ export default function Challenge({ challenge, submission }) {
   return (
     <>
       <Head title={ challenge.name } />
-      <Modal back={ route('trail') }>
+      <Modal back={ route('trail-challenges') }>
         <Header data={ challenge } />
-        <PhotoUpload target={ route('submit-challenge', challenge.id) } />
+        { (submission.accepted == false) && <PhotoUpload target={ route('submit-challenge', challenge.id) } /> }
         <PhotoSubmission submission={ submission } />
       </Modal>
     </>

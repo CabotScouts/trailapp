@@ -10,13 +10,65 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
+use App\Models\Question;
 use App\Models\Challenge;
 use App\Models\Submission;
 
 class TrailController extends Controller {
 
-  public function index() {
-    return Inertia::render('challenge-list', [
+  public function questions() {
+    return Inertia::render('question/list', [
+      'questions' => Question::orderBy('points', 'desc')->get()
+        ->map(function($question) {
+          $submissions = Auth::user()->submissions()->where('question_id', $question->id);
+          return [
+            'id' => $question->id,
+            'number' => $question->number,
+            'name' => $question->name,
+            'points' => $question->points,
+            'submitted' => ($submissions->count() > 0),
+            'accepted' => ($submissions->where('accepted', true)->count() > 0),
+          ];
+        }),
+      'team' => Auth::user()->name,
+      'group' => Auth::user()->group->name,
+    ]);
+  }
+
+  public function viewQuestion($id) {
+    $question = Question::findOrFail($id);
+    $submission = Auth::user()->submissions()->where('question_id', $question->id)->first();
+
+    return Inertia::render('question/view', [
+      'question' => $question,
+      'submission' => $submission ? [ 'answer' => $submission->answer, 'accepted' => $submission->accepted ] : [ 'answer' => false, 'accepted' => false ],
+    ]);
+  }
+
+  public function questionSubmission(Request $request, $id) {
+    Validator::make($request->all(),
+      [
+        'answer' => 'required|string',
+      ],
+      [
+        'answer.required' => 'You need to give your answer',
+      ]
+    )->validate();
+
+    $submission = Submission::firstOrNew(
+      [
+        'question_id' => $id,
+        'team_id' => Auth::user()->id,
+      ]
+    );
+    $submission->answer = $request->answer;
+    $submission->save();
+
+    return redirect()->route('question', $id);
+  }
+
+  public function challenges() {
+    return Inertia::render('challenge/list', [
       'challenges' => Challenge::orderBy('points', 'desc')
         ->orderBy('name')
         ->get()
@@ -39,7 +91,7 @@ class TrailController extends Controller {
     $challenge = Challenge::findOrFail($id);
     $submission = Auth::user()->submissions()->where('challenge_id', $challenge->id)->first();
 
-    return Inertia::render('challenge-view', [
+    return Inertia::render('challenge/view', [
       'challenge' => $challenge,
       'submission' => $submission ? url("storage/uploads/{$submission->filename}") : false,
     ]);

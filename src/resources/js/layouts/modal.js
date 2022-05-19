@@ -27,7 +27,7 @@ export function Modal({ children, back=false }) {
 
 export function Header({ data }) {
   return (
-    <div className="p-10 text-neutral-50">
+    <div className="p-10 pb-5 text-neutral-50">
       <div className="pt-5 font-serif text-4xl font-bold">{ data.number && (data.number + ' - ') }{ data.name }</div>
       { (data.points > 0) && (<div className="text-neutral-100">{ data.points } points</div>) }
       { data.description && <div className="text-lg font-medium mt-5">{ data.description }</div> }
