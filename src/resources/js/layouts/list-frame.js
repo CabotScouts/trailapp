@@ -12,7 +12,7 @@ export default function ListFrame({ team, group, points, children }) {
           <p className="text-sm text-neutral-100">{ group }</p>
         </div>
         <div className="flex-none flex items-center">
-          <p className="text-sm p-3 bg-neutral-100 text-slate-900 font-bold rounded-full">{ points }</p>
+          <p className="text-sm px-3 py-2 bg-neutral-100 text-slate-900 font-bold rounded-full">{ points }</p>
         </div>
       </div>
 
