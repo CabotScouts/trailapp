@@ -11,11 +11,8 @@ A web app to run a wide game/scavenger hunt type event, featuring questions and 
   
 #### Questions
 * ~~Add/edit/delete questions~~
-* UI for viewing questions and submitting answers
+* ~~UI for viewing questions and submitting answers~~
   
-#### Multiple Submissions
-* Store additional photo submissions rather than overwriting
-
 #### Write up installation instructions
 * Clone repo
 * Create container & app environment files and fill out
@@ -29,3 +26,8 @@ A web app to run a wide game/scavenger hunt type event, featuring questions and 
 * Shortlink (QR code generator?) to access event -> takes you to 'create a team' page for that event
 * Config settings (has teams or not etc.)
 * Localisation (what are 'Groups' named etc.)
+
+#### Multiple Submissions
+* Allow questions/challenges to specify what type of submission they accept
+* Add multi-submission UI
+* Store additional photo submissions rather than overwriting
