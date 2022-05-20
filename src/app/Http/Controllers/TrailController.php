@@ -27,7 +27,7 @@ class TrailController extends Controller {
             'id' => $question->id,
             'number' => $question->number,
             'name' => $question->name,
-            'points' => $question->points,
+            // 'points' => $question->points,
             'submitted' => ($submissions->count() > 0),
             'accepted' => ($submissions->where('accepted', true)->count() > 0),
           ];
@@ -80,7 +80,7 @@ class TrailController extends Controller {
           return [
             'id' => $challenge->id,
             'name' => $challenge->name,
-            'points' => $challenge->points,
+            // 'points' => $challenge->points,
             'submitted' => ($submissions->count() > 0),
             'accepted' => ($submissions->where('accepted', true)->count() > 0),
           ];
