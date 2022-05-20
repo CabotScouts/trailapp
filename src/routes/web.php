@@ -9,7 +9,7 @@ use App\Http\Controllers\AdminController;
 
 Route::get('/', [TeamController::class, 'index'])->middleware(['checkteam'])->name('start');
 Route::post('/create-team', [TeamController::class, 'create'])->name('create-team');
-
+Route::get('/join/{id}/{code}', [TeamController::class, 'join'])->middleware(['checkteam'])->name('join-team');
 Route::get('/clone/{id}', [TeamController::class, 'clone'])->middleware(['auth:user']);
 Route::get('/destroy', [TeamController::class, 'destroy'])->middleware(['auth:user', 'auth:team']);
 
@@ -21,6 +21,9 @@ Route::middleware(['auth:team'])->controller(TrailController::class)->group(func
   Route::get('/challenges', 'challenges')->name('trail-challenges');
   Route::get('/challenge/{id}', 'viewChallenge')->name('challenge');
   Route::post('/challenge/{id}/submit', 'challengeSubmission')->name('submit-challenge');
+  
+  Route::get('/qr', 'showQR')->name('show-qr');
+  Route::get('/qr/code.png', 'getQRImage')->name('qr-image');
 });
 
 Route::match(['get', 'post'], '/login', [AdminController::class, 'login'])->middleware(['guest'])->name('login');

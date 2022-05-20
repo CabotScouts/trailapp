@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
 
 use App\Models\Question;
 use App\Models\Challenge;
@@ -125,6 +124,19 @@ class TrailController extends Controller {
     $submission->save();
 
     return redirect()->route('challenge', $id);
+  }
+
+  public function showQR() {
+    return Inertia::render('join-team', [
+      'team' => Auth::user()->name,
+      'src' => route('qr-image'),
+    ]);
+  }
+  
+  public function getQRImage() {
+    $id = Auth::user()->id;
+    $qr = storage_path("app/qr/{$id}.png");
+    return response()->file($qr);
   }
 
 }

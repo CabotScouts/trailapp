@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link, usePage } from '@inertiajs/inertia-react';
+import { QrcodeIcon } from '@heroicons/react/solid';
 
 export default function ListFrame({ team, group, points, children }) {
   const { page, component } = usePage();
+
+  // <p className="text-sm px-3 py-2 bg-neutral-100 text-slate-900 font-bold rounded-full">{ points }</p>
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -12,7 +15,9 @@ export default function ListFrame({ team, group, points, children }) {
           <p className="text-sm text-neutral-100">{ group }</p>
         </div>
         <div className="flex-none flex items-center">
-          <p className="text-sm px-3 py-2 bg-neutral-100 text-slate-900 font-bold rounded-full">{ points }</p>
+        <Link href={ route('show-qr') } className="w-8 mr-1 rounded-xl text-center text-purple-900 font-bold text-sm p-1 bg-white">
+          <QrcodeIcon />
+        </Link>
         </div>
       </div>
 

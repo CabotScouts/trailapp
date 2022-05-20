@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Str;
 
 use App\Models\Group;
 use App\Models\Team;
@@ -41,16 +42,28 @@ class TeamController extends Controller {
     $team = Team::create([
       'group_id' => $request->group,
       'name' => $request->name,
+      'join_token' => Str::random(100),
     ]);
+
+    $team->generateQR();
 
     Auth::guard('team')->login($team, true);
     return redirect()->route('trail');
   }
 
+  public function join($id, $code) {
+    $team = Team::where('id', $id)->firstOrFail();
+    
+    if($team->join_token == $code) {
+      Auth::guard('team')->loginUsingId($id, true);
+      return redirect()->route('trail');
+    }
+    
+    return redirect()->route('start');
+  }
+
   public function clone(Request $request, $id) {
     Auth::guard('team')->loginUsingId($id, true);
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
     return redirect()->route('trail');
   }
 
