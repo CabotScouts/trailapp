@@ -15,7 +15,7 @@ export default function ListFrame({ team, group, points, children }) {
           <p className="text-sm text-neutral-100">{ group }</p>
         </div>
         <div className="flex-none flex items-center">
-        <Link href={ route('show-qr') } className="w-8 mr-1 rounded-xl text-center text-purple-900 font-bold text-sm p-1 bg-white">
+        <Link href={ route('show-qr') } className="w-10 mr-1 rounded-xl text-center text-purple-900 font-bold text-sm p-1 bg-white">
           <QrcodeIcon />
         </Link>
         </div>
