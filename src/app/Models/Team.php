@@ -7,7 +7,7 @@ use chillerlan\QRCode\QRCode;
 
 class Team extends Authenticatable {
 
-  public $fillable = ['name', 'group_id'];
+  public $fillable = ['name', 'group_id', 'join_token'];
   protected $hidden = ['remember_token', 'join_token'];
 
   public function group() {
