@@ -5,13 +5,13 @@ services:
     container_name: ${CONTAINER}
     user: "${UID}:${GID}"
     restart: unless-stopped
-    build: .
+    build: app
     networks:
       - mysql
     volumes:
-      - ./src:/var/www
-      - ./apache.conf:/etc/apache2/sites-enabled/000-default.conf
-      - ./php.ini:/usr/local/etc/php/conf.d/additional.ini
+      - ./app:/var/www
+      - ./app/apache.conf:/etc/apache2/sites-enabled/000-default.conf
+      - ./app/php.ini:/usr/local/etc/php/conf.d/additional.ini
 
 networks:
   mysql:
