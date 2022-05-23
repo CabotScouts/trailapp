@@ -26,6 +26,18 @@ services:
     ports:
       - 6379:6379
 
+  websockets:
+    container_name: ${CONTAINER}_websockets
+    user: "${UID}:${GID}"
+    restart: unless-stopped
+    build: websockets
+    networks:
+      - backend
+    depends_on:
+      - redis
+    volumes:
+      - ./websockets:/var/www
+
 networks:
   mysql:
     external: true
