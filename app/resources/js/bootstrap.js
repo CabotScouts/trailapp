@@ -9,6 +9,7 @@ window.Echo = new Echo({
   broadcaster: 'pusher',
   key: process.env.MIX_PUSHER_APP_KEY,
   wsHost: process.env.MIX_PUSHER_HOST,
+  wsPath: process.env.MIX_PUSHER_PATH,
   wsPort: process.env.MIX_PUSHER_PORT,
   wssPort: process.env.MIX_PUSHER_PORT,
   forceTLS: false,
