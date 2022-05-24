@@ -8,3 +8,4 @@ services:
   websockets:
     ports:
       - 6001:6001
+      - 9601:9601
