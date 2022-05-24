@@ -37,6 +37,8 @@ services:
       - redis
     volumes:
       - ./websockets:/var/www
+    ports:
+      - 6001:6001
 
 networks:
   mysql:
