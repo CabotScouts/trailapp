@@ -18,7 +18,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik"
-      - "traefik.http.routers.${CONTAINER}_ws.rule=Host(`${TRAEFIK_HOST}`) && Path(`/websockets`)"
+      - "traefik.http.routers.${CONTAINER}_ws.rule=Host(`${TRAEFIK_HOST}`) && Path(`/ws`)"
       - "traefik.http.middlewares.${CONTAINER}_ws.compress=true"
       - "traefik.http.routers.${CONTAINER}_ws.middlewares=${CONTAINER}_ws"
       - "traefik.http.services.${CONTAINER}_ws.loadBalancer.server.port=6001"
