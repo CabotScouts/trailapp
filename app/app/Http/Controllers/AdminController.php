@@ -11,15 +11,12 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Redis;
 
 use App\Models\Group;
 use App\Models\Team;
 use App\Models\Question;
 use App\Models\Challenge;
 use App\Models\Submission;
-use App\Events\Update;
-use App\Events\UpdateRedis;
 
 class AdminController extends Controller {
 
@@ -52,9 +49,6 @@ class AdminController extends Controller {
   }
 
   public function dashboard() {
-    Update::dispatch("test event");
-    UpdateRedis::dispatch("test event via redis");
-
     return Inertia::render('admin/dashboard');
   }
 

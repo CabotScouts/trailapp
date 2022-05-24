@@ -17,5 +17,3 @@ window.Echo = new Echo({
   disableStats: true,
   enabledTransports: ['ws', 'wss'],
 });
-
-window.Echo.channel('global').listenToAll((e, d) => { console.log(e, d) });
