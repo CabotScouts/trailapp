@@ -17,6 +17,7 @@ use App\Models\Team;
 use App\Models\Question;
 use App\Models\Challenge;
 use App\Models\Submission;
+use App\Events\Update;
 
 class AdminController extends Controller {
 
@@ -49,6 +50,7 @@ class AdminController extends Controller {
   }
 
   public function dashboard() {
+    Update::dispatch("test event");
     return Inertia::render('admin/dashboard');
   }
 
@@ -98,7 +100,7 @@ class AdminController extends Controller {
     $s = Submission::where('id', $request->id)->firstOrFail();
     Storage::delete("public/uploads/{$s->filename}");
     $s->delete();
-    
+
     return redirect()->back();
   }
 
