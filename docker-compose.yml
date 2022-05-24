@@ -23,8 +23,10 @@ services:
     build: app
     command: php artisan queue:work --sleep=3 --tries=3 --max-time=3600
     networks:
+      - mysql
       - backend
     depends_on:
+      - mysql
       - app
     volumes:
       - ./app:/var/www
