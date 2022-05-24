@@ -4,6 +4,9 @@ import ListFrame from '@/layouts/list-frame';
 import ListItem from '@/components/list-item';
 
 export default function ChallengeList({ team, group, points, challenges }) {
+  
+  window.Echo.private(`team.${team.id}`).listenToAll((e, d) => { console.log(e, d) });
+  
   return (
     <>
       <Head title="Challenges" />

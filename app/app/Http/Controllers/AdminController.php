@@ -18,6 +18,9 @@ use App\Models\Question;
 use App\Models\Challenge;
 use App\Models\Submission;
 
+use App\Events\SubmissionAccepted;
+use App\Events\SubmissionRejected;
+
 class AdminController extends Controller {
 
   public function login(Request $request) {
@@ -91,14 +94,15 @@ class AdminController extends Controller {
     $s->accepted = true;
     $s->save();
 
+    SubmissionAccepted::dispatch($s);
     return redirect()->back();
   }
 
   public function rejectSubmission(Request $request, $id) {
     $s = Submission::where('id', $request->id)->firstOrFail();
     Storage::delete("public/uploads/{$s->filename}");
+    SubmissionRejected::dispatch($s);
     $s->delete();
-
     return redirect()->back();
   }
 
