@@ -13,7 +13,7 @@ services:
       - ./app:/var/www
       - ./app/apache.conf:/etc/apache2/sites-enabled/000-default.conf
       - ./app/php.ini:/usr/local/etc/php/conf.d/additional.ini
-      
+
   redis:
     image: redis:latest
     container_name: ${CONTAINER}_redis
@@ -37,8 +37,6 @@ services:
       - redis
     volumes:
       - ./websockets:/var/www
-    ports:
-      - 6001:6001
 
 networks:
   mysql:
