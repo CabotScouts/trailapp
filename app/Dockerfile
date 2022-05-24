@@ -19,7 +19,9 @@ RUN apt update \
             pdo \
             pdo_mysql \
             pdo_pgsql \
-            pgsql
+            pgsql \
+        && pecl install redis \
+        && docker-php-ext-enable redis
 
 WORKDIR /var/www
 
