@@ -9,10 +9,25 @@ services:
     networks:
       - mysql
       - backend
+    depends_on:
+      - mysql
     volumes:
       - ./app:/var/www
       - ./app/apache.conf:/etc/apache2/sites-enabled/000-default.conf
       - ./app/php.ini:/usr/local/etc/php/conf.d/additional.ini
+
+  queue:
+    container_name: ${CONTAINER}_queue
+    user: "${UID}:${GID}"
+    restart: unless-stopped
+    build: app
+    command: ["php", "artisan", "queue:work"]
+    networks:
+      - backend
+    depends_on:
+      - app
+    volumes:
+      - ./app:/var/www
 
   redis:
     image: redis:latest
@@ -21,13 +36,16 @@ services:
     restart: unless-stopped
     networks:
       - backend
+    depends_on:
+      - app
+      - queue
     volumes:
       - ./redis:/data
     ports:
       - 6379:6379
 
   websockets:
-    image: quay.io/soketi/soketi:1.0-16-debian
+    image: quay.io/soketi/soketi:1.0-16-distroless
     container_name: ${CONTAINER}_websockets
     user: "${UID}:${GID}"
     restart: unless-stopped
