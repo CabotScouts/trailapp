@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Submission extends Model {
+  use SoftDeletes;
 
   protected $fillable = [ 'question_id', 'challenge_id', 'team_id', 'filename', 'answer' ];
 
