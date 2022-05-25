@@ -13,10 +13,10 @@ export default function Dashboard(props) {
         <GridItem className="bg-green-600" href={ route('challenges') }>Challenges</GridItem>
         <GridItem className="bg-orange-600" href={ route('teams') }>Teams</GridItem>
         <GridItem className="bg-red-600" href={ route('groups') }>Groups</GridItem>
+        <GridItem className="bg-pink-600" href={ route('users') }>Users</GridItem> 
       </Grid>
     </Frame>
   );
 }
-
-// <GridItem className="bg-pink-600" href={ route('users') }>Users</GridItem>   
+ 
 // <GridItem className="bg-rose-600" href={ route('groups') }>Settings</GridItem>
