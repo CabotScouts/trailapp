@@ -8,7 +8,7 @@ import Input from '@/components/form/input';
 import Select from '@/components/form/select';
 import Button from '@/components/form/button';
 
-export default function Start(props) {
+const Start = (props) => {
 
   const { data, setData, post, processing, errors, reset } = useForm({
     group: '',
@@ -45,3 +45,6 @@ export default function Start(props) {
     </>
   );
 }
+
+Start.layout = null;
+export default Start;
