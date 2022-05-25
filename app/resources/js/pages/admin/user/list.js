@@ -7,7 +7,7 @@ import { PencilIcon } from '@heroicons/react/solid';
 
 export default function List({ users }) {
   return (
-    <Frame title="Questions">
+    <Frame title="Users">
       <ButtonBar>
         <Button href={ route('add-user') }>Add User</Button>
       </ButtonBar>
