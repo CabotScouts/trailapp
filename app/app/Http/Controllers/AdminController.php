@@ -70,7 +70,7 @@ class AdminController extends Controller {
 
   public function submissions($filter=false) {
     $submissions = Submission::orderBy('created_at', 'desc');
-    $submissions = ($filter == "pending") ? $submissions->where('accepted', [false, null])->orderBy('created_at')->limit(10) : $submissions;
+    $submissions = ($filter == "pending") ? $submissions->where('accepted', [false, null])->oldest()->limit(10) : $submissions;
 
     return Inertia::render('admin/submission/list', [
       'submissions' => $submissions->get()->map(fn($submission) => [
