@@ -13,6 +13,24 @@ export default function Global(children) {
     }
   }
   
+  const displayMessage = (message) => {
+    toast.custom((t) => (
+      <div className="p-5 bg-white rounded-xl shadow-lg w-full">
+        <p className="font-serif text-2xl font-bold text-purple-900">A message from Trail HQ!</p>
+        <p className="text-lg py-4">{ message.message }</p>
+        <button
+          onClick={ () => toast.remove(t.id) }
+          className="inline-flex items-center px-4 py-2 bg-purple-900 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest"
+        >
+          OK!
+        </button>
+      </div>
+    ),
+    {
+      duration: Infinity,
+    });
+  }
+  
   if(window.TeamListener === undefined) {
     window.TeamListener = window.Echo.private(`team.${children.props.auth.user.id}`)
     .listen('SubmissionReceived', (submission) => {
@@ -25,20 +43,11 @@ export default function Global(children) {
     .listen('SubmissionRejected', (submission) => {
       toast.error(<div>Your { submission.type } for <span className="font-bold">{ submission.name }</span> was rejected 😬</div>);
       partialReload(submission.type);
-    });
+    }).listen('MessageToTeams', (message) => displayMessage(message));
   }
   
   if(window.MessageListener === undefined) {
-    window.MessageListener = window.Echo.channel('global').listen('MessageToTeams', (message) => { 
-      toast(
-        <div className="flex flex-col">
-          <p className="text-xl font-bold pb-2">A message from Trail HQ!</p>
-          <p className="text-lg italic">{ message.message }</p>
-        </div>, {
-        icon: '📢',
-        duration: 20000,
-      });
-    });
+    window.MessageListener = window.Echo.channel('global').listen('MessageToTeams', (message) => displayMessage(message));
   }
   
   return (

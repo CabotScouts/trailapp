@@ -54,6 +54,7 @@ Route::prefix('dashboard')->middleware(['auth:user'])->controller(AdminControlle
   Route::match(['get', 'post'], '/challenge/{id}/delete', 'deleteChallenge')->name('delete-challenge');
 
   Route::get('/teams', 'teams')->name('teams');
+  Route::match(['get', 'post'], '/team/{id}/broadcast', 'broadcast')->name('broadcast-to-team');
   Route::get('/team/{id}/submissions', 'viewTeamSubmissions')->name('view-team-submissions');
   Route::match(['get', 'post'], '/team/{id}/delete', 'deleteTeam')->name('delete-team');
 

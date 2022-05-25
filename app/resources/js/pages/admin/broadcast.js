@@ -20,8 +20,18 @@ export default function Broadcast(props) {
 
   const submit = (e) => {
     e.preventDefault();
-    post(route('broadcast'));
+    if(props.id === null) {
+      console.log('broadcasting to all');
+      post(route('broadcast'));
+    }
+    else {
+      console.log(`broadcasting to ${ props.id }`);
+      post(route('broadcast-to-team', props.id));
+    }
   };
+  
+  const name = (props.name !== null) ? props.name : 'all teams';
+  const title = (props.name !== null) ? ` to ${ props.name }` : '';
 
   return (
     <>
@@ -29,12 +39,12 @@ export default function Broadcast(props) {
       <Modal>
         <div className="p-10 pt-20">
           <div className="p-5 bg-white rounded-xl shadow-lg w-full">
-            <Header title="Broadcast">
-              <p><span className="italic">Broadcast</span> instantly sends a message to all teams - use with care, and check your message for mistakes!</p>
+            <Header title={`Broadcast${ title }`}>
+              <p><span className="italic">Broadcast</span> instantly sends a message to teams - use with care, and check your message for mistakes!</p>
             </Header>
             <Errors errors={ errors } />
             <Group onSubmit={ submit }>
-              <Textarea title="Message" name="message" placeholder="Send a message to all teams" onChange={ handleChange } required />
+              <Textarea title="Message" name="message" placeholder={`Send a message to ${ name }`} onChange={ handleChange } required />
               <Button processing={ processing }>Broadcast</Button>
             </Group>
           </div>

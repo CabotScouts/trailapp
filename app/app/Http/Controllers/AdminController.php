@@ -57,17 +57,27 @@ class AdminController extends Controller {
     return Inertia::render('admin/dashboard');
   }
 
-  public function broadcast(Request $request) {
+  public function broadcast(Request $request, $id = false) {
+    $team = ($id) ? Team::where('id', $id)->firstOrFail() : false;
+    
     if($request->isMethod('get')) {
-      return Inertia::render('admin/broadcast');
+      return Inertia::render('admin/broadcast', [
+        'id' => ($team) ? $team->id : null,
+        'name' => ($team) ? $team->name : null,
+      ]);
     }
     elseif($request->isMethod('post')) {
       $data = $request->validate([
         'message' => 'required'
       ]);
       
-      MessageToTeams::dispatch($request->message);
-      return redirect()->route('dashboard');
+      MessageToTeams::dispatch($request->message, $id);
+      if($id) {
+        return redirect()->route('teams');
+      }
+      else {
+        return redirect()->route('dashboard');
+      }
     }
   }
 
