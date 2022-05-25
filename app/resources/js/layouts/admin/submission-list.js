@@ -34,7 +34,7 @@ export default function List({ submissions, children }) {
       }
       <div className="grid grid-cols-1 md:grid-cols-3">
       { (submissions.length > 0) && submissions.map((s) =>
-        <div key={ s.id } className="p-5 border border-b-blue-200">
+        <div key={ s.id } className="p-5 border-b border-b-blue-200 border-r border-r-blue-200">
           { s.challenge && <p className="font-serif text-2xl font-bold text-blue-800">{ s.challenge }</p> }
           { s.question && <p className="font-serif text-2xl font-bold text-blue-800">{ s.question.name }</p> }
           { s.team && <p className="text-sm font-medium">{ s.team } ({ s.group })</p> }
