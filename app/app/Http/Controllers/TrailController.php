@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use App\Models\Question;
 use App\Models\Challenge;
 use App\Models\Submission;
+use App\Events\SubmissionReceived;
 
 class TrailController extends Controller {
 
@@ -63,7 +64,8 @@ class TrailController extends Controller {
     );
     $submission->answer = $request->answer;
     $submission->save();
-
+    
+    SubmissionReceived::dispatch($submission);
     return redirect()->route('trail');
   }
 
@@ -123,6 +125,7 @@ class TrailController extends Controller {
     $submission->filename = $filename;
     $submission->save();
 
+    SubmissionReceived::dispatch($submission);
     return redirect()->route('challenge', $id);
   }
 

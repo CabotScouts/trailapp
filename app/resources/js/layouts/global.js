@@ -15,6 +15,9 @@ export default function Global(children) {
   
   if(window.TeamListener === undefined) {
     window.TeamListener = window.Echo.private(`team.${children.props.auth.user.id}`)
+    .listen('SubmissionReceived', (submission) => {
+      partialReload(submission.type);
+    })
     .listen('SubmissionAccepted', (submission) => {
       toast.success(<div>Your { submission.type } for <span className="font-bold">{ submission.name }</span> was accepted! 🥳</div>);
       partialReload(submission.type);
