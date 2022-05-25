@@ -19,8 +19,10 @@ services:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik"
       - "traefik.http.routers.${CONTAINER}_ws.rule=Host(`${TRAEFIK_HOST}`) && Path(`/ws`)"
-      - "traefik.http.middlewares.${CONTAINER}_ws.compress=true"
       - "traefik.http.routers.${CONTAINER}_ws.middlewares=${CONTAINER}_ws"
+      - "traefik.http.middlewares.${CONTAINER}_ws.chain.middlewares=${CONTAINER}_ws-compress,${CONTAINER}_ws-headers"
+      - "traefik.http.middlewares.${CONTAINER}_ws-compress.compress=true"
+      - "traefik.http.middlewares.${CONTAINER}_ws-headers.headers.customrequestheaders.X-Forwarded-Proto=https"
       - "traefik.http.services.${CONTAINER}_ws.loadBalancer.server.port=6001"
 
 networks:
