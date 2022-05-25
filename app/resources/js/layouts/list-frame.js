@@ -21,7 +21,7 @@ export default function ListFrame({ team, group, points, children }) {
         </div>
       </div>
 
-      <div className="grow mb-14 overflow-auto bg-neutral-100">
+      <div className="grow mb-14 bg-neutral-100">
         { children }
       </div>
       
