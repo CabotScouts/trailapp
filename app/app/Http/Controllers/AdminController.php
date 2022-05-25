@@ -69,7 +69,7 @@ class AdminController extends Controller {
   }
 
   public function submissions($filter=false) {
-    $submissions = ($filter == "pending") ? Submission::where('accepted', [false, null])->oldest()->limit(10) : Submission::latest();
+    $submissions = ($filter == "pending") ? Submission::where('accepted', [false, null])->oldest()->limit(12) : Submission::latest();
 
     return Inertia::render('admin/submission/list', [
       'submissions' => $submissions->get()->map(fn($submission) => [
