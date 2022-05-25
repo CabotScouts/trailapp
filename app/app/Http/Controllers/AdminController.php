@@ -20,6 +20,7 @@ use App\Models\Submission;
 
 use App\Events\SubmissionAccepted;
 use App\Events\SubmissionRejected;
+use App\Events\MessageToTeams;
 
 class AdminController extends Controller {
 
@@ -53,6 +54,20 @@ class AdminController extends Controller {
 
   public function dashboard() {
     return Inertia::render('admin/dashboard');
+  }
+
+  public function broadcast(Request $request) {
+    if($request->isMethod('get')) {
+      return Inertia::render('admin/broadcast');
+    }
+    elseif($request->isMethod('post')) {
+      $data = $request->validate([
+        'message' => 'required'
+      ]);
+      
+      MessageToTeams::dispatch($request->message);
+      return redirect()->route('dashboard');
+    }
   }
 
   public function leaderboard() {

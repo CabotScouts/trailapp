@@ -31,7 +31,7 @@ Route::get('/logout', [AdminController::class, 'logout'])->middleware(['auth:use
 
 Route::prefix('dashboard')->middleware(['auth:user'])->controller(AdminController::class)->group(function(){
   Route::get('', 'dashboard')->name('dashboard');
-
+  Route::match(['get', 'post'], '/broadcast', 'broadcast')->name('broadcast');
   Route::get('/leaderboard', 'leaderboard')->name('leaderboard');
 
   Route::get('/submissions/{filter?}/{page?}', 'submissions')->whereAlpha('filter')->name('submissions');

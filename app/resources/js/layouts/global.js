@@ -32,8 +32,8 @@ export default function Global(children) {
     window.MessageListener = window.Echo.channel('global').listen('MessageToTeams', (message) => { 
       toast(
         <div className="flex flex-col">
-          <p className="text-lg font-bold pb-2">A message from trail HQ</p>
-          <p>{message.message}</p>
+          <p className="text-xl font-bold pb-2">A message from Trail HQ!</p>
+          <p className="text-lg italic">{ message.message }</p>
         </div>, {
         icon: '📢',
         duration: 20000,
