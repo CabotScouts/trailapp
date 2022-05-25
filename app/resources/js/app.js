@@ -12,7 +12,9 @@ createInertiaApp({
   title: (title) => `${title} - ${app_name}`,
   resolve: (name) => {
     const page = require(`./pages/${name}`).default;
-    page.layout = page.layout || Global;
+    if(page.layout === undefined && !name.startsWith('admin/')) {
+      page.layout = Global;
+    }
     return page;
   },
   setup({ el, App, props }) {

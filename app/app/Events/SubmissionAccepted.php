@@ -24,4 +24,10 @@ class SubmissionAccepted implements ShouldBroadcast {
   public function broadcastOn() {
     return new PrivateChannel("team.{$this->submission->team->id}");
   }
+  
+  public function broadcastWith() {
+    $type = ($this->submission->challenge_id === null) ? "answer" : "photo";
+    $name = ($this->submission->challenge_id === null) ? $this->submission->question->name : $this->submission->challenge->name;
+    return ['type' => $type, 'name' => $name];
+  }
 }
