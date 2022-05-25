@@ -2,10 +2,10 @@ version: "3"
 
 services:
   app:
+    build: app
     container_name: ${CONTAINER}
     user: "${UID}:${GID}"
     restart: unless-stopped
-    build: app
     networks:
       - mysql
       - backend
@@ -15,10 +15,10 @@ services:
       - ./app/php.ini:/usr/local/etc/php/conf.d/additional.ini
 
   queue:
+    build: app
     container_name: ${CONTAINER}_queue
     user: "${UID}:${GID}"
     restart: unless-stopped
-    build: app
     command: php artisan queue:work --sleep=3 --tries=3 --max-time=3600
     networks:
       - mysql
