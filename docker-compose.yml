@@ -9,8 +9,6 @@ services:
     networks:
       - mysql
       - backend
-    depends_on:
-      - mysql
     volumes:
       - ./app:/var/www
       - ./app/apache.conf:/etc/apache2/sites-enabled/000-default.conf
