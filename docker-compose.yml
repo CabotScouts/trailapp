@@ -26,7 +26,6 @@ services:
       - mysql
       - backend
     depends_on:
-      - mysql
       - app
     volumes:
       - ./app:/var/www
