@@ -33,7 +33,7 @@ export default function List({ title="Teams", teams, children=false, simple=fals
         { !simple &&
           <>
             <Link href={ route('broadcast-to-team', teams[key].id) }>
-              <div className="w-8 rounded-xl text-center text-neutral-100 p-2 bg-blue-600 mr-2">
+              <div className="w-8 rounded-xl text-center text-neutral-100 p-2 bg-blue-600 mr-1">
                 <ChatIcon />
               </div>
             </Link>
