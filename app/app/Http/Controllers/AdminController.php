@@ -268,6 +268,7 @@ class AdminController extends Controller {
       ]);
 
       Question::where('id', $question->id)->update($data);
+      Submission::where('question_id', $question->id)->where('accepted', 1)->update(['points' => $data['points']]);
       return redirect()->route('questions');
     }
   }
@@ -371,7 +372,8 @@ class AdminController extends Controller {
         'points' => 'required|numeric',
       ]);
 
-      Challenge::where('id', $request->id)->update($data);
+      Challenge::where('id', $challenge->id)->update($data);
+      Submission::where('challenge_id', $challenge->id)->where('accepted', 1)->update(['points' => $data['points']]);
       return redirect()->route('challenges');
     }
   }
