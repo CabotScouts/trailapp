@@ -6,10 +6,10 @@ export default function Global(children) {
   
   const partialReload = (type) => {
     if(type === "answer") {
-      Inertia.reload({ only: ['questions', 'submission'] })
+      Inertia.reload({ only: ['points', 'questions', 'submission'] })
     }
     else {
-      Inertia.reload({ only: ['challenges', 'submission'] })
+      Inertia.reload({ only: ['points', 'challenges', 'submission'] })
     }
   }
   
