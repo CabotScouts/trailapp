@@ -22,11 +22,11 @@ export default function ListFrame({ team, group, points, children }) {
         </div>
       </div>
 
-      <div className="grow pb-11 bg-neutral-100">
+      <div className="grow pb-14 bg-neutral-100">
         { children }
       </div>
       
-      <div className="flex-none w-full fixed flex items-stretch bottom-0 h-12 font-medium font-serif text-xl text-purple-900">
+      <div className="flex-none w-full fixed flex items-stretch bottom-0 h-14 font-medium font-serif text-xl text-purple-900">
         <Link href={ route('trail') } className={`flex-auto h-full ${ component === 'question/list' ? 'bg-slate-900' : 'bg-neutral-100' }`} preserveScroll>
           <div className={`h-full w-full flex items-center border-transparent ${ component === 'question/list' ? 'bg-neutral-100 rounded-b-lg' : 'bg-slate-900 rounded-tr-lg text-neutral-100' }`}>
             <div className="mx-auto">Questions</div>
