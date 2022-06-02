@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
 
+use App\Helpers;
 use App\Models\Question;
 use App\Models\Challenge;
 use App\Models\Submission;
@@ -20,7 +21,7 @@ class TrailController extends Controller {
     return Inertia::render('question/list', [
       'team' => ['id' => Auth::user()->id, 'name' => Auth::user()->name],
       'group' => Auth::user()->group->name,
-      // 'points' => Auth::user()->points,
+      'points' => Helpers::points(Auth::user()->points),
       'questions' => Question::orderBy('number')->get()
         ->map(function($question) {
           $submissions = Auth::user()->submissions()->where('question_id', $question->id);
@@ -73,7 +74,7 @@ class TrailController extends Controller {
     return Inertia::render('challenge/list', [
       'team' => ['id' => Auth::user()->id, 'name' => Auth::user()->name],
       'group' => Auth::user()->group->name,
-      // 'points' => Auth::user()->points,
+      'points' => Helpers::points(Auth::user()->points),
       'challenges' => Challenge::orderBy('points', 'desc')
         ->orderBy('name')
         ->get()
