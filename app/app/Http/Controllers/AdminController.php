@@ -294,7 +294,7 @@ class AdminController extends Controller {
 
   public function challenges() {
     return Inertia::render('admin/challenge/list', [
-      'challenges' => Challenge::orderBy('points', 'desc')->orderBy('name')->get()->map(fn($challenge) => [
+      'challenges' => Challenge::orderBy('name')->get()->map(fn($challenge) => [
         'id' => $challenge->id,
         'name' => $challenge->name,
         'points' => $challenge->points,
