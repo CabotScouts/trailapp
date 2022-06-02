@@ -19,7 +19,7 @@ class Team extends Authenticatable {
   }
 
   public function getPointsAttribute() {
-    return $this->submissions()->where('accepted', true)->sum('points');
+    return intval($this->submissions()->where('accepted', true)->sum('points'));
   }
   
   public function generateQR() {

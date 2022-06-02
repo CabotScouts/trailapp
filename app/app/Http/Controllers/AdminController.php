@@ -87,7 +87,7 @@ class AdminController extends Controller {
       'name' => $team->name,
       'group' => $team->group->name,
       'points' => $team->points,
-    ])->sortByDesc('points');
+    ])->sortByDesc('points')->values()->all();
 
     return Inertia::render('admin/leaderboard', [
       'teams' => $teams,
