@@ -243,7 +243,7 @@ class AdminController extends Controller {
         'name' => 'required|string|max:255|unique:questions',
         'number' => 'required|numeric',
         'question' => 'required|string',
-        'points' => 'required|numeric',
+        'points' => 'required|numeric|gt:0',
       ]);
 
       Question::insert($data);
@@ -272,7 +272,7 @@ class AdminController extends Controller {
         'number' => 'required|numeric',
         'name' => ['required', 'string', Rule::unique('questions')->ignore($question->id)],
         'question' => 'required|string',
-        'points' => 'required|numeric',
+        'points' => 'required|numeric|gt:0',
       ]);
 
       Question::where('id', $question->id)->update($data);
@@ -357,7 +357,7 @@ class AdminController extends Controller {
       $data = $request->validate([
         'name' => 'required|string|max:255|unique:challenges',
         'description' => 'required|string|max:255',
-        'points' => 'required|numeric',
+        'points' => 'required|numeric|gt:0',
       ]);
 
       Challenge::insert($data);
@@ -384,7 +384,7 @@ class AdminController extends Controller {
         'id' => 'required|exists:challenges',
         'name' => ['required', 'string', 'max:255', Rule::unique('challenges')->ignore($challenge->id)],
         'description' => 'required|string|max:255',
-        'points' => 'required|numeric',
+        'points' => 'required|numeric|gt:0',
       ]);
 
       Challenge::where('id', $challenge->id)->update($data);
