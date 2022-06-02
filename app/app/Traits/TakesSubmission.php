@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Helpers;
 use App\Models\Submission;
 
 trait TakesSubmission {
@@ -14,6 +15,10 @@ trait TakesSubmission {
     $this->points = $points;
     $this->accepted = true;
     return $this->save();
+  }
+
+  public function getPointsLabelAttribute() {
+    return Helpers::points($this->points);
   }
 
 }

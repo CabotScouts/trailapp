@@ -16,7 +16,7 @@ export default function List({ challenges }) {
         <div className="flex-grow pr-5">
           <Link href={ route('view-challenge', c.id) }>
             <p className="text-xl text-medium">{ c.name }</p>
-            <p className="text-sm">{ c.points } points</p>
+            <p className="text-sm">{ c.points_label }</p>
           </Link>
         </div>
         <div className="flex-none flex items-center">

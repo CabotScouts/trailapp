@@ -189,6 +189,7 @@ class AdminController extends Controller {
         'number' => $question->number,
         'name' => $question->name,
         'points' => $question->points,
+        'points_label' => $question->pointsLabel,
         'submissions' => $question->submissions->count()
       ]),
     ]);
@@ -198,7 +199,14 @@ class AdminController extends Controller {
     $question = Question::findOrFail($id);
 
     return Inertia::render('admin/question/view', [
-      'question' => $question
+      'question' => [
+        'id' => $question->id,
+        'number' => $question->number,
+        'name' => $question->name,
+        'question' => $question->question,
+        'points' => $question->points,
+        'points_label' => $question->pointsLabel,
+      ],
     ]);
   }
 
@@ -298,6 +306,7 @@ class AdminController extends Controller {
         'id' => $challenge->id,
         'name' => $challenge->name,
         'points' => $challenge->points,
+        'points_label' => $challenge->pointsLabel,
         'submissions' => $challenge->submissions->count()
       ]),
     ]);
@@ -307,7 +316,13 @@ class AdminController extends Controller {
     $challenge = Challenge::findOrFail($id);
 
     return Inertia::render('admin/challenge/view', [
-      'challenge' => $challenge
+      'challenge' => [
+        'id' => $challenge->id,
+        'name' => $challenge->name,
+        'description' => $challenge->description,
+        'points' => $challenge->points,
+        'points_label' => $challenge->pointsLabel,
+      ],
     ]);
   }
 

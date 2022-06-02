@@ -29,7 +29,7 @@ class TrailController extends Controller {
             'id' => $question->id,
             'number' => $question->number,
             'name' => $question->name,
-            'points' => $question->points,
+            'points' => $question->pointsLabel,
             'submitted' => ($submissions->count() > 0),
             'accepted' => ($submissions->where('accepted', true)->count() > 0),
           ];
@@ -42,7 +42,14 @@ class TrailController extends Controller {
     $submission = Auth::user()->submissions()->where('question_id', $question->id)->first();
 
     return Inertia::render('question/view', [
-      'question' => $question,
+      'question' => [
+        'id' => $question->id,
+        'number' => $question->number,
+        'name' => $question->name,
+        'question' => $question->question,
+        'points' => $question->points,
+        'points_label' => $question->pointsLabel,
+      ],
       'submission' => $submission ? [ 'answer' => $submission->answer, 'accepted' => $submission->accepted ] : [ 'answer' => false, 'accepted' => false ],
     ]);
   }
@@ -83,7 +90,7 @@ class TrailController extends Controller {
           return [
             'id' => $challenge->id,
             'name' => $challenge->name,
-            'points' => $challenge->points,
+            'points' => $challenge->pointsLabel,
             'submitted' => ($submissions->count() > 0),
             'accepted' => ($submissions->where('accepted', true)->count() > 0),
           ];
@@ -96,7 +103,13 @@ class TrailController extends Controller {
     $submission = Auth::user()->submissions()->where('challenge_id', $challenge->id)->first();
 
     return Inertia::render('challenge/view', [
-      'challenge' => $challenge,
+      'challenge' => [
+        'id' => $challenge->id,
+        'name' => $challenge->name,
+        'description' => $challenge->description,
+        'points' => $challenge->points,
+        'points_label' => $challenge->pointsLabel,
+      ],
       'submission' => $submission ? [ 'file' => url("storage/uploads/{$submission->filename}"), 'accepted' => $submission->accepted ] : [ 'file' => false, 'accepted' => false ],
     ]);
   }
