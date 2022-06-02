@@ -21,7 +21,7 @@ class TrailController extends Controller {
       'team' => ['id' => Auth::user()->id, 'name' => Auth::user()->name],
       'group' => Auth::user()->group->name,
       // 'points' => Auth::user()->points,
-      'questions' => Question::orderBy('points', 'desc')->get()
+      'questions' => Question::orderBy('number')->get()
         ->map(function($question) {
           $submissions = Auth::user()->submissions()->where('question_id', $question->id);
           return [
