@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Submission extends Model {
   use SoftDeletes;
 
-  protected $fillable = [ 'question_id', 'challenge_id', 'team_id', 'filename', 'answer' ];
+  protected $fillable = [ 'question_id', 'challenge_id', 'team_id', 'upload_id', 'answer' ];
 
   public function challenge() {
     return $this->belongsTo(Challenge::class);
@@ -21,10 +21,18 @@ class Submission extends Model {
   public function team() {
     return $this->belongsTo(Team::class);
   }
+  
+  public function upload() {
+    return $this->hasOne(Upload::class);
+  }
 
   public function getTimeAttribute() {
     $date = date_create($this->created_at);
     return date_format($date, "d/m/Y H:i");
+  }
+
+  public function getFileAttribute() {
+    return ($this->upload) ? $this->upload->file : false;
   }
 
 }

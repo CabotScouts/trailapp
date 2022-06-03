@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Str;
 
 use App\Helpers;
 use App\Models\Question;
 use App\Models\Challenge;
 use App\Models\Submission;
+use App\Models\Upload;
 use App\Events\SubmissionReceived;
 
 class TrailController extends Controller {
@@ -110,7 +110,7 @@ class TrailController extends Controller {
         'points' => $challenge->points,
         'points_label' => $challenge->pointsLabel,
       ],
-      'submission' => $submission ? [ 'file' => url("storage/uploads/{$submission->filename}"), 'accepted' => $submission->accepted ] : [ 'file' => false, 'accepted' => false ],
+      'submission' => $submission ? [ 'file' => $submission->file, 'accepted' => $submission->accepted ] : [ 'file' => false, 'accepted' => false ],
     ]);
   }
 
@@ -125,19 +125,20 @@ class TrailController extends Controller {
       ]
     )->validate();
 
-    $ext = $request->photo->extension();
-    $filename = strval(Auth::user()->id) . "_" . $id . "_" . Str::random(15) . "." . $ext;
-    $request->photo->storeAs("public/uploads/", $filename);
-
+    $upload = Upload::fromFile($request->photo, $id);
     $submission = Submission::firstOrNew(
       [
         'challenge_id' => $id,
         'team_id' => Auth::user()->id,
+      ],
+      [
+        'upload_id' => $upload->id,
       ]
     );
-
-    $submission->filename = $filename;
     $submission->save();
+    
+    $upload->submission_id = $submission->id;
+    $upload->save();
 
     SubmissionReceived::dispatch($submission);
     return redirect()->route('challenge', $id);

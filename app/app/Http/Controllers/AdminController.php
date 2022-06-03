@@ -100,7 +100,7 @@ class AdminController extends Controller {
     return Inertia::render('admin/submission/list', [
       'submissions' => $submissions->get()->map(fn($submission) => [
         'id' => $submission->id,
-        'file' => ($submission->filename) ? url("storage/uploads/{$submission->filename}") : false,
+        'file' => $submission->file,
         'answer' => ($submission->answer) ? $submission->answer : false,
         'challenge' => ($submission->challenge) ? $submission->challenge->name : false,
         'question' => ($submission->question) ? ['name' => $submission->question->name, 'text' => $submission->question->question] : false,
