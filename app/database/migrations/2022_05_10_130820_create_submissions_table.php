@@ -18,6 +18,8 @@ return new class extends Migration {
       $table->string('filename');
       $table->boolean('accepted')->default(false);
     });
+    
+    Storage::makeDirectory('public/uploads');
   }
 
   public function down() {
