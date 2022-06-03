@@ -125,7 +125,6 @@ class AdminController extends Controller {
 
   public function rejectSubmission(Request $request, $id) {
     $s = Submission::where('id', $request->id)->firstOrFail();
-    Storage::delete("public/uploads/{$s->filename}");
     SubmissionRejected::dispatch($s);
     $s->delete();
     return redirect()->back();
