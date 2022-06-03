@@ -9,6 +9,7 @@ class Team extends Authenticatable {
 
   public $fillable = ['name', 'group_id', 'join_token'];
   protected $hidden = ['remember_token', 'join_token'];
+  protected $with = ['group'];
 
   public function group() {
     return $this->belongsTo(Group::class);

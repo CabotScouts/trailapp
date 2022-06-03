@@ -18,28 +18,31 @@ use App\Events\SubmissionReceived;
 class TrailController extends Controller {
 
   public function questions() {
+    $user = Auth::user();
+    
     return Inertia::render('question/list', [
-      'team' => ['id' => Auth::user()->id, 'name' => Auth::user()->name],
-      'group' => Auth::user()->group->name,
-      'points' => Helpers::points(Auth::user()->points),
-      'questions' => Question::orderBy('number')->get()
+      'team' => ['id' => $user->id, 'name' => $user->name],
+      'group' => $user->group->name,
+      'points' => Helpers::points($user->points),
+      'questions' => Question::with(['submissions' => function($query) use ($user) {
+        $query->where('team_id', $user->id);
+      }])->orderBy('number')->get()
         ->map(function($question) {
-          $submissions = Auth::user()->submissions()->where('question_id', $question->id);
           return [
             'id' => $question->id,
             'number' => $question->number,
             'name' => $question->name,
             'points' => $question->pointsLabel,
-            'submitted' => ($submissions->count() > 0),
-            'accepted' => ($submissions->where('accepted', true)->count() > 0),
+            'submitted' => ($question->submissions->count() > 0),
+            'accepted' => ($question->submissions->where('accepted', true)->count() > 0),
           ];
         }),
     ]);
   }
 
   public function viewQuestion($id) {
-    $question = Question::findOrFail($id);
-    $submission = Auth::user()->submissions()->where('question_id', $question->id)->first();
+    $question = Question::with(['submissions' => function($query) { $query->where('team_id', Auth::user()->id); }])->findOrFail($id);
+    $submission = $question->submissions->first();
 
     return Inertia::render('question/view', [
       'question' => [
@@ -78,29 +81,32 @@ class TrailController extends Controller {
   }
 
   public function challenges() {
+    $user = Auth::user();
+    
     return Inertia::render('challenge/list', [
-      'team' => ['id' => Auth::user()->id, 'name' => Auth::user()->name],
-      'group' => Auth::user()->group->name,
-      'points' => Helpers::points(Auth::user()->points),
-      'challenges' => Challenge::orderBy('points', 'desc')
+      'team' => ['id' => $user->id, 'name' => $user->name],
+      'group' => $user->group->name,
+      'points' => Helpers::points($user->points),
+      'challenges' => Challenge::with(['submissions' => function($query) use ($user) {
+        $query->where('team_id', $user->id);
+      }])->orderBy('points', 'desc')
         ->orderBy('name')
         ->get()
         ->map(function($challenge) {
-          $submissions = Auth::user()->submissions()->where('challenge_id', $challenge->id);
           return [
             'id' => $challenge->id,
             'name' => $challenge->name,
             'points' => $challenge->pointsLabel,
-            'submitted' => ($submissions->count() > 0),
-            'accepted' => ($submissions->where('accepted', true)->count() > 0),
+            'submitted' => ($challenge->submissions->count() > 0),
+            'accepted' => ($challenge->submissions->where('accepted', true)->count() > 0),
           ];
         }),
     ]);
   }
 
   public function viewChallenge($id) {
-    $challenge = Challenge::findOrFail($id);
-    $submission = Auth::user()->submissions()->where('challenge_id', $challenge->id)->first();
+    $challenge = Challenge::with(['submissions' => function($query) { $query->where('team_id', Auth::user()->id); }])->findOrFail($id);
+    $submission = $challenge->submissions->first();
 
     return Inertia::render('challenge/view', [
       'challenge' => [
