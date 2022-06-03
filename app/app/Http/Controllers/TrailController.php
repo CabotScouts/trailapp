@@ -132,7 +132,7 @@ class TrailController extends Controller {
     )->validate();
 
     $upload = Upload::fromFile($request->photo, $id);
-    $submission = Submission::firstOrNew(
+    $submission = Submission::firstOrCreate(
       [
         'challenge_id' => $id,
         'team_id' => Auth::user()->id,
@@ -141,8 +141,6 @@ class TrailController extends Controller {
         'upload_id' => $upload->id,
       ]
     );
-    $submission->save();
-    
     $upload->submission_id = $submission->id;
     $upload->save();
 
