@@ -152,7 +152,7 @@ class AdminController extends Controller {
       ],
       'submissions' => Submission::where('team_id', $id)->orderBy('created_at', 'desc')->get()->map(fn($submission) => [
         'id' => $submission->id,
-        'file' => ($submission->filename) ? url("storage/uploads/{$submission->filename}") : false,
+        'file' => $submission->file,
         'answer' => ($submission->answer) ? $submission->answer : false,
         'challenge' => ($submission->challenge) ? $submission->challenge->name : false,
         'question' => ($submission->question) ? ['name' => $submission->question->name, 'text' => $submission->question->question] : false,
@@ -333,7 +333,7 @@ class AdminController extends Controller {
       'challenge' => $challenge->name,
       'submissions' => Submission::where('challenge_id', $id)->orderBy('created_at', 'desc')->get()->map(fn($submission) => [
         'id' => $submission->id,
-        'file' => url("storage/uploads/{$submission->filename}"),
+        'file' => $submission->file,
         'time' => $submission->time,
         'team' => $submission->team->name,
         'group' => $submission->team->group->name,
