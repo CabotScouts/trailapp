@@ -15,6 +15,8 @@ return new class extends Migration {
       $table->string('join_token')->nullable()->after('group_id');
     });
     
+    Storage::makeDirectory('app/qr');
+    
     $teams = Team::all();
     foreach($teams as $team) {
       $team->join_token = Str::random(100);
