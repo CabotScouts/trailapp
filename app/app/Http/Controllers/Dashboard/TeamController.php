@@ -8,8 +8,29 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Team;
 use App\Models\Submission;
+use App\Events\MessageToTeams;
 
 class TeamController extends Controller {
+
+  public function broadcast(Request $request, $id = false) {
+    $team = ($id) ? Team::where('id', $id)->firstOrFail() : false;
+    
+    if($request->isMethod('get')) {
+      return Inertia::render('admin/broadcast', [
+        'id' => ($team) ? $team->id : null,
+        'name' => ($team) ? $team->name : null,
+      ]);
+    }
+    elseif($request->isMethod('post')) {
+      $data = $request->validate([
+        'message' => 'required'
+      ]);
+      
+      MessageToTeams::dispatch($request->message, $id);
+      $route = $id ? 'teams' : 'dashboard';
+      return redirect()->route($route);
+    }
+  }
 
   public function teams() {
     return Inertia::render('admin/team/list', [
