@@ -25,12 +25,22 @@ class ProcessUpload implements ShouldQueue {
 
   public function handle() {
     $image = Image::make(Storage::path("public/uploads/0/{$this->upload->filename}"));
-    
     $image = $image->orientate();
+    $width = $image->width();
+    $height = $image->height();
     
-    if($image->width() > 1920) {
+    $landscape = ($width > $height);
+    
+    if($landscape && $width > 1920) {
       $image = $image->resize(1920, null, function ($constraint) {
         $constraint->aspectRatio();
+        $constraint->upsize();
+      });
+    }
+    else if($height > 1080) {
+      $image = $image->resize(null, 1080, function ($constraint) {
+        $constraint->aspectRatio();
+        $constraint->upsize();
       });
     }
     

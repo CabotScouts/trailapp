@@ -21,7 +21,6 @@ class Kernel extends ConsoleKernel
     {
         $schedule->job(new PruneSubmissions)->everyTenMinutes();
         $schedule->job(new PruneUploads)->everyFiveMinutes();
-        $schedule->job(new ProcessOldUploads)->hourly();
     }
 
     /**
