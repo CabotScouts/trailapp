@@ -20,6 +20,7 @@ RUN apt update \
             pdo_mysql \
             pdo_pgsql \
             pgsql \
+            exif \
         && pecl install redis \
         && docker-php-ext-enable redis
 
