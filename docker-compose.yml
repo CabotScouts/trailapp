@@ -2,7 +2,7 @@ version: "3"
 
 services:
   app:
-    build: app
+    image: cabottrailapp
     container_name: ${CONTAINER}
     user: "${UID}:${GID}"
     restart: unless-stopped
@@ -15,11 +15,25 @@ services:
       - ./app/php.ini:/usr/local/etc/php/conf.d/additional.ini
 
   queue:
-    build: app
+    image: cabottrailapp
     container_name: ${CONTAINER}_queue
     user: "${UID}:${GID}"
     restart: unless-stopped
     command: php artisan queue:work --sleep=3 --tries=3 --max-time=3600
+    networks:
+      - mysql
+      - backend
+    depends_on:
+      - app
+    volumes:
+      - ./app:/var/www
+      
+  scheduler:
+    image: cabottrailapp
+    container_name: ${CONTAINER}_scheduler
+    user: "${UID}:${GID}"
+    restart: unless-stopped
+    command: php artisan schedule:work
     networks:
       - mysql
       - backend
