@@ -25,6 +25,12 @@ export default function Question({ question, submission }) {
       <Modal back={ route('trail') }>
         <Header data={ question } />
         <div className="px-10">
+          { Object.keys(errors).length > 0 &&
+          <div className="mb-5 p-4 bg-white rounded-xl shadow-lg">
+            <Errors errors={ errors } />
+          </div>
+          }
+          
           { (submission.accepted == false) &&
           <form onSubmit={ submit }>
             <textarea
@@ -44,8 +50,6 @@ export default function Question({ question, submission }) {
             >
               { (submission.answer == false) && 'Submit' }{ (submission.answer != false) && 'Update' } answer
             </button>
-
-            <Errors errors={ errors } />
           </form>
           }
           { (submission.accepted == true) && <TextSubmission submission={ submission.answer } /> }

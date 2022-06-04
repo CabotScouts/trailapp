@@ -124,11 +124,12 @@ class TrailController extends Controller {
   public function challengeSubmission(Request $request, $id) {
     Validator::make($request->all(),
       [
-        'photo' => 'required|image',
+        'photo' => 'required|image|max:12000',
       ],
       [
         'photo.required' => 'You need to select a photo to upload',
         'photo.image' => 'You need to select a photo to upload',
+        'photo.max' => 'The photo you tried to upload is too big (maximum size is 12MB)',
       ]
     )->validate();
 
