@@ -5,6 +5,9 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
+use App\Jobs\PruneSubmissions;
+use App\Jobs\PruneUploads;
+
 class Kernel extends ConsoleKernel
 {
     /**
@@ -15,7 +18,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->job(new PruneSubmissions)->everyTenMinutes();
+        $schedule->job(new PruneUploads)->everyFiveMinutes();
     }
 
     /**

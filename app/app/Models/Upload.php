@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class Upload extends Model
 {
@@ -22,5 +23,15 @@ class Upload extends Model
   protected function getFileAttribute() {
     $dir = $this->processed ? "1" : "0";
     return url("storage/uploads/$dir/$this->filename");
+  }
+  
+  public function removeFiles() {
+    $success = Storage::delete("public/uploads/0/$this->filename");
+    
+    if($this->processed) {
+      $success &= Storage::delete("public/uploads/1/$this->filename");
+    }
+    
+    return $success;
   }
 }

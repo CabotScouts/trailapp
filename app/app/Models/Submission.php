@@ -23,7 +23,7 @@ class Submission extends Model {
   }
   
   public function upload() {
-    return $this->hasOne(Upload::class);
+    return $this->belongsTo(Upload::class);
   }
 
   public function getTimeAttribute() {

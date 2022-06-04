@@ -20,7 +20,7 @@ return new class extends Migration {
     });
     
     Schema::table('submissions', function(Blueprint $table) {
-      $table->foreignId('upload_id')->after('question_id')->nullable()->constrained()->onDelete('restrict'); // don't allow submission to be deleted if upload exists
+      $table->foreignId('upload_id')->after('question_id')->nullable(); // don't allow submission to be deleted if upload exists
     });
     
     Storage::makeDirectory('public/uploads/0'); // unprocessed files
