@@ -8,13 +8,12 @@ use Illuminate\Validation\Rule;
 
 use App\Http\Controllers\Controller;
 use App\Models\Group;
-use App\Models\Team;
 
 class GroupController extends Controller {
 
   public function groups() {
     return Inertia::render('admin/group/list', [
-      'groups' => Group::orderBy('number')->orderBy('name')->get()->map(fn($group) => [
+      'groups' => Group::with('teams')->orderBy('number')->orderBy('name')->get()->map(fn($group) => [
         'id' => $group->id,
         'name' => $group->name,
         'teams' => $group->teams()->count()
@@ -23,11 +22,13 @@ class GroupController extends Controller {
   }
 
   public function viewGroupTeams($id) {
-    $group = Group::findOrFail($id);
+    $group = Group::with(['teams' => function($query) use ($id) {
+      $query->where('group_id', $id)->orderBy('name');
+    }, 'teams.submissions'])->findOrFail($id);
 
     return Inertia::render('admin/group/teams', [
       'group' => $group->name,
-      'teams' => Team::where('group_id', $id)->orderBy('name')->get()->map(fn($team) => [
+      'teams' => $group->teams->map(fn($team) => [
         'id' => $team->id,
         'name' => $team->name,
         'group' => $team->group->name,
@@ -72,7 +73,7 @@ class GroupController extends Controller {
         'number' => 'required|numeric',
       ]);
 
-      Group::where('id', $request->id)->update($data);
+      Group::where('id', $group->id)->update($data);
       return redirect()->route('groups');
     }
   }

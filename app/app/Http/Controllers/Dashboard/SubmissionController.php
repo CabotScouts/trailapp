@@ -13,7 +13,8 @@ use App\Events\SubmissionRejected;
 class SubmissionController extends Controller {
 
   public function submissions($filter=false) {
-    $submissions = ($filter == "pending") ? Submission::where('accepted', [false, null])->oldest()->limit(12) : Submission::latest();
+    $submissions = Submission::with('upload', 'challenge', 'question', 'team', 'team.group');
+    $submissions = ($filter == "pending") ? $submissions->where('accepted', [false, null])->oldest()->limit(12) : $submissions->latest();
 
     return Inertia::render('admin/submission/list', [
       'submissions' => $submissions->get()->map(fn($submission) => [
@@ -31,7 +32,7 @@ class SubmissionController extends Controller {
   }
 
   public function acceptSubmission(Request $request) {
-    $s = Submission::where('id', $request->id)->firstOrFail();
+    $s = Submission::with(['challenge', 'question'])->where('id', $request->id)->firstOrFail();
     $points = ($s->challenge) ? $s->challenge->points : $s->question->points;
     $s->points = $points;
     $s->accepted = true;

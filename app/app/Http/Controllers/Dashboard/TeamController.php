@@ -34,7 +34,7 @@ class TeamController extends Controller {
 
   public function teams() {
     return Inertia::render('admin/team/list', [
-      'teams' => Team::orderBy('name')->get()->map(fn($team) => [
+      'teams' => Team::with('group')->orderBy('name')->get()->map(fn($team) => [
         'id' => $team->id,
         'name' => $team->name,
         'group' => $team->group->name,
@@ -44,14 +44,16 @@ class TeamController extends Controller {
   }
 
   public function viewTeamSubmissions($id) {
-    $team = Team::findOrFail($id);
+    $team = Team::with(['group', 'submissions' => function($query) use ($id) {
+      $query->where('team_id', $id)->orderBy('created_at', 'desc');
+    }, 'submissions.upload', 'submissions.challenge', 'submissions.question'])->findOrFail($id);
 
     return Inertia::render('admin/team/submissions', [
       'team' => [
         'name' => $team->name,
         'group' => $team->group->name,
       ],
-      'submissions' => Submission::where('team_id', $id)->orderBy('created_at', 'desc')->get()->map(fn($submission) => [
+      'submissions' => $team->submissions->map(fn($submission) => [
         'id' => $submission->id,
         'file' => $submission->file,
         'answer' => ($submission->answer) ? $submission->answer : false,
