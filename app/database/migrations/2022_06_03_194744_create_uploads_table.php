@@ -15,7 +15,6 @@ return new class extends Migration {
         $table->timestamps();
         $table->foreignId('submission_id')->nullable()->constrained()->onDelete('set null'); // set id to NULL if submission is deleted
         $table->string('filename')->unique();
-        $table->integer('rotate')->nullable();
         $table->boolean('processed')->default(false);
     });
     
