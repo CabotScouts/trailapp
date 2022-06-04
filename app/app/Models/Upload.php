@@ -12,6 +12,10 @@ class Upload extends Model
 {
   protected $fillable = ['submission_id', 'filename'];
 
+  public function submission() {
+    return $this->belongsTo(Submission::class);
+  }
+
   protected function fromFile(UploadedFile $photo, $id) {
     $ext = $photo->extension();
     $filename = strval(Auth::user()->id) . "_" . $id . "_" . Str::random(15) . "." . $ext;

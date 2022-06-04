@@ -13,6 +13,7 @@ use App\Models\Question;
 use App\Models\Challenge;
 use App\Models\Submission;
 use App\Models\Upload;
+use App\Jobs\ProcessUpload;
 use App\Events\SubmissionReceived;
 
 class TrailController extends Controller {
@@ -131,19 +132,20 @@ class TrailController extends Controller {
       ]
     )->validate();
 
+    Submission::where('challenge_id', $id)->where('team_id', Auth::user()->id)->delete();
+    
     $upload = Upload::fromFile($request->photo, $id);
-    $submission = Submission::firstOrCreate(
+    $submission = Submission::create(
       [
         'challenge_id' => $id,
         'team_id' => Auth::user()->id,
-      ],
-      [
         'upload_id' => $upload->id,
       ]
     );
-    $upload->submission_id = $submission->id;
+    $upload->submission()->associate($submission);
     $upload->save();
 
+    ProcessUpload::dispatch($upload);
     SubmissionReceived::dispatch($submission);
     return redirect()->route('challenge', $id);
   }

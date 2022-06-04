@@ -7,6 +7,7 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 use App\Jobs\PruneSubmissions;
 use App\Jobs\PruneUploads;
+use App\Jobs\ProcessOldUploads;
 
 class Kernel extends ConsoleKernel
 {
@@ -20,6 +21,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->job(new PruneSubmissions)->everyTenMinutes();
         $schedule->job(new PruneUploads)->everyFiveMinutes();
+        $schedule->job(new ProcessOldUploads)->hourly();
     }
 
     /**

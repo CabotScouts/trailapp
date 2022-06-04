@@ -27,6 +27,7 @@ services:
       - app
     volumes:
       - ./app:/var/www
+      - ./app/php.ini:/usr/local/etc/php/conf.d/additional.ini
       
   scheduler:
     image: cabottrailapp
@@ -41,6 +42,7 @@ services:
       - app
     volumes:
       - ./app:/var/www
+      - ./app/php.ini:/usr/local/etc/php/conf.d/additional.ini
 
   redis:
     image: redis:latest
