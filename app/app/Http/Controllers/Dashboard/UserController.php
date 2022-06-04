@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -13,7 +14,7 @@ use App\Models\User;
 class UserController extends Controller {
 
   public function users() {
-    $users = User::where('id', '!=', 1)->get();
+    $users = User::all();
     return Inertia::render('admin/user/list', [
       'users' => $users->map(fn($user) => [
         'id' => $user->id,
@@ -56,22 +57,17 @@ class UserController extends Controller {
       ]);
     }
     elseif($request->isMethod('post')) {
-      if($id != 1) {
-        $data = $request->validate([
-          'username' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($user->id)],
-          'password' => 'required|min:8|same:password_confirmation',
-          'password_confirmation' => 'required',
-        ]);
+      $data = $request->validate([
+        'username' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($user->id)],
+        'password' => 'required|min:8|same:password_confirmation',
+        'password_confirmation' => 'required',
+      ]);
 
-        $user->update([
-          'username' => $data['username'],
-          'password' => Hash::make($data['password']),
-        ]);
-        return redirect()->route('users');
-      }
-      else {
-        return back()->withErrors(['id' => 'The user ID is invalid']);
-      }
+      $user->update([
+        'username' => $data['username'],
+        'password' => Hash::make($data['password']),
+      ]);
+      return redirect()->route('users');
     }
   }
   
@@ -86,7 +82,7 @@ class UserController extends Controller {
       ]);
     }
     elseif($request->isMethod('post')) {
-      if($request->id == $id && $id !== 1) {
+      if($request->id == $id) {
         if($request->id !== Auth::user()->id) {
           User::destroy($id);
           return redirect()->route('users');
