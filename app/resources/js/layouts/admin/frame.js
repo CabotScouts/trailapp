@@ -12,7 +12,7 @@ export default function Frame({ title, children, back=true }) {
   return (
     <>
       <Head title={ title } />
-      <div className="min-h-screen bg-slate-300">
+      <div className="min-h-screen bg-slate-300 lg:pb-20">
         <div className="bg-blue-900 shadow-sm">
           <div className="container max-w-screen-lg mx-auto flex items-center px-5 py-4">
             { back !== "false" &&
