@@ -10,9 +10,9 @@ services:
       - mysql
       - backend
     volumes:
-      - ./app:/var/www
-      - ./app/apache.conf:/etc/apache2/sites-enabled/000-default.conf
-      - ./app/php.ini:/usr/local/etc/php/conf.d/additional.ini
+      - ../app:/var/www
+      - ../app/apache.conf:/etc/apache2/sites-enabled/000-default.conf
+      - ../app/php.ini:/usr/local/etc/php/conf.d/additional.ini
 
   queue:
     image: cabottrailapp
@@ -26,8 +26,8 @@ services:
     depends_on:
       - app
     volumes:
-      - ./app:/var/www
-      - ./app/php.ini:/usr/local/etc/php/conf.d/additional.ini
+      - ../app:/var/www
+      - ../app/php.ini:/usr/local/etc/php/conf.d/additional.ini
       
   scheduler:
     image: cabottrailapp
@@ -41,8 +41,8 @@ services:
     depends_on:
       - app
     volumes:
-      - ./app:/var/www
-      - ./app/php.ini:/usr/local/etc/php/conf.d/additional.ini
+      - ../app:/var/www
+      - ../app/php.ini:/usr/local/etc/php/conf.d/additional.ini
 
   redis:
     image: redis:latest
@@ -55,7 +55,7 @@ services:
       - app
       - queue
     volumes:
-      - ./redis:/data
+      - ../redis:/data
 
   websockets:
     image: quay.io/soketi/soketi:1.0-16-distroless
@@ -67,7 +67,7 @@ services:
     depends_on:
       - redis
     volumes:
-      - ./websockets/.env:/app/.env
+      - ../websockets/.env:/app/.env
 
 networks:
   mysql:
