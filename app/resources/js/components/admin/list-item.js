@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/inertia-react';
 
 export default function ListItem({ children }) {
   return (
-    <div className="p-5 flex items-center border border-b-blue-200">
+    <div className="p-5 flex items-center border-b border-b-slate-200">
       { children }
     </div>
   )

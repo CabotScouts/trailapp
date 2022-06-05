@@ -12,7 +12,7 @@ export function Modal({ children, back=false }) {
   };
 
   return (
-    <div className="flex">
+    <div className="container max-w-screen-lg mx-auto flex relative">
       <div className="p-4 absolute top-0 right-0">
         <Link href={ back } onClick={ goBack }>
           <XIcon className="w-10 h-10 text-slate-300" />

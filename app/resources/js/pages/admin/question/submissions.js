@@ -1,10 +1,11 @@
 import React from 'react';
 import List from '@/layouts/admin/submission-list';
+import { Stripe } from '@/layouts/admin/frame';
 
 export default function Submissions({ question, submissions }) {
   return (
     <List submissions={ submissions }>
-      <div className="p-3">{ question }</div>
+      <Stripe>Submissions for <span className="font-bold">{ question }</span></Stripe>
     </List>
   )
 }

@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link, usePage } from '@inertiajs/inertia-react';
-
+import { Stripe } from '@/layouts/admin/frame';
 
 export function ButtonBar({ children }) {
   return (
-    <div className="p-3 flex justify-end bg-blue-600">
-      { children }
-    </div>
+    <Stripe>
+      <div className="flex justify-end">
+        { children }
+      </div>
+    </Stripe>
   );
 }
 
