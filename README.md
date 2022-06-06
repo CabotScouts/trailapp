@@ -12,7 +12,7 @@ Submit answers & photos directly from the app
 
 ### Realtime feedback on submission being accepted/rejected
 Control able to accept/reject submissions that have been sent in - feedback given to teams in realtime.
-| [![Dashboard submission view](docs/submission-received.jpg)](docs/submission-received.png) | [![Accepted notification](docs/submission-accepted.png)](docs/submission-accepted.png) |
+| [![Dashboard submission view](docs/submission-received.jpg)](docs/submission-received.jpg) | [![Accepted notification](docs/submission-accepted.png)](docs/submission-accepted.png) |
 | --- | --- |
 
 ### Realtime messaging from control to teams
