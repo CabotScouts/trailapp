@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  app:
+    networks:
+      - ${DOCKER_DB_NETWORK}
+
+  queue:
+    networks:
+      - ${DOCKER_DB_NETWORK}
+
+  scheduler:
+    networks:
+      - ${DOCKER_DB_NETWORK}
+
+networks:
+  ${DOCKER_DB_NETWORK}:
+    external: true

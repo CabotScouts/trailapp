@@ -1,0 +1,195 @@
+#!/bin/bash
+
+# Nice header
+echo
+echo
+cat build/header.txt
+echo
+echo
+
+# Test if .env is present and load it (or exit)
+loadenv() {
+  if [[ -f .env ]]; then
+    source .env
+  else
+    echo "[!] .env file missing - run ${0} init to create"
+    echo
+    exit 1
+  fi
+}
+
+# Test for docker/docker-compose
+resolvedocker() {
+  which docker &> /dev/null
+  if [[ $? -ne 0 ]]; then
+    echo "[!] docker executable not found"
+    echo
+    exit 1
+  fi
+
+  docker compose --help &> /dev/null
+  if [[ $? -eq 0 ]]; then
+    DOCKERCOMPOSE="docker compose"
+  else
+    which docker-compose &> /dev/null
+    if [[ $? -eq 0 ]]; then
+      DOCKERCOMPOSE="docker-compose"
+    else
+      echo "[!] no version of docker compose available"
+      echo
+      exit 1
+    fi
+  fi
+}
+
+# Make .env and redis directory if they don't already exist
+init() {
+  echo "[*] Initialising..."
+
+  if [[ ! -f ".env" ]]; then
+    cp build/.env.example ./.env
+    echo "[.] .env file created"
+  fi
+
+  if [[ ! -d "redis" ]]; then
+    mkdir redis
+    echo "[.] redis dump directory created"
+  fi
+
+  echo "[*] done."
+  echo
+  exit 0
+}
+
+# Compile env files and place in app directory; build core app docker image; run npm build
+build() {
+  loadenv
+  resolvedocker
+
+  echo "[*] Building..."
+
+  echo "[.] Creating application .env file"
+  cp .env app/.env
+  cat build/.env.stub >> app/.env
+  if [[ $DOCKER_DB -eq "internal" ]]; then
+    cat build/.env.mysql.stub >> app/.env
+    mkdir mysql
+  fi
+
+  echo "[.] Building docker image"
+  docker build ./build -t ${DOCKER_TAG}
+  if [[ $? -ne 0 ]]; then
+    echo "[!] image failed to build"
+    echo
+    exit 1
+  fi
+
+  echo "[.] Building react prod files"
+  makereact
+
+  echo "[.] Running setup scripts"
+  compose-up
+  docker exec ${DOCKER_NAMESPACE}_app /bin/bash setup.sh
+  docker exec ${DOCKER_NAMESPACE}_app /bin/bash cache.sh
+
+  echo "[*] done."
+  echo
+  exit 0
+}
+
+# Build docker compose files string
+dcfiles() {
+  DCFILES="-f build/docker-compose.yml"
+
+  if [[ $DOCKER_INGRESS -eq "local" ]]; then
+    DCFILES="${DCFILES} -f build/docker-compose.local.yml"
+    echo "[.] Using local ingress configuration"
+  elif [[ $DOCKER_INGRESS -eq "traefik" ]]; then
+    DCFILES="${DCFILES} -f build/docker-compose.traefik.yml"
+    echo "[.] Using traefik ingress configuration"
+  fi
+
+  if [[ $DOCKER_DB -eq "internal" ]]; then
+    echo "[.] Using internal mysql container configuration"
+    DCFILES="${DCFILES} -f build/docker-compose.db-internal.yml"
+  elif [[ $DOCKER_DB_NETWORK ]]; then
+    echo "[.] Using external database network configuration"
+    DCFILES="${DCFILES} -f build/docker-compose.db-network.yml"
+  fi
+}
+
+# Start docker containers with relevant configurations
+compose-up() {
+  dcfiles
+  ${DOCKERCOMPOSE} --env-file ./app/.env ${DCFILES} up -d
+
+  if [[ $? -ne 0 ]]; then
+    echo "[!] containers failed to start"
+    echo
+    exit 1
+  fi
+}
+
+start() {
+  loadenv
+  resolvedocker
+  echo "[*] Starting app..."
+  compose-up
+  docker exec ${DOCKER_NAMESPACE}_app /bin/bash cache.sh
+  echo "[*] done."
+  echo
+  exit 0
+}
+
+# Stop docker containers
+compose-down() {
+  dcfiles
+  ${DOCKERCOMPOSE} --env-file ./app/.env ${DCFILES} down
+}
+
+stop() {
+  loadenv
+  resolvedocker
+  echo "[*] Stopping app..."
+  compose-down
+  echo "[*] done."
+  echo
+  exit 0
+}
+
+# Pull lastest version of repo
+update() {
+  loadenv
+  resolvedocker
+  compose-down
+  echo "[*] Pulling latest..."
+  git pull
+  echo "[*] done."
+  echo
+  exit 0
+}
+
+# Run database migrations in core app container
+migrate() {
+  loadenv
+  resolvedocker
+  echo "[*] Running migrations..."
+  docker exec -it ${DOCKER_NAMESPACE}_app php artisan migrate
+
+  if [[ $? -ne 0 ]]; then
+    echo "[!] failed - have you started the app?"
+    echo
+    exit 1
+  fi
+
+  echo "[*] done."
+  echo
+  exit 0
+}
+
+# Build npm files
+# makereact() {
+#
+# }
+
+$1

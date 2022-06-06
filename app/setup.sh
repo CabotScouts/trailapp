@@ -7,6 +7,3 @@ if [[ -z "${APP_KEY}" ]]; then
 fi
 
 php artisan storage:link
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
