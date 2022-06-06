@@ -57,8 +57,6 @@ init() {
   fi
 
   echo "[*] done."
-  echo
-  exit 0
 }
 
 # Compile env files and place in app directory; build core app docker image; run npm build
@@ -69,6 +67,10 @@ build() {
   echo "[*] Building..."
 
   echo "[.] Creating application .env file"
+  if [[ -z $APP_KEY ]]; then
+    echo "PUSHER_APP_KEY=$(openssl rand -hex 35)" >> .env
+  fi
+  
   if [[ -z $PUSHER_APP_KEY ]]; then
     echo "PUSHER_APP_KEY=$(openssl rand -hex 20)" >> .env
   fi
@@ -110,12 +112,7 @@ build() {
   docker exec ${DOCKER_NAMESPACE}_app /bin/bash setup.sh
   docker exec ${DOCKER_NAMESPACE}_app /bin/bash cache.sh
 
-  echo "[.] Building react app"
-  makereact
-
   echo "[*] done."
-  echo
-  exit 0
 }
 
 # Build docker compose files string for current configuration
@@ -139,6 +136,26 @@ dcfiles() {
   fi
 }
 
+# Build react app files in node container
+makereact() {
+  ${DOCKERCOMPOSE} --env-file ./app/.env -f build/docker-compose.npm.yml run --rm build install
+  ${DOCKERCOMPOSE} --env-file ./app/.env -f build/docker-compose.npm.yml run --rm build run prod
+}
+
+# Wrap above so can be called directly
+build-npm() {
+  loadenv
+  resolvedocker
+  echo "[*] Building react app..."
+  makereact
+  echo "[*] done."
+}
+
+build-all() {
+  build
+  build-npm
+}
+
 # Start docker containers with relevant configurations
 compose-up() {
   dcfiles
@@ -159,14 +176,12 @@ start() {
   compose-up
   docker exec ${DOCKER_NAMESPACE}_app /bin/bash cache.sh
   echo "[*] done."
-  echo
-  exit 0
 }
 
 # Stop docker containers
 compose-down() {
   dcfiles
-  ${DOCKERCOMPOSE} --env-file ./app/.env ${DCFILES} down
+  ${DOCKERCOMPOSE} --env-file ./app/.env -p ${DOCKER_NAMESPACE} ${DCFILES} down
 }
 
 # Wrapper for above
@@ -176,8 +191,6 @@ stop() {
   echo "[*] Stopping app..."
   compose-down
   echo "[*] done."
-  echo
-  exit 0
 }
 
 # Pull lastest version of repo
@@ -185,8 +198,6 @@ update() {
   echo "[*] Pulling latest..."
   git pull
   echo "[*] done."
-  echo
-  exit 0
 }
 
 # Run database migrations in core app container
@@ -203,8 +214,6 @@ migrate() {
   fi
 
   echo "[*] done."
-  echo
-  exit 0
 }
 
 rollback() {
@@ -220,25 +229,6 @@ rollback() {
   fi
 
   echo "[*] done."
-  echo
-  exit 0
-}
-
-# Build react app files in node container
-makereact() {
-  ${DOCKERCOMPOSE} --env-file ./app/.env -f build/docker-compose.npm.yml run --rm build install
-  ${DOCKERCOMPOSE} --env-file ./app/.env -f build/docker-compose.npm.yml run --rm build run prod
-}
-
-# Wrap above so can be called directly
-npm-build() {
-  loadenv
-  resolvedocker
-  echo "[*] Building react app..."
-  makereact
-  echo "[*] done."
-  echo
-  exit 0
 }
 
 add-user() {
@@ -254,8 +244,8 @@ add-user() {
   fi
 
   echo "[*] done - login at ${APP_URL}/login"
-  echo
-  exit 0
 }
 
 $1
+echo
+exit 0

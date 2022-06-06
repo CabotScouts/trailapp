@@ -55,7 +55,7 @@ services:
       - ../redis:/data
 
   websockets:
-    image: quay.io/soketi/soketi:1.0-16-distroless
+    image: quay.io/soketi/soketi:latest-16-distroless
     container_name: ${DOCKER_NAMESPACE}_websockets
     user: "${DOCKER_UID}:${DOCKER_GID}"
     restart: unless-stopped
@@ -63,8 +63,11 @@ services:
       - backend
     depends_on:
       - redis
-    volumes:
-      - ../.env:/app/.env
+    environment:
+      - SOKETI_DEBUG=0
+      - SOKETI_DEFAULT_APP_ID="${DOCKER_TAG}"
+      - SOKETI_DEFAULT_APP_KEY="${PUSHER_APP_KEY}"
+      - SOKETI_DEFAULT_APP_SECRET="${PUSHER_APP_SECRET}"
 
 networks:
   backend:
