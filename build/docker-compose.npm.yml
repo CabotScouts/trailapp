@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  build:
+    image: node:current-alpine
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - NODE_OPTIONS=--openssl-legacy-provider
+    volumes:
+      - ../app:/home/node/app
+    entrypoint: ['npm']

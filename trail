@@ -84,7 +84,7 @@ build() {
     exit 1
   fi
 
-  echo "[.] Building react prod files"
+  echo "[.] Building react app"
   makereact
 
   echo "[.] Running setup scripts"
@@ -97,7 +97,7 @@ build() {
   exit 0
 }
 
-# Build docker compose files string
+# Build docker compose files string for current configuration
 dcfiles() {
   DCFILES="-f build/docker-compose.yml"
 
@@ -130,6 +130,7 @@ compose-up() {
   fi
 }
 
+# Wrapper for above
 start() {
   loadenv
   resolvedocker
@@ -147,6 +148,7 @@ compose-down() {
   ${DOCKERCOMPOSE} --env-file ./app/.env ${DCFILES} down
 }
 
+# Wrapper for above
 stop() {
   loadenv
   resolvedocker
@@ -159,9 +161,6 @@ stop() {
 
 # Pull lastest version of repo
 update() {
-  loadenv
-  resolvedocker
-  compose-down
   echo "[*] Pulling latest..."
   git pull
   echo "[*] done."
@@ -187,9 +186,38 @@ migrate() {
   exit 0
 }
 
-# Build npm files
-# makereact() {
-#
-# }
+# Build react app files in node container
+makereact() {
+  ${DOCKERCOMPOSE} --env-file ./app/.env -f build/docker-compose.npm.yml run --rm build install
+  ${DOCKERCOMPOSE} --env-file ./app/.env -f build/docker-compose.npm.yml run --rm build run prod
+}
+
+# Wrap above so can be called directly
+npm-build() {
+  loadenv
+  resolvedocker
+  echo "[*] Building react app..."
+  makereact
+  echo "[*] done."
+  echo
+  exit 0
+}
+
+add-user() {
+  loadenv
+  resolvedocker
+  echo "[*] Adding new user..."
+  docker exec -it ${DOCKER_NAMESPACE}_app php artisan user:make
+
+  if [[ $? -ne 0 ]]; then
+    echo "[!] failed - have you started the app?"
+    echo
+    exit 1
+  fi
+
+  echo "[*] done - login at ${APP_URL}/login"
+  echo
+  exit 0
+}
 
 $1
