@@ -226,8 +226,8 @@ rollback() {
 
 # Build react app files in node container
 makereact() {
-  ${DOCKERCOMPOSE} --env-file ./app/.env -p trailappbuildhelper -f build/docker-compose.npm.yml run --rm build install
-  ${DOCKERCOMPOSE} --env-file ./app/.env -p trailappbuildhelper -f build/docker-compose.npm.yml run --rm build run prod
+  ${DOCKERCOMPOSE} --env-file ./app/.env -f build/docker-compose.npm.yml run --rm build install
+  ${DOCKERCOMPOSE} --env-file ./app/.env -f build/docker-compose.npm.yml run --rm build run prod
 }
 
 # Wrap above so can be called directly
