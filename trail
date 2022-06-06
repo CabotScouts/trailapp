@@ -77,16 +77,18 @@ build() {
     echo "PUSHER_APP_SECRET=$(openssl rand -hex 20)" >> .env
   fi
 
-  if [[ $DOCKER_DB -eq "internal" ]] && [[ -z $DB_PASSWORD ]]; then
+  if [[ "${DOCKER_DB}" == "internal" ]] && [[ -z $DB_PASSWORD ]]; then
     echo "DB_PASSWORD=$(openssl rand -hex 20)" >> app/.env
   fi
 
   if [[ -f "app/.env" ]]; then
     rm app/.env
   fi
-  cp .env app/.env
 
-  if [[ $DOCKER_DB -eq "internal" ]]; then
+  echo "# AUTO GENERATED - CHANGES NOT PERSISTED" > app/.env
+  cat .env >> app/.env
+
+  if [[ "${DOCKER_DB}" == "internal" ]]; then
     cat build/.env.mysql.stub >> app/.env
     if [[ ! -d "mysql" ]]; then
       mkdir mysql
@@ -103,13 +105,13 @@ build() {
     exit 1
   fi
 
-  echo "[.] Building react app"
-  makereact
-
   echo "[.] Running setup scripts"
   compose-up
   docker exec ${DOCKER_NAMESPACE}_app /bin/bash setup.sh
   docker exec ${DOCKER_NAMESPACE}_app /bin/bash cache.sh
+
+  echo "[.] Building react app"
+  makereact
 
   echo "[*] done."
   echo
@@ -120,18 +122,18 @@ build() {
 dcfiles() {
   DCFILES="-f build/docker-compose.yml"
 
-  if [[ $DOCKER_INGRESS -eq "local" ]]; then
+  if [[ "${DOCKER_INGRESS}" == "local" ]]; then
     DCFILES="${DCFILES} -f build/docker-compose.local.yml"
     echo "[.] Using local ingress configuration"
-  elif [[ $DOCKER_INGRESS -eq "traefik" ]]; then
+  elif [[ "${DOCKER_INGRESS}" == "traefik" ]]; then
     DCFILES="${DCFILES} -f build/docker-compose.traefik.yml"
     echo "[.] Using traefik ingress configuration"
   fi
 
-  if [[ $DOCKER_DB -eq "internal" ]]; then
+  if [[ "${DOCKER_DB}" == "internal" ]]; then
     echo "[.] Using internal mysql container configuration"
     DCFILES="${DCFILES} -f build/docker-compose.db-internal.yml"
-  elif [[ $DOCKER_DB_NETWORK ]]; then
+  elif [[ ! -z $DOCKER_DB_NETWORK ]]; then
     echo "[.] Using external database network configuration"
     DCFILES="${DCFILES} -f build/docker-compose.db-network.yml"
   fi
@@ -224,8 +226,8 @@ rollback() {
 
 # Build react app files in node container
 makereact() {
-  ${DOCKERCOMPOSE} --env-file ./app/.env -f build/docker-compose.npm.yml run --rm build install
-  ${DOCKERCOMPOSE} --env-file ./app/.env -f build/docker-compose.npm.yml run --rm build run prod
+  ${DOCKERCOMPOSE} --env-file ./app/.env -p trailappbuildhelper -f build/docker-compose.npm.yml run --rm build install
+  ${DOCKERCOMPOSE} --env-file ./app/.env -p trailappbuildhelper -f build/docker-compose.npm.yml run --rm build run prod
 }
 
 # Wrap above so can be called directly
