@@ -6,6 +6,7 @@
 ## Screenshots
 ### Answer questions and complete challenges
 | [![Question view](docs/questions.png)](docs/questions.png) | [![Challenge view](docs/challenges.png)](docs/challenges.png) |
+| --- | --- |
 | [![Question submission](docs/question-submission.png)](docs/question-submission.png) | [![Challenge submission](docs/challenge-submission.jpg)](docs/challenge-submission.jpg) |
 
 ### Realtime feedback on submission being accepted/rejected
