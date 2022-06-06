@@ -67,9 +67,6 @@ build() {
   echo "[*] Building..."
 
   echo "[.] Creating application .env file"
-  if [[ -z $APP_KEY ]]; then
-    echo "APP_KEY=$(openssl rand -hex 32)" >> .env
-  fi
   
   if [[ -z $PUSHER_APP_KEY ]]; then
     echo "PUSHER_APP_KEY=$(openssl rand -hex 20)" >> .env
