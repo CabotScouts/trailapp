@@ -142,7 +142,7 @@ dcfiles() {
 # Start docker containers with relevant configurations
 compose-up() {
   dcfiles
-  ${DOCKERCOMPOSE} --env-file ./app/.env ${DCFILES} up -d
+  ${DOCKERCOMPOSE} --env-file ./app/.env -p ${DOCKER_NAMESPACE} ${DCFILES} up -d
 
   if [[ $? -ne 0 ]]; then
     echo "[!] containers failed to start"
