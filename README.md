@@ -28,25 +28,13 @@ QR code allows other teams members to be submitting at the same time - realtime 
 [![Dashboard](docs/dashboard.png)](docs/dashboard.png)
 
 ## Getting Started
-Clone the repository
-`git clone https://github.com/CabotExplorers/trailapp.git`
-
-Generate initial .env file:
-`./trail init`
-
-[Fill out environment variables depending on your setup](#environment-variables)
-
-Build app:
-`./trail build-all`
-
-Run database migrations:
-`./trail migrate`
-
-Create initial user:
-`./trail add-user`
-
-Add your groups, questions, challenges, and other users via the dashboard.
-
-Start your trail!
+- Clone the repository: `git clone https://github.com/CabotExplorers/trailapp.git`
+- Generate initial .env file: `./trail init`
+- [Fill out environment variables depending on your setup](#environment-variables)
+- Build app: `./trail build-all`
+- Run database migrations: `./trail migrate`
+- Create initial user: `./trail add-user`
+- Add your groups, questions, challenges, and other users via the dashboard.
+- Start your trail!
 
 ### Environment Variables
