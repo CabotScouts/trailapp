@@ -8,6 +8,7 @@ services:
   mysql:
     image: mysql
     container_name: ${DOCKER_NAMESPACE}_mysql
+    user: "${DOCKER_UID}:${DOCKER_GID}"
     restart: unless-stopped
     networks:
       - backend

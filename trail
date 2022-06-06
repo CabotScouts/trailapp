@@ -69,12 +69,31 @@ build() {
   echo "[*] Building..."
 
   echo "[.] Creating application .env file"
+  if [[ -z $PUSHER_APP_KEY ]]; then
+    echo "PUSHER_APP_KEY=$(openssl rand -hex 20)" >> .env
+  fi
+
+  if [[ -z $PUSHER_APP_SECRET ]]; then
+    echo "PUSHER_APP_SECRET=$(openssl rand -hex 20)" >> .env
+  fi
+
+  if [[ $DOCKER_DB -eq "internal" ]] && [[ -z $DB_PASSWORD ]]; then
+    echo "DB_PASSWORD=$(openssl rand -hex 20)" >> app/.env
+  fi
+
+  if [[ -f "app/.env" ]]; then
+    rm app/.env
+  fi
   cp .env app/.env
-  cat build/.env.stub >> app/.env
+
   if [[ $DOCKER_DB -eq "internal" ]]; then
     cat build/.env.mysql.stub >> app/.env
-    mkdir mysql
+    if [[ ! -d "mysql" ]]; then
+      mkdir mysql
+    fi
   fi
+
+  cat build/.env.stub >> app/.env
 
   echo "[.] Building docker image"
   docker build ./build -t ${DOCKER_TAG}
