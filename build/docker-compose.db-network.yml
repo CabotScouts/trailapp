@@ -3,16 +3,17 @@ version: "3"
 services:
   app:
     networks:
-      - ${DOCKER_DB_NETWORK}
+      - database
 
   queue:
     networks:
-      - ${DOCKER_DB_NETWORK}
+      - database
 
   scheduler:
     networks:
-      - ${DOCKER_DB_NETWORK}
-
+      - database
+      
 networks:
-  ${DOCKER_DB_NETWORK}:
+  database:
+    name: ${DOCKER_DB_NETWORK}
     external: true
