@@ -186,6 +186,23 @@ migrate() {
   exit 0
 }
 
+rollback() {
+  loadenv
+  resolvedocker
+  echo "[*] Rolling back migrations..."
+  docker exec -it ${DOCKER_NAMESPACE}_app php artisan migrate:rollback
+
+  if [[ $? -ne 0 ]]; then
+    echo "[!] failed - have you started the app?"
+    echo
+    exit 1
+  fi
+
+  echo "[*] done."
+  echo
+  exit 0
+}
+
 # Build react app files in node container
 makereact() {
   ${DOCKERCOMPOSE} --env-file ./app/.env -f build/docker-compose.npm.yml run --rm build install

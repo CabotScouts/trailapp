@@ -14,14 +14,14 @@ return new class extends Migration {
     Schema::table('teams', function(Blueprint $table) {
       $table->string('join_token')->nullable()->after('group_id');
     });
-    
-    Storage::makeDirectory('app/qr');
-    
+
+    Storage::makeDirectory('qr');
+
     $teams = Team::all();
     foreach($teams as $team) {
       $team->join_token = Str::random(100);
       $team->save();
-      
+
       $team->generateQR();
     }
   }
@@ -30,8 +30,8 @@ return new class extends Migration {
     Schema::table('teams', function(Blueprint $table) {
       $table->dropColumn('join_token');
     });
-    
-    Storage::deleteDirectory('app/qr');
+
+    Storage::deleteDirectory('qr');
   }
 
 };
