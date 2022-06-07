@@ -31,13 +31,32 @@ QR code allows other teams members to join the team and be submitting at the sam
 [![Dashboard](docs/dashboard.png)](docs/dashboard.png)
 
 # Getting Started
+Want to jump straight into testing the app? Try running *quickstart*:
+
+- [Check prerequisites are installed](#prerequisites)
 - Clone the repository: `git clone https://github.com/CabotExplorers/trailapp.git`
-- Generate initial .env file: `./trail init`
+- Run *quickstart*: `./trail quickstart`
+- [Open the app in your browser and login with username *root*, password *password*](http://127.0.0.1:8000)
+
+## Custom installation
+- Clone the repository: `git clone https://github.com/CabotExplorers/trailapp.git`
+- Generate initial environment variables file: `./trail init`
 - [Fill out environment variables depending on your setup](#environment-variables)
 - Build app: `./trail build-all`
 - Run database migrations: `./trail migrate`
-- Create initial user: `./trail add-user`
+- Create an initial user: `./trail add-user`
+- [Setup your container ingress method](#ingress-method)
 - Add your groups, questions, challenges, and other users via the dashboard.
 - Start your trail!
 
+### Prerequisites
+The app makes use of containers to minimise the need for installing/configuring software, but still requires some essentials to get to that stage:
+
+- Linux (either native or using Windows Subsystem for Linux) or macOS
+- [git](https://github.com/git-guides/install-git) - for cloning this repository (comes with most Distros already)
+- [docker](https://docs.docker.com/engine/install/) - for running containers
+- openssl - for generating random strings (comes with most Distros already)
+
 ### Environment Variables
+
+### Ingress Methods
