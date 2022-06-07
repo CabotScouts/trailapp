@@ -27,4 +27,5 @@ services:
 
 networks:
   traefik:
+    name: ${DOCKER_TRAEFIK_NETWORK:-traefik}
     external: true
