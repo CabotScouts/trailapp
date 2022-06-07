@@ -79,7 +79,7 @@ Variables to set:
 | `DOCKER_TRAEFIK_NETWORK` | the docker network your traefik container routes through (default: "traefik") |
 | `APP_HOST` | the domain the main app container should be reachable at |
 | `APP_WEBSOCKET_HOST` | the domain the websockets container should be reachable at |
-| `APP_WEBSOCKER_PORT` | the port traefik is listening on, unless you've added extra entry points you probably want to use web secure (443) |
+| `APP_WEBSOCKET_PORT` | the port traefik is listening on for the websocket container, unless you've added extra entry points you probably want to use web secure (443) |
 
 ### Environment Variables
 *insert table here*
