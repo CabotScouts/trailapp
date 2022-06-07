@@ -70,7 +70,7 @@ There's a whole host of proxy services you can use:
 Use the `APP_PORT` and `APP_WEBSOCKET_PORT` environment vars to set which ports you want the containers to listen on, then point your connections there. Don't forget to update the `APP_HOST` and `APP_WEBSOCKET_HOST` vars to the *external addresses* your proxy is listening. 
 
 #### Traefik
-If you're using the [Traefik](https://doc.traefik.io/traefik/) edge router then TrailApp comes with `docker compose` stub and environment variables to configure this (because it's what we use on our server).
+If you're using the [Traefik](https://doc.traefik.io/traefik/) edge router then TrailApp comes with a docker compose stub and environment variables to configure this (because it's what we use on our server).
 
 Variables to set:
 | Variable | Value |
