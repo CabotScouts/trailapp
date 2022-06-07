@@ -1,14 +1,24 @@
 #!/bin/bash
 
-# Nice header
-echo
-echo
-cat build/header.txt
-echo
-echo
+# -- INTERNAL CALLS --
+internal_header() {
+  # Nice header
+  echo
+  cat build/header.txt
+  echo
+}
 
-# Test if .env is present and load it (or exit)
-loadenv() {
+internal_check_valid() {
+  # Check that internal calls don't get run
+  if [[ $1 == internal_* ]]; then
+    echo "[!] Internal calls can only be run internally!"
+    echo
+    exit 1
+  fi
+}
+
+internal_loadenv() {
+  # Test if .env is present and load it (or exit)
   if [[ -f .env ]]; then
     source .env
   else
@@ -18,8 +28,8 @@ loadenv() {
   fi
 }
 
-# Test for docker/docker-compose
-resolvedocker() {
+internal_resolvedocker() {
+  # Test for docker/docker-compose executables and save correct calls
   which docker &> /dev/null
   if [[ $? -ne 0 ]]; then
     echo "[!] docker executable not found"
@@ -35,85 +45,15 @@ resolvedocker() {
     if [[ $? -eq 0 ]]; then
       DOCKERCOMPOSE="docker-compose"
     else
-      echo "[!] no version of docker compose available"
+      echo "[!] docker compose not available"
       echo
       exit 1
     fi
   fi
 }
 
-# Make .env and redis directory if they don't already exist
-init() {
-  echo "[*] Initialising..."
-
-  if [[ ! -f ".env" ]]; then
-    cp build/.env.example ./.env
-    echo "[.] .env file created"
-  fi
-
-  if [[ ! -d "redis" ]]; then
-    mkdir redis
-    echo "[.] redis dump directory created"
-  fi
-
-  echo "[*] done."
-}
-
-# Compile env files and place in app directory; build core app docker image; run npm build
-build() {
-  loadenv
-  resolvedocker
-
-  echo "[*] Building..."
-
-  echo "[.] Creating application .env file"
-  
-  if [[ -z $PUSHER_APP_KEY ]]; then
-    echo "PUSHER_APP_KEY=$(openssl rand -hex 20)" >> .env
-  fi
-
-  if [[ -z $PUSHER_APP_SECRET ]]; then
-    echo "PUSHER_APP_SECRET=$(openssl rand -hex 20)" >> .env
-  fi
-
-  if [[ "${DOCKER_DB}" == "internal" ]] && [[ -z $DB_PASSWORD ]]; then
-    echo "DB_PASSWORD=$(openssl rand -hex 20)" >> app/.env
-  fi
-
-  if [[ -f "app/.env" ]]; then
-    rm app/.env
-  fi
-
-  echo "# AUTO GENERATED - CHANGES NOT PERSISTED" > app/.env
-  cat .env >> app/.env
-
-  if [[ "${DOCKER_DB}" == "internal" ]]; then
-    cat build/.env.mysql.stub >> app/.env
-    if [[ ! -d "mysql" ]]; then
-      mkdir mysql
-    fi
-  fi
-
-  cat build/.env.stub >> app/.env
-
-  echo "[.] Building docker image"
-  docker build ./build -t ${DOCKER_TAG}
-  if [[ $? -ne 0 ]]; then
-    echo "[!] image failed to build"
-    echo
-    exit 1
-  fi
-
-  echo "[.] Running setup scripts"
-  compose-up
-  docker exec ${DOCKER_NAMESPACE}_app /bin/bash setup.sh
-  docker exec ${DOCKER_NAMESPACE}_app /bin/bash cache.sh
-
-  echo "[*] done."
-}
-
-# Build docker compose files string for current configuration
-dcfiles() {
+internal_dcfiles() {
+  # Build docker compose files string for current configuration
   DCFILES="-f build/docker-compose.yml"
 
   if [[ "${DOCKER_INGRESS}" == "local" ]]; then
@@ -133,29 +73,102 @@ dcfiles() {
   fi
 }
 
-# Build react app files in node container
-makereact() {
+internal_init() {
+  # Initialise new .env file
+  if [[ ! -f ".env" ]]; then
+    touch .env
+    echo "DOCKER_UID=$(id -u)" >> .env
+    echo "DOCKER_GID=$(id -g)" >> .env
+    cat build/.env.example >> .env
+    echo "[.] .env file created"
+  fi
+
+  ## TODO: - move this somewhere else
+  if [[ ! -d "redis" ]]; then
+    mkdir redis
+    echo "[.] redis dump directory created"
+  fi
+}
+
+internal_build_env() {
+  # Build full .env file
+  echo "[.] Creating application .env file"
+
+  if [[ -z $PUSHER_APP_KEY ]]; then
+    echo "PUSHER_APP_KEY=$(openssl rand -hex 32)" >> .env
+  fi
+
+  if [[ -z $PUSHER_APP_SECRET ]]; then
+    echo "PUSHER_APP_SECRET=$(openssl rand -hex 32)" >> .env
+  fi
+
+  if [[ "${DOCKER_DB}" == "internal" ]] && [[ -z $DB_PASSWORD ]]; then
+    echo "DB_PASSWORD=$(openssl rand -hex 32)" >> .env
+  fi
+
+  if [[ -f "app/.env" ]]; then
+    rm app/.env
+  fi
+
+  echo "# AUTO GENERATED - CHANGES NOT PERSISTED" > app/.env
+  cat .env >> app/.env
+
+  if [[ "${DOCKER_DB}" == "internal" ]]; then
+    cat build/.env.mysql.stub >> app/.env
+    if [[ ! -d "mysql" ]]; then
+      mkdir mysql
+    fi
+  fi
+
+  cat build/.env.stub >> app/.env
+}
+
+internal_build_image() {
+  # Build core app docker image
+  echo "[.] Building docker image"
+
+  docker build ./build -t ${DOCKER_TAG}
+  if [[ $? -ne 0 ]]; then
+    echo "[!] image failed to build"
+    echo
+    exit 1
+  fi
+}
+
+internal_build_react() {
+  # Build react app files in node container
+  echo "[.] Running react build in node build container"
+
   ${DOCKERCOMPOSE} --env-file ./app/.env -f build/docker-compose.npm.yml run --rm build install
   ${DOCKERCOMPOSE} --env-file ./app/.env -f build/docker-compose.npm.yml run --rm build run prod
 }
 
-# Wrap above so can be called directly
-build-npm() {
-  loadenv
-  resolvedocker
-  echo "[*] Building react app..."
-  makereact
-  echo "[*] done."
+internal_run_setup() {
+  # Run setup script (composer install) on core app container
+  echo "[.] Running setup script"
+  internal_isup
+  docker exec ${DOCKER_NAMESPACE}_app /bin/bash setup.sh
+  internal_exec_postcheck
 }
 
-build-all() {
-  build
-  build-npm
+internal_run_cache() {
+  # Run lavarel caching commands on core app container
+  echo "[.] Running cache script"
+  internal_isup
+  docker exec ${DOCKER_NAMESPACE}_app /bin/bash cache.sh
+  internal_exec_postcheck
 }
 
-# Start docker containers with relevant configurations
-compose-up() {
-  dcfiles
+internal_run_postbuild() {
+  internal_compose_up
+  internal_run_setup
+  internal_run_cache
+  internal_compose_down
+}
+
+internal_compose_up() {
+  # Start docker containers with relevant configurations
+  internal_dcfiles
   ${DOCKERCOMPOSE} --env-file ./app/.env -p ${DOCKER_NAMESPACE} ${DCFILES} up -d
 
   if [[ $? -ne 0 ]]; then
@@ -165,84 +178,201 @@ compose-up() {
   fi
 }
 
-# Wrapper for above
-start() {
-  loadenv
-  resolvedocker
-  echo "[*] Starting app..."
-  compose-up
-  docker exec ${DOCKER_NAMESPACE}_app /bin/bash cache.sh
-  echo "[*] done."
-}
-
-# Stop docker containers
-compose-down() {
-  dcfiles
+internal_compose_down() {
+  # Stop docker containers
+  internal_dcfiles
   ${DOCKERCOMPOSE} --env-file ./app/.env -p ${DOCKER_NAMESPACE} ${DCFILES} down
 }
 
-# Wrapper for above
-stop() {
-  loadenv
-  resolvedocker
-  echo "[*] Stopping app..."
-  compose-down
-  echo "[*] done."
+internal_isup() {
+  # Check if docker containers are up before continuing
+  internal_loadenv
+
+  docker ps | grep ${DOCKER_NAMESPACE}_app &> /dev/null
+  if [[ $? -ne 0 ]]; then
+    echo "[!] The app is not currently running - run '${0} start' to bring it up first"
+    echo
+    exit 1
+  fi
 }
 
-# Pull lastest version of repo
+internal_exec_postcheck() {
+  # Test if docker exec commands failed (normally indicates app isn't running)
+  if [[ $? -ne 0 ]]; then
+    echo "[!] failed - have you started the app?"
+    echo
+    exit 1
+  fi
+}
+
+internal_migrate() {
+  # Run laravel migrations
+  internal_isup
+  docker exec -it ${DOCKER_NAMESPACE}_app php artisan migrate
+  internal_exec_postcheck
+}
+
+internal_migrate_force() {
+  # Run laravel migrations forced (so will run in production without questioning)
+  internal_isup
+  docker exec -it ${DOCKER_NAMESPACE}_app php artisan migrate --force
+  internal_exec_postcheck
+}
+
+internal_migrate_rollback() {
+  # Rollback laravel migrations
+  internal_isup
+  docker exec -it ${DOCKER_NAMESPACE}_app php artisan migrate:rollback
+  internal_exec_postcheck
+}
+
+internal_add_user() {
+  # Run laravel command to add a new user on app container
+  if [[ ! -z $1 ]]; then
+    if [[ ! -z $2 ]]; then
+      docker exec -it ${DOCKER_NAMESPACE}_app php artisan user:make $1 --password=$2
+    else
+      docker exec -it ${DOCKER_NAMESPACE}_app php artisan user:make $1
+    fi
+  else
+    docker exec -it ${DOCKER_NAMESPACE}_app php artisan user:make
+  fi
+}
+
+internal_exit() {
+  echo
+  exit 0
+}
+
+internal_help_message() {
+  # If we get here then first argument wasn't a valid call -> show help message
+  # TODO: write this
+  echo "HELP"
+}
+
+# -- EXTERNAL CALLS --
+init() {
+  # Initialise new app (create .env if it doesn't already exist)
+  echo "[*] Initialising..."
+  internal_init
+  echo "[*] done."
+  internal_exit
+}
+
+build() {
+  # Compile env files and place in app directory; build core app docker image; run setup and cache scripts
+  internal_loadenv
+  internal_resolvedocker
+
+  OPTION=$1
+
+  if [[ -z $OPTION ]]; then
+    echo "[*] Building app..."
+    internal_build_env
+    internal_build_image
+    internal_run_postbuild
+  elif [[ "${OPTION}" == "npm" ]]; then
+    echo "[*] Building react app..."
+    internal_build_react
+    echo "[*] done."
+  elif [[ "${OPTION}" == "all" ]]; then
+    echo "[*] Building everything..."
+    internal_build_env
+    internal_build_image
+    internal_build_react
+    internal_run_postbuild
+    echo "[*] done."
+  fi
+
+  echo "[*] done."
+  internal_exit
+}
+
+start() {
+  # Start the app
+  internal_loadenv
+  internal_resolvedocker
+
+  echo "[*] Starting app..."
+  internal_compose_up
+  internal_run_cache
+  echo "[*] done."
+  internal_exit
+}
+
+stop() {
+  # Stop the app
+  internal_loadenv
+  internal_resolvedocker
+
+  echo "[*] Stopping app..."
+  internal_compose_down
+  echo "[*] done."
+  internal_exit
+}
+
 update() {
+  # Pull lastest version of repo
+
   echo "[*] Pulling latest..."
   git pull
   echo "[*] done."
+  internal_exit
 }
 
-# Run database migrations in core app container
 migrate() {
-  loadenv
-  resolvedocker
-  echo "[*] Running migrations..."
-  docker exec -it ${DOCKER_NAMESPACE}_app php artisan migrate
+  # Run database migrations in core app container
+  internal_loadenv
+  internal_resolvedocker
 
-  if [[ $? -ne 0 ]]; then
-    echo "[!] failed - have you started the app?"
-    echo
-    exit 1
+  OPTION=$1
+
+  if [[ -z $OPTION ]]; then
+    echo "[*] Running migrations..."
+    internal_migrate
+  elif [[ "${OPTION}" == "force" ]]; then
+    echo "[*] Force running migrations..."
+    internal_migrate_force
+  elif [[ "${OPTION}" == "rollback" ]]; then
+    echo "[*] Rolling back migrations..."
+    internal_migrate_rollback
   fi
 
   echo "[*] done."
-}
-
-rollback() {
-  loadenv
-  resolvedocker
-  echo "[*] Rolling back migrations..."
-  docker exec -it ${DOCKER_NAMESPACE}_app php artisan migrate:rollback
-
-  if [[ $? -ne 0 ]]; then
-    echo "[!] failed - have you started the app?"
-    echo
-    exit 1
-  fi
-
-  echo "[*] done."
+  internal_exit
 }
 
 add-user() {
-  loadenv
-  resolvedocker
-  echo "[*] Adding new user..."
-  docker exec -it ${DOCKER_NAMESPACE}_app php artisan user:make
+  internal_loadenv
+  internal_resolvedocker
 
-  if [[ $? -ne 0 ]]; then
-    echo "[!] failed - have you started the app?"
-    echo
-    exit 1
-  fi
+  echo "[*] Adding new user..."
+  internal_isup
+  internal_add_user $1 $2
 
   echo "[*] done - login at ${APP_URL}/login"
+  internal_exit
 }
 
-$1
-echo
-exit 0
+quickstart() {
+  # Speedrun creating a brand new app - smashes lots of internals together and hopes for the best!
+  echo "[*] Quickstarting a new app - buckle up..."
+  internal_init
+  internal_loadenv
+  internal_resolvedocker
+  internal_build_env
+  internal_build_image
+  internal_build_react
+  internal_run_postbuild
+  internal_compose_up
+  internal_migrate_force
+  internal_add_user root password
+  echo "[*] If everything went to plan you should now be able to login at ${APP_URL} using username 'root', password 'password'!"
+  internal_exit
+}
+
+# -- RUN --
+internal_header
+internal_check_valid $1
+$1 $2 $3
+internal_help_message
