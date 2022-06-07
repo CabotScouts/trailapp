@@ -23,7 +23,7 @@ Artisan::command("user:make {username?} {--password=} {--random}", function ($us
   }
   else {
     $data = $validator->validated();
-    User::create($data);
+    User::create(['username' => $data['username'], 'password' => Hash::make($data['password'])]);
 
     if($random) {
       $this->info("Created new user {$u} with password {$p}");
