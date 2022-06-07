@@ -3,23 +3,33 @@
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 use App\Models\User;
 
-Artisan::command("user:make {username?} {--random}", function ($username=false, $random=false) {
+Artisan::command("user:make {username?} {--password=} {--random}", function ($username=false, $password=false, $random=false) {
   $u = $username ? $username : $this->ask("Enter a username");
-  $p = $random ? Str::random(10) : $this->secret("Enter a password") ;
+  $p = $password ? $password : ($random ? Str::random(10) : $this->secret("Enter a password"));
 
-  User::create([
-    'username' => $u,
-    'password' => Hash::make($p),
-  ]);
+  $validator = Validator::make(
+    ['username' => $u, 'password' => $p],
+    ['username' => 'required|unique:users', 'password' => 'required|min:8']
+  );
 
-  if($random) {
-    $this->info("Created new user {$u} with password {$p}");
+  if($validator->fails()) {
+    foreach($validator->errors()->all() as $error);
+    $this->error($error);
   }
   else {
-    $this->info("Created new user {$u}");
+    $data = $validator->validated();
+    User::create($data);
+
+    if($random) {
+      $this->info("Created new user {$u} with password {$p}");
+    }
+    else {
+      $this->info("Created new user {$u}");
+    }
   }
 });
