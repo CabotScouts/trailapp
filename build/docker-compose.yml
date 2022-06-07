@@ -71,3 +71,4 @@ services:
 
 networks:
   backend:
+    name: ${DOCKER_NAMESPACE}_bridge
