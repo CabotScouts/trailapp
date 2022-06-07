@@ -23,7 +23,7 @@ Ability to broadcast messages out to teams (both to individual teams, and to all
 | --- | --- |
 
 ## Supports multiple teams members working collaboratively
-QR code allows other teams members to be submitting at the same time - realtime feedback to teams keeps all members in sync.
+QR code allows other teams members to join the team and be submitting at the same time - realtime feedback to teams keeps all members in sync as they go.
 
 [![Join with QR](docs/join-qr2.png)](docs/join-qr2.png)
 
