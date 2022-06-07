@@ -20,7 +20,10 @@ internal_check_valid() {
 internal_loadenv() {
   # Test if .env is present and load it (or exit)
   if [[ -f .env ]]; then
-    source .env
+    if [[ -z $ENVLOADED ]]; then
+      source .env
+      ENVLOADED=true
+    fi
   else
     echo "[!] .env file missing - run ${0} init to create"
     echo
