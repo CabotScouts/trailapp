@@ -31,7 +31,7 @@ internal_loadenv() {
   fi
 }
 
-internal_resolvedocker() {
+internal_resolve_docker() {
   # Test for docker/docker-compose executables and save correct calls
   which docker &> /dev/null
   if [[ $? -ne 0 ]]; then
@@ -52,6 +52,13 @@ internal_resolvedocker() {
       echo
       exit 1
     fi
+  fi
+}
+
+internal_check_openssl() {
+  openssl rand 1 &> /dev/null
+  if [[ $? -ne 0 ]]; then
+    echo "[!] openssl not installed/available"
   fi
 }
 
@@ -78,6 +85,9 @@ internal_dcfiles() {
 
 internal_init() {
   # Initialise new .env file
+  internal_resolve_docker
+  internal_check_openssl
+
   if [[ ! -f ".env" ]]; then
     touch .env
     echo "DOCKER_UID=$(id -u)" >> .env
@@ -265,7 +275,7 @@ init() {
 build() {
   # Compile env files and place in app directory; build core app docker image; run setup and cache scripts
   internal_loadenv
-  internal_resolvedocker
+  internal_resolve_docker
 
   OPTION=$1
 
@@ -294,7 +304,7 @@ build() {
 start() {
   # Start the app
   internal_loadenv
-  internal_resolvedocker
+  internal_resolve_docker
 
   echo "[*] Starting app..."
   internal_compose_up
@@ -306,7 +316,7 @@ start() {
 stop() {
   # Stop the app
   internal_loadenv
-  internal_resolvedocker
+  internal_resolve_docker
 
   echo "[*] Stopping app..."
   internal_compose_down
@@ -326,7 +336,7 @@ update() {
 migrate() {
   # Run database migrations in core app container
   internal_loadenv
-  internal_resolvedocker
+  internal_resolve_docker
 
   OPTION=$1
 
@@ -347,7 +357,7 @@ migrate() {
 
 add-user() {
   internal_loadenv
-  internal_resolvedocker
+  internal_resolve_docker
 
   echo "[*] Adding new user..."
   internal_isup
@@ -362,7 +372,7 @@ quickstart() {
   echo "[*] Quickstarting a new app - buckle up..."
   internal_init
   internal_loadenv
-  internal_resolvedocker
+  internal_resolve_docker
   internal_build_env
   internal_build_image
   internal_build_react
