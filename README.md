@@ -45,7 +45,7 @@ Want to jump straight into testing the app? Try running *quickstart*:
 - Build app: `./trail build-all`
 - Run database migrations: `./trail migrate`
 - Create an initial user: `./trail add-user`
-- [Setup your container ingress method](#ingress-method)
+- [Setup your container ingress method](#ingress-methods)
 - Add your groups, questions, challenges, and other users via the dashboard.
 - Start your trail!
 
@@ -55,7 +55,7 @@ The app makes use of containers to minimise the need for installing/configuring 
 - Linux (either native or using Windows Subsystem for Linux) or macOS
 - [git](https://github.com/git-guides/install-git) - for cloning this repository (comes with most Distros already)
 - [docker](https://docs.docker.com/engine/install/) - for running containers
-- openssl - for generating random strings (comes with most Distros already)
+- [openssl](https://www.openssl.org/) - for generating random strings (comes with most Distros already)
 
 ### Environment Variables
 
