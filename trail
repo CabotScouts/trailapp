@@ -66,7 +66,7 @@ internal_dcfiles() {
   # Build docker compose files string for current configuration
   DCFILES="-f build/docker-compose.yml"
 
-  if [[ "${DOCKER_INGRESS}" == "local" ]]; then
+  if [[ -z $DOCKER_INGRESS ]] || [[ "${DOCKER_INGRESS}" == "local" ]]; then
     DCFILES="${DCFILES} -f build/docker-compose.local.yml"
     echo "[.] Using local ingress configuration"
   elif [[ "${DOCKER_INGRESS}" == "traefik" ]]; then
