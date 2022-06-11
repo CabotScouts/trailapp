@@ -117,7 +117,10 @@ class TrailController extends Controller {
         'points' => $challenge->points,
         'points_label' => $challenge->pointsLabel,
       ],
-      'submission' => $submission ? [ 'file' => $submission->file, 'accepted' => $submission->accepted ] : [ 'file' => false, 'accepted' => false ],
+      'submission' => $submission ? [ 'upload' => ($submission->upload) ? [ 
+        'file' => $submission->upload->file, 
+        'link' => $submission->upload->link ] : false, 
+        'accepted' => $submission->accepted ] : [ 'upload' => false, 'accepted' => false ],
     ]);
   }
 

@@ -47,7 +47,7 @@ class ChallengeController extends Controller {
       'challenge' => $challenge->name,
       'submissions' => $challenge->submissions->map(fn($submission) => [
         'id' => $submission->id,
-        'file' => $submission->file,
+        'upload' => ($submission->upload) ? [ 'file' => $submission->upload->file, 'link' => $submission->upload->link ] : false,
         'time' => $submission->time,
         'team' => $submission->team->name,
         'group' => $submission->team->group->name,
