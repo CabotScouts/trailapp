@@ -29,6 +29,10 @@ class Upload extends Model
     return url("storage/uploads/$dir/$this->filename");
   }
   
+  protected function getLinkAttribute() {
+    return url("storage/uploads/0/$this->filename");
+  }
+  
   public function removeFiles() {
     $success = Storage::delete("public/uploads/0/$this->filename");
     

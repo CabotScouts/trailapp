@@ -31,8 +31,4 @@ class Submission extends Model {
     return date_format($date, "d/m/Y H:i");
   }
 
-  public function getFileAttribute() {
-    return ($this->upload) ? $this->upload->file : false;
-  }
-
 }

@@ -55,7 +55,7 @@ class TeamController extends Controller {
       ],
       'submissions' => $team->submissions->map(fn($submission) => [
         'id' => $submission->id,
-        'file' => $submission->file,
+        'upload' => ($submission->upload) ? [ 'file' => $submission->upload->file, 'link' => $submission->upload->link ] : false,
         'answer' => ($submission->answer) ? $submission->answer : false,
         'challenge' => ($submission->challenge) ? $submission->challenge->name : false,
         'question' => ($submission->question) ? ['name' => $submission->question->name, 'text' => $submission->question->question] : false,
