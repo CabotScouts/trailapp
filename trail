@@ -384,8 +384,32 @@ quickstart() {
   internal_exit
 }
 
+exec() {
+  internal_loadenv
+  internal_resolve_docker
+  internal_isup
+  docker exec -it ${DOCKER_NAMESPACE}_app $@
+  internal_exit
+}
+
+tinker() {
+  internal_loadenv
+  internal_resolve_docker
+  internal_isup
+  docker exec -it --env XDG_CONFIG_HOME=storage/psysh ${DOCKER_NAMESPACE}_app php artisan tinker
+  internal_exit
+}
+
+test() {
+  internal_loadenv
+  internal_resolve_docker
+  internal_isup
+  docker exec -it ${DOCKER_NAMESPACE}_app php artisan test
+  internal_exit
+}
+
 # -- RUN --
 internal_header
 internal_check_valid $1
-$1 $2 $3
+$@
 internal_help_message
