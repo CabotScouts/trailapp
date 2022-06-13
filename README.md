@@ -1,5 +1,5 @@
 # TrailApp
-A web app to run a wide game challenge trail/scavenger hunt type events featuring questions and photo challenges.
+A web app to run wide game/challenge trail/scavenger hunt type events featuring questions and photo challenges.
 
 [Jump to installation instructions](#getting-started)
 
@@ -45,7 +45,7 @@ Want to jump straight into testing the app? Try running *quickstart*:
 - Generate initial environment variables file: `./trail init`
 - [Fill out environment variables depending on your setup](#environment-variables)
 - [Setup your container ingress method](#ingress-methods)
-- Build app: `./trail build-all`
+- Build app: `./trail build all`
 - Run database migrations: `./trail migrate`
 - Create an initial user: `./trail add-user`
 - Login to the dashboard and add your groups, questions, challenges, and other users.
@@ -67,7 +67,7 @@ There's a whole host of proxy services you can use:
 - [HAProxy](http://www.haproxy.org/)
 - [Cloudflare tunnels](https://www.cloudflare.com/en-gb/products/tunnel/) probably? Not sure how this handles websocket traffic
 
-Use the `APP_PORT` and `APP_WEBSOCKET_PORT` environment vars to set which ports you want the containers to listen on, then point your connections there. Don't forget to update the `APP_HOST` and `APP_WEBSOCKET_HOST` vars to the *external addresses* your proxy is listening. 
+Use the `APP_PORT` and `APP_WEBSOCKET_PORT` environment vars to set which ports you want the containers to listen on, then point your connections there. Don't forget to update the `APP_HOST` and `APP_WEBSOCKET_HOST` vars to the *external addresses* your proxy is listening.
 
 #### Traefik
 If you're using the [Traefik](https://doc.traefik.io/traefik/) edge router then TrailApp comes with a docker compose stub and environment variables to configure this (because it's what we use on our server).
