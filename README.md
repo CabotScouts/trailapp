@@ -41,7 +41,7 @@ Want to jump straight into testing the app? Try running *quickstart*:
 - [Open the app in your browser](http://127.0.0.1:8000/login) and login with username `root`, password `password`.
 
 ## Custom installation
-- Clone the repository: `git clone https://github.com/CabotExplorers/trailapp.git`
+- Clone the repository: `git clone https://github.com/CabotScouts/trailapp.git`
 - Generate initial environment variables file: `./trail init`
 - [Fill out environment variables depending on your setup](#environment-variables)
 - [Setup your container ingress method](#ingress-methods)
