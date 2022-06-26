@@ -36,7 +36,7 @@ Setup your relevant users and groups, add questions and challenges, mark submiss
 Want to jump straight into testing the app? Try running *quickstart*:
 
 - [Check prerequisites are installed](#prerequisites)
-- Clone the repository: `git clone https://github.com/CabotExplorers/trailapp.git`
+- Clone the repository: `git clone https://github.com/CabotScouts/trailapp.git`
 - Run *quickstart*: `./trail quickstart`
 - [Open the app in your browser](http://127.0.0.1:8000/login) and login with username `root`, password `password`.
 
@@ -59,7 +59,10 @@ The app makes use of containers to minimise the need for installing/configuring 
 - [docker](https://docs.docker.com/engine/install/) - for running containers
 - [openssl](https://www.openssl.org/) - for generating random strings (comes with most Distros already)
 
-### Ingress Methods
+## Environment Variables
+*TODO: write out various sets of env. variables*
+
+## Ingress Methods
 To run the trail you need to get connections into the core app container and the websockets container (unless you really don't want any of the real time stuff).
 
 There's a whole host of proxy services you can use:
@@ -67,9 +70,9 @@ There's a whole host of proxy services you can use:
 - [HAProxy](http://www.haproxy.org/)
 - [Cloudflare tunnels](https://www.cloudflare.com/en-gb/products/tunnel/) probably? Not sure how this handles websocket traffic
 
-Use the `APP_PORT` and `APP_WEBSOCKET_PORT` environment vars to set which ports you want the containers to listen on, then point your connections there. Don't forget to update the `APP_HOST` and `APP_WEBSOCKET_HOST` vars to the *external addresses* your proxy is listening.
+Use the `APP_PORT` and `APP_WEBSOCKET_PORT` environment vars to set which ports you want the containers to listen on, then point your connections there. Don't forget to update the `APP_HOST` and `APP_WEBSOCKET_HOST` vars to the *external addresses* your proxy is listening on.
 
-#### Traefik
+### Traefik
 If you're using the [Traefik](https://doc.traefik.io/traefik/) edge router then TrailApp comes with a docker compose stub and environment variables to configure this (because it's what we use on our server).
 
 Variables to set:
@@ -81,5 +84,6 @@ Variables to set:
 | `APP_WEBSOCKET_HOST` | the domain the websockets container should be reachable at |
 | `APP_WEBSOCKET_PORT` | the port traefik is listening on for the websocket container, unless you've added extra entry points you probably want to use web secure (443) |
 
-### Environment Variables
-*insert table here*
+# Development
+Things to chip away at:
+* Pagination of submissions page, to avoid killing the server (sorry Thursday teams...)
