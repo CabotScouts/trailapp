@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 use App\Http\Controllers\Controller;
 use App\Models\Team;
@@ -44,16 +45,15 @@ class TeamController extends Controller {
   }
 
   public function viewTeamSubmissions($id) {
-    $team = Team::with(['group', 'submissions' => function($query) use ($id) {
-      $query->where('team_id', $id)->orderBy('created_at', 'desc')->paginate(10);
-    }, 'submissions.upload', 'submissions.challenge', 'submissions.question'])->findOrFail($id);
+    $team = Team::with('group')->findOrFail($id);
+    $submissions = Submission::with(['upload', 'challenge', 'question'])->where('team_id', $id)->orderBy('created_at', 'desc')->paginate(12);
 
     return Inertia::render('admin/team/submissions', [
       'team' => [
         'name' => $team->name,
         'group' => $team->group->name,
       ],
-      'submissions' => $team->submissions,
+      'submissions' => $submissions,
     ]);
   }
 

@@ -41,20 +41,12 @@ class QuestionController extends Controller {
   }
 
   public function viewQuestionSubmissions($id) {
-    $question = Question::with(['submissions' => function($query) use ($id) {
-      $query->where('question_id', $id)->orderBy('created_at', 'desc');
-    }, 'submissions.team', 'submissions.team.group'])->findOrFail($id);
+    $question = Question::findOrFail($id);
+    $submissions = Submission::with(['upload', 'question'])->where('question_id', $id)->orderBy('created_at', 'desc')->paginate(12);
 
     return Inertia::render('admin/question/submissions', [
       'question' => $question->name,
-      'submissions' => $question->submissions->map(fn($submission) => [
-        'id' => $submission->id,
-        'answer' => $submission->answer,
-        'time' => $submission->time,
-        'team' => $submission->team->name,
-        'group' => $submission->team->group->name,
-        'accepted' => $submission->accepted,
-      ]),
+      'submissions' => $submissions,
     ]);
   }
 
