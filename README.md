@@ -86,4 +86,4 @@ Variables to set:
 
 # Development
 Things to chip away at:
-* Pagination of submissions page, to avoid killing the server (sorry Thursday teams...)
+* ~~Pagination of submissions page, to avoid killing the server (sorry Thursday teams...)~~
