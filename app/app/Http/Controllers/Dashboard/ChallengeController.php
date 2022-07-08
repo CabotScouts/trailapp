@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Dashboard;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 use App\Http\Controllers\Controller;
 use App\Models\Challenge;
