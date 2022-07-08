@@ -14,21 +14,9 @@ class SubmissionController extends Controller {
 
   public function submissions($filter=false) {
     $submissions = Submission::with('upload', 'challenge', 'question', 'team', 'team.group');
-    $submissions = ($filter == "pending") ? $submissions->where('accepted', [false, null])->oldest()->limit(12) : $submissions->latest();
-
-    return Inertia::render('admin/submission/list', [
-      'submissions' => $submissions->get()->map(fn($submission) => [
-        'id' => $submission->id,
-        'upload' => ($submission->upload) ? [ 'file' => $submission->upload->file, 'link' => $submission->upload->link ] : false,
-        'answer' => ($submission->answer) ? $submission->answer : false,
-        'challenge' => ($submission->challenge) ? $submission->challenge->name : false,
-        'question' => ($submission->question) ? ['name' => $submission->question->name, 'text' => $submission->question->question] : false,
-        'time' => $submission->time,
-        'team' => $submission->team->name,
-        'group' => $submission->team->group->name,
-        'accepted' => $submission->accepted,
-      ]),
-    ]);
+    $submissions = ($filter == "pending") ? $submissions->where('accepted', [false, null])->oldest() : $submissions->latest();
+    $submissions = $submissions->paginate(12);
+    return Inertia::render('admin/submission/list', [ "submissions" => $submissions ]);
   }
 
   public function acceptSubmission(Request $request) {
@@ -48,5 +36,5 @@ class SubmissionController extends Controller {
     $s->delete();
     return redirect()->back();
   }
-  
+
 }

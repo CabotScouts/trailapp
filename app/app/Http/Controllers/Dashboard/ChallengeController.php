@@ -39,20 +39,12 @@ class ChallengeController extends Controller {
   }
 
   public function viewChallengeSubmissions($id) {
-    $challenge = Challenge::with(['submissions' => function($query) use ($id) {
-      $query->where('challenge_id', $id)->orderBy('created_at', 'desc');
-    }, 'submissions.team', 'submissions.team.group', 'submissions.upload'])->findOrFail($id);
+    $challenge = Challenge::findOrFail($id);
+    $submissions = Submission::with(['upload', 'challenge'])->where('challenge_id', $id)->orderBy('created_at', 'desc')->paginate(12);
 
     return Inertia::render('admin/challenge/submissions', [
       'challenge' => $challenge->name,
-      'submissions' => $challenge->submissions->map(fn($submission) => [
-        'id' => $submission->id,
-        'upload' => ($submission->upload) ? [ 'file' => $submission->upload->file, 'link' => $submission->upload->link ] : false,
-        'time' => $submission->time,
-        'team' => $submission->team->name,
-        'group' => $submission->team->group->name,
-        'accepted' => $submission->accepted,
-      ]),
+      'submissions' => $submissions
     ]);
   }
 

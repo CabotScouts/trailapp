@@ -14,7 +14,7 @@ class TeamController extends Controller {
 
   public function broadcast(Request $request, $id = false) {
     $team = ($id) ? Team::where('id', $id)->firstOrFail() : false;
-    
+
     if($request->isMethod('get')) {
       return Inertia::render('admin/broadcast', [
         'id' => ($team) ? $team->id : null,
@@ -25,7 +25,7 @@ class TeamController extends Controller {
       $data = $request->validate([
         'message' => 'required'
       ]);
-      
+
       MessageToTeams::dispatch($request->message, $id);
       $route = $id ? 'teams' : 'dashboard';
       return redirect()->route($route);
@@ -44,24 +44,15 @@ class TeamController extends Controller {
   }
 
   public function viewTeamSubmissions($id) {
-    $team = Team::with(['group', 'submissions' => function($query) use ($id) {
-      $query->where('team_id', $id)->orderBy('created_at', 'desc');
-    }, 'submissions.upload', 'submissions.challenge', 'submissions.question'])->findOrFail($id);
+    $team = Team::with('group')->findOrFail($id);
+    $submissions = Submission::with(['upload', 'challenge', 'question'])->where('team_id', $id)->orderBy('created_at', 'desc')->paginate(12);
 
     return Inertia::render('admin/team/submissions', [
       'team' => [
         'name' => $team->name,
         'group' => $team->group->name,
       ],
-      'submissions' => $team->submissions->map(fn($submission) => [
-        'id' => $submission->id,
-        'upload' => ($submission->upload) ? [ 'file' => $submission->upload->file, 'link' => $submission->upload->link ] : false,
-        'answer' => ($submission->answer) ? $submission->answer : false,
-        'challenge' => ($submission->challenge) ? $submission->challenge->name : false,
-        'question' => ($submission->question) ? ['name' => $submission->question->name, 'text' => $submission->question->question] : false,
-        'time' => $submission->time,
-        'accepted' => $submission->accepted,
-      ]),
+      'submissions' => $submissions,
     ]);
   }
 
@@ -84,5 +75,5 @@ class TeamController extends Controller {
       }
     }
   }
-  
+
 }
