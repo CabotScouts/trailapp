@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from '@inertiajs/inertia-react';
 import Frame, { Container } from '@/layouts/admin/frame';
+import Paginator from '@/components/admin/paginator';
 import PhotoSubmission from '@/components/photo-submission';
 import TextSubmission from '@/components/text-submission';
 import { ThumbUpIcon, ThumbDownIcon } from '@heroicons/react/solid';
@@ -31,7 +32,7 @@ export default function List({ submissions, children }) {
       
       <Container>
         <div className="mx-auto grid grid-cols-1 md:grid-cols-2">
-        { (submissions.length > 0) && submissions.map((s) =>
+        { (submissions.data.length > 0) && submissions.data.map((s) =>
           <div key={ s.id } className="p-5 border-b border-b-slate-200 border-r border-r-slate-200">
             { s.challenge && <p className="font-serif text-2xl font-bold text-blue-800">{ s.challenge }</p> }
             { s.question && <p className="font-serif text-2xl font-bold text-blue-800">{ s.question.name }</p> }
@@ -66,7 +67,8 @@ export default function List({ submissions, children }) {
           </div>
         ) }
         </div>
-        { (submissions.length === 0) &&
+        <Paginator data={ submissions } />
+        { (submissions.data.length === 0) &&
           <div className="p-5 text-center">
             <p className="text-medium text-xl">No submissions</p>
           </div>
