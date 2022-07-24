@@ -284,17 +284,15 @@ build() {
     internal_build_env
     internal_build_image
     internal_run_postbuild
-  elif [[ "${OPTION}" == "npm" ]]; then
+  elif [[ "${OPTION}" == "react" ]]; then
     echo "[*] Building react app..."
     internal_build_react
-    echo "[*] done."
   elif [[ "${OPTION}" == "all" ]]; then
     echo "[*] Building everything..."
     internal_build_env
     internal_build_image
     internal_build_react
     internal_run_postbuild
-    echo "[*] done."
   fi
 
   echo "[*] done."
