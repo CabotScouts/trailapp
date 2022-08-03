@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Dashboard\AuthController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\LeaderboardController;
 use App\Http\Controllers\Dashboard\SubmissionController;
 use App\Http\Controllers\Dashboard\QuestionController;
 use App\Http\Controllers\Dashboard\ChallengeController;
@@ -15,12 +16,15 @@ Route::match(['get', 'post'], '/login', [AuthController::class, 'login'])->middl
 Route::get('/logout', [AuthController::class, 'logout'])->middleware(['auth:user'])->name('logout');
 
 Route::prefix('dashboard')->middleware(['auth:user'])->group(function(){
-  
+
   Route::controller(DashboardController::class)->group(function() {
     Route::get('', 'dashboard')->name('dashboard');
-    Route::get('/leaderboard', 'leaderboard')->name('leaderboard');
   });
-  
+
+  Route::controller(LeaderboardController::class)->group(function() {
+    Route::get('/leaderboard/{group?}', 'leaderboard')->name('leaderboard');
+  });
+
   Route::controller(SubmissionController::class)->group(function() {
     Route::get('/submissions/{filter?}/{page?}', 'submissions')->whereAlpha('filter')->name('submissions');
     Route::post('/submission/{id}/accept', 'acceptSubmission')->name('accept-submission');
