@@ -2,7 +2,8 @@ version: "3"
 
 services:
   app:
-    image: ${DOCKER_TAG}
+    build:
+      dockerfile: Dockerfile
     container_name: ${DOCKER_NAMESPACE}_app
     user: "${DOCKER_UID}:${DOCKER_GID}"
     restart: unless-stopped
@@ -14,7 +15,8 @@ services:
       - ../app/php.ini:/usr/local/etc/php/conf.d/additional.ini
 
   queue:
-    image: ${DOCKER_TAG}
+    build:
+      dockerfile: Dockerfile
     container_name: ${DOCKER_NAMESPACE}_queue
     user: "${DOCKER_UID}:${DOCKER_GID}"
     restart: unless-stopped
@@ -28,7 +30,8 @@ services:
       - ../app/php.ini:/usr/local/etc/php/conf.d/additional.ini
 
   scheduler:
-    image: ${DOCKER_TAG}
+    build:
+      dockerfile: Dockerfile
     container_name: ${DOCKER_NAMESPACE}_scheduler
     user: "${DOCKER_UID}:${DOCKER_GID}"
     restart: unless-stopped
