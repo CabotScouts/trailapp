@@ -377,7 +377,7 @@ quickstart() {
   internal_run_postbuild
   internal_compose_up
   internal_migrate_force
-  internal_add_user root password
+  docker exec -it ${DOCKER_NAMESPACE}_app php artisan db:seed
   echo "[*] If everything went to plan you should now be able to login at ${APP_URL} using username 'root', password 'password'!"
   internal_exit
 }
