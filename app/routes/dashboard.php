@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Dashboard\AuthController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\EventController;
 use App\Http\Controllers\Dashboard\LeaderboardController;
 use App\Http\Controllers\Dashboard\SubmissionController;
 use App\Http\Controllers\Dashboard\QuestionController;
@@ -19,6 +20,10 @@ Route::prefix('dashboard')->middleware(['auth:user'])->group(function(){
 
   Route::controller(DashboardController::class)->group(function() {
     Route::get('', 'dashboard')->name('dashboard');
+  });
+
+  Route::controller(EventController::class)->group(function() {
+    Route::get('/events', 'events')->name('events');
   });
 
   Route::controller(LeaderboardController::class)->group(function() {
