@@ -8,7 +8,7 @@ use App\Models\Event;
 trait EventSpecific {
 
   public function event() {
-    return $this->hasOne(Event::class);
+    return $this->belongsTo(Event::class);
   }
   
 }
