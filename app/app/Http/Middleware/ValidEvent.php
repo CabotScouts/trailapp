@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class NotATeam
+class ValidEvent
 {
     /**
      * Handle an incoming request.
@@ -17,8 +17,13 @@ class NotATeam
      */
     public function handle(Request $request, Closure $next)
     {
-      if(Auth::guard('team')->check()) {
-        return redirect()->route('trail');
+      $team = Auth::user();
+      $active = $team->group->event->active;
+      $running = $team->group->event->running;
+
+      if(!$active || !$running) {
+        Auth::guard('team')->logout();
+        return redirect()->route('start');
       }
 
       return $next($request);
