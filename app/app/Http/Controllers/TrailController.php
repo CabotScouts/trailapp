@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 use App\Helpers;
-use App\Models\Question;
-use App\Models\Challenge;
+use App\Models\Event;
 use App\Models\Submission;
 use App\Models\Upload;
 use App\Jobs\ProcessUpload;
@@ -20,14 +19,13 @@ class TrailController extends Controller {
 
   public function questions() {
     $user = Auth::user();
+    $event = Event::where('active', true)->with(['questions', 'questions.submissions' => function($query) use ($user) { $query->where('team_id', $user->id); }])->first();
     
     return Inertia::render('question/list', [
       'team' => ['id' => $user->id, 'name' => $user->name],
       'group' => $user->group->name,
       'points' => Helpers::points($user->points),
-      'questions' => Question::with(['submissions' => function($query) use ($user) {
-        $query->where('team_id', $user->id);
-      }])->orderBy('number')->get()
+      'questions' => $event->questions()->orderBy('number')->get()
         ->map(function($question) {
           return [
             'id' => $question->id,
@@ -42,7 +40,8 @@ class TrailController extends Controller {
   }
 
   public function viewQuestion($id) {
-    $question = Question::with(['submissions' => function($query) { $query->where('team_id', Auth::user()->id); }])->findOrFail($id);
+    $event = Event::where('active', true)->with(['questions', 'questions.submissions' => function($query) { $query->where('team_id', Auth::user()->id); }])->first();
+    $question = $event->questions()->findOrFail($id);
     $submission = $question->submissions->first();
 
     return Inertia::render('question/view', [
@@ -59,8 +58,11 @@ class TrailController extends Controller {
   }
 
   public function questionSubmission(Request $request, $id) {
+    $event = Event::where('active', true)->first();
+
     Validator::make($request->all(),
       [
+        'question' => ['required', Rule::exists('questions', 'id')->where(fn ($query) => $query->where('event_id', $event->id))],
         'answer' => 'required|string',
       ],
       [
@@ -83,14 +85,13 @@ class TrailController extends Controller {
 
   public function challenges() {
     $user = Auth::user();
+    $event = Event::where('active', true)->with(['challenges', 'challenges.submissions' => function($query) use ($user) { $query->where('team_id', $user->id); }])->first();
     
     return Inertia::render('challenge/list', [
       'team' => ['id' => $user->id, 'name' => $user->name],
       'group' => $user->group->name,
       'points' => Helpers::points($user->points),
-      'challenges' => Challenge::with(['submissions' => function($query) use ($user) {
-        $query->where('team_id', $user->id);
-      }])->orderBy('points', 'desc')
+      'challenges' => $event->challenges()->orderBy('points', 'desc')
         ->orderBy('name')
         ->get()
         ->map(function($challenge) {
@@ -106,7 +107,8 @@ class TrailController extends Controller {
   }
 
   public function viewChallenge($id) {
-    $challenge = Challenge::with(['submissions' => function($query) { $query->where('team_id', Auth::user()->id); }])->findOrFail($id);
+    $event = Event::where('active', true)->with(['challenges', 'challenges.submissions' => function($query) { $query->where('team_id', Auth::user()->id); }])->first();
+    $challenge = $event->challenges()->findOrFail($id);
     $submission = $challenge->submissions->first();
 
     return Inertia::render('challenge/view', [
@@ -125,8 +127,11 @@ class TrailController extends Controller {
   }
 
   public function challengeSubmission(Request $request, $id) {
+    $event = Event::where('active', true)->first();
+
     Validator::make($request->all(),
       [
+        'challenge' => ['required', Rule::exists('questions', 'id')->where(fn ($query) => $query->where('event_id', $event->id))],
         'photo' => 'required|image|max:12000',
       ],
       [
