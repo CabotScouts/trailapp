@@ -10,15 +10,18 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 
-use App\Models\Group;
+use App\Models\Event;
 use App\Models\Team;
 
 class TeamController extends Controller {
 
   public function index(Request $request) {
+    $event = Event::with('groups')->where('active', true)->first();
+
     return Inertia::render('create-team', [
-      'name' => config('app.name'),
-      'groups' => Group::orderBy('number')->orderBy('name')->get()->map(function($group) {
+      'name' => $event->name,
+      'running' => $event->running,
+      'groups' => $event->groups()->orderBy('number')->orderBy('name')->get()->map(function($group) {
         return [ 'id' => $group->id, 'name' => $group->name ];
       }),
     ]);
