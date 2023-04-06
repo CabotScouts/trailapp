@@ -35,10 +35,10 @@ class TeamController extends Controller {
         'name' => ['required', 'string', 'max:255', Rule::unique('teams')->where(fn ($query) => $query->where('group_id', $request->group))],
       ],
       [
-        'group.required' => 'You need to choose your Scout Group',
-        'group.exists' => 'The Scout Group you\'ve chosen doesn\'t exist',
+        'group.required' => 'You need to choose your group',
+        'group.exists' => 'The group you\'ve chosen doesn\'t exist',
         'name.required' => 'You need to enter a team name',
-        'name.unique' => 'Someone in your Scout Group is already using this team name',
+        'name.unique' => 'Someone in your group is already using this team name',
       ],
     )->validate();
 

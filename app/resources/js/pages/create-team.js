@@ -28,19 +28,29 @@ const Start = (props) => {
     <>
       <Head title="Create a team" />
       <Frame>
-        <Header title={ props.name }>
-          <p>Pick your Scout Group and decide on a team name to start the trail</p>
-        </Header>
-        
-        <Errors errors={errors} />
-        
-        <Group onSubmit={ submit }>
-          <Select title="Scout Group" name="group" placeholder="Select your Group" onChange={ handleChange } required>
-            { props.groups.map(g => (<option key={ g.id } value={ g.id }>{ g.name }</option>)) }
-          </Select>
-          <Input type="text" title="Team Name" name="name" placeholder="Pick a team name" onChange={ handleChange } required />
-          <Button processing={ processing }>Start Trail</Button>
-        </Group>
+        {(props.running == true) &&
+          <>
+            <Header title={props.name}>
+              <p>Pick your group and decide on a team name to start the trail</p>
+            </Header>
+
+            <Errors errors={errors} />
+
+            <Group onSubmit={submit}>
+              <Select title="Group" name="group" placeholder="Select your group" onChange={handleChange} required>
+                {props.groups.map(g => (<option key={g.id} value={g.id}>{g.name}</option>))}
+              </Select>
+              <Input type="text" title="Team Name" name="name" placeholder="Pick a team name" onChange={handleChange} required />
+              <Button processing={processing}>Start Trail</Button>
+            </Group>
+          </>
+        }
+
+        {(props.running == false) &&
+          <Header title={props.name}>
+            <p>This event isn't running yet!</p>
+          </Header>
+        }
       </Frame>
     </>
   );
