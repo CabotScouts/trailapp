@@ -28,10 +28,12 @@ class TeamController extends Controller {
   }
 
   public function create(Request $request) {
+    $event = Event::where('active', true)->first();
+
     Validator::make(
       $request->all(),
       [
-        'group' => 'required|exists:groups,id',
+        'group' => ['required', Rule::exists('groups', 'id')->where(fn ($query) => $query->where('event_id', $event->id))],
         'name' => ['required', 'string', 'max:255', Rule::unique('teams')->where(fn ($query) => $query->where('group_id', $request->group))],
       ],
       [
