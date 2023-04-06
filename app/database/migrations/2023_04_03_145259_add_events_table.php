@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->boolean('active')->default(false);
+            $table->boolean('running')->default(false);
         });
     }
 
