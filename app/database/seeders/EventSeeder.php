@@ -23,6 +23,7 @@ class EventSeeder extends Seeder
         $event = Event::create([
             'name' => 'Example Event',
             'active' => true,
+            'running' => true,
         ]);
 
         // Update questions/challenges/groups to reference this event
