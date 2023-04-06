@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->boolean('active');
+            $table->boolean('active')->default(false);
         });
     }
 
