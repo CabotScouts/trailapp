@@ -71,7 +71,7 @@ class EventController extends Controller {
               'name' => $group->name,
               'number' => $group->number,
             ]);
-            $event->groups()->save($q);
+            $event->groups()->save($g);
           }
         }
       }
