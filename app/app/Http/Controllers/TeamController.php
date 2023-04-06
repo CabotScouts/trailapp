@@ -58,8 +58,9 @@ class TeamController extends Controller {
 
   public function join($id, $code) {
     $team = Team::where('id', $id)->firstOrFail();
+    $event = Event::where('active', true)->first();
     
-    if($team->join_token == $code) {
+    if($team->join_token == $code && $team->group->event_id = $event->id) {
       Auth::guard('team')->loginUsingId($id, true);
       return redirect()->route('trail');
     }
@@ -68,8 +69,15 @@ class TeamController extends Controller {
   }
 
   public function clone(Request $request, $id) {
-    Auth::guard('team')->loginUsingId($id, true);
-    return redirect()->route('trail');
+    $team = Team::where('id', $id)->firstOrFail();
+    $event = Event::where('active', true)->first();
+
+    if($team->group->event_id = $event->id) {
+      Auth::guard('team')->loginUsingId($id, true);
+      return redirect()->route('trail');
+    }
+
+    return redirect()->route('start');
   }
 
   public function destroy(Request $request) {
