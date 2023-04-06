@@ -24,6 +24,11 @@ Route::prefix('dashboard')->middleware(['auth:user'])->group(function(){
 
   Route::controller(EventController::class)->group(function() {
     Route::get('/events', 'events')->name('events');
+    Route::match(['get', 'post'], '/event/new', 'newEvent')->name('new-event');
+    Route::match(['get', 'post'], '/event/{id}/edit', 'editEvent')->name('edit-event');
+    Route::match(['get', 'post'], '/event/{id}/delete', 'deleteEvent')->name('delete-event');
+    Route::match(['get', 'post'], '/event/{id}/active', 'toggleActive')->name('toggle-event-active');
+    Route::match(['get', 'post'], '/event/{id}/running', 'toggleRunning')->name('toggle-event-running');
   });
 
   Route::controller(LeaderboardController::class)->group(function() {

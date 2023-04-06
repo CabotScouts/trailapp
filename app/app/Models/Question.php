@@ -4,13 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\TakesSubmission;
+use App\Traits\EventSpecific;
 
 class Question extends Model {
-  use TakesSubmission;
+
+  use TakesSubmission, EventSpecific;
   protected $fillable = ['number', 'name', 'question', 'points'];
   public $timestamps = false;
-
-  public function event() {
-    return $this->hasOne(Event::class);
-  }
+  
 }
