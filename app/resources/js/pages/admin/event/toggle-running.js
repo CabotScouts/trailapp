@@ -19,7 +19,7 @@ export default function ToggleRunningEvent({ event }) {
   return (
     <>
       <Head title="Toggle Running Event" />
-      <Modal back={route('events')}>
+      <Modal>
         <div className="p-10 pt-20">
           <div className="p-5 bg-white rounded-xl shadow-lg w-full">
 
