@@ -378,7 +378,7 @@ quickstart() {
   internal_compose_up
   internal_migrate_force
   docker exec -it ${DOCKER_NAMESPACE}_app php artisan db:seed
-  echo "[*] If everything went to plan you should now be able to login at ${APP_URL} using username 'root', password 'password'!"
+  echo "[*] If everything went to plan you should now be able to login at ${APP_URL} using username 'admin', password 'password'!"
   internal_exit
 }
 

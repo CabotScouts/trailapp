@@ -38,7 +38,7 @@ Want to jump straight into testing the app? Try running *quickstart*:
 - [Check prerequisites are installed](#prerequisites)
 - Clone the repository: `git clone https://github.com/CabotScouts/trailapp.git`
 - Run *quickstart*: `./trail quickstart`
-- [Open the app in your browser](http://127.0.0.1:8000/login) and login with username `root`, password `password`.
+- [Open the app in your browser](http://127.0.0.1:8000/login) and login with username `admin`, password `password`.
 
 ## Custom installation
 - Clone the repository: `git clone https://github.com/CabotScouts/trailapp.git`
