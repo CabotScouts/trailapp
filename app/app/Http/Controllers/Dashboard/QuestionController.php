@@ -7,14 +7,17 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 use App\Http\Controllers\Controller;
+use App\Models\Event;
 use App\Models\Question;
 use App\Models\Submission;
 
 class QuestionController extends Controller {
 
   public function questions() {
+    $event = Event::where('active', true)->with(['questions', 'questions.submissions'])->first();
+
     return Inertia::render('admin/question/list', [
-      'questions' => Question::orderBy('number')->get()->map(fn($question) => [
+      'questions' => $event->questions()->orderBy('number')->get()->map(fn($question) => [
         'id' => $question->id,
         'number' => $question->number,
         'name' => $question->name,
@@ -26,7 +29,8 @@ class QuestionController extends Controller {
   }
 
   public function viewQuestion($id) {
-    $question = Question::findOrFail($id);
+    $event = Event::where('active', true)->with('questions')->first();
+    $question = $event->questions()->findOrFail($id);
 
     return Inertia::render('admin/question/view', [
       'question' => [
@@ -41,8 +45,10 @@ class QuestionController extends Controller {
   }
 
   public function viewQuestionSubmissions($id) {
-    $question = Question::findOrFail($id);
-    $submissions = Submission::with(['upload', 'question'])->where('question_id', $id)->orderBy('created_at', 'desc')->paginate(12);
+    // TODO: filter submissions to only fetch for question ID
+    $event = Event::where('active', true)->with(['questions', 'questions.submissions'])->first();
+    $question = $event->questions()->findOrFail($id);
+    $submissions = $question->submissions()->orderBy('created_at', 'desc')->paginate(12);
 
     return Inertia::render('admin/question/submissions', [
       'question' => $question->name,
@@ -70,14 +76,16 @@ class QuestionController extends Controller {
         'points' => 'required|numeric|gt:0',
       ]);
 
-      Question::insert($data);
+      $question = Question::create($data);
+      Event::where('active', true)->first()->questions()->save($question);
       return redirect()->route('questions');
     }
   }
 
   public function editQuestion(Request $request, $id) {
     if($request->isMethod('get')) {
-      $question = Question::findOrFail($id);
+      $event = Event::where('active', true)->with('questions')->first();
+      $question = $event->questions()->findOrFail($id);
       return Inertia::render('admin/question/form', [
         'data' => [
           'id' => $question->id,
@@ -89,12 +97,13 @@ class QuestionController extends Controller {
       ]);
     }
     elseif($request->isMethod('post')) {
-      $question = Question::findOrFail($id);
+      $event = Event::where('active', true)->with('questions')->first();
+      $question = $event->questions()->findOrFail($id);
 
       $data = $request->validate([
         'id' => 'required|exists:questions',
         'number' => 'required|numeric',
-        'name' => ['required', 'string', Rule::unique('questions')->ignore($question->id)],
+        'name' => 'required|string',
         'question' => 'required|string',
         'points' => 'required|numeric|gt:0',
       ]);
@@ -107,20 +116,18 @@ class QuestionController extends Controller {
 
   public function deleteQuestion(Request $request, $id) {
     if($request->isMethod('get')) {
-      $question = Question::findOrFail($id);
+      $event = Event::where('active', true)->with('questions')->first();
+      $question = $event->questions()->findOrFail($id);
       return Inertia::render('admin/question/delete', [
         'id' => $question->id,
         'name' => $question->name,
       ]);
     }
     elseif($request->isMethod('post')) {
-      if($request->id == $id) {
-        Question::destroy($id);
-        return redirect()->route('questions');
-      }
-      else {
-        return back()->withErrors(['id' => 'The question ID is invalid']);
-      }
+      $event = Event::where('active', true)->with('questions')->first();
+      $question = $event->questions()->findOrFail($id);
+      $question->delete();
+      return redirect()->route('questions');
     }
   }
   
