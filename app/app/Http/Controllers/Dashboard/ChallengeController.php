@@ -7,14 +7,17 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 use App\Http\Controllers\Controller;
+use App\Models\Event;
 use App\Models\Challenge;
 use App\Models\Submission;
 
 class ChallengeController extends Controller {
 
   public function challenges() {
+    $event = Event::where('active', true)->with(['challenges', 'challenges.submissions'])->first();
+
     return Inertia::render('admin/challenge/list', [
-      'challenges' => Challenge::with('submissions')->orderBy('name')->get()->map(fn($challenge) => [
+      'challenges' => $event->challenges()->orderBy('name')->get()->map(fn($challenge) => [
         'id' => $challenge->id,
         'name' => $challenge->name,
         'points' => $challenge->points,
@@ -25,7 +28,8 @@ class ChallengeController extends Controller {
   }
 
   public function viewChallenge($id) {
-    $challenge = Challenge::findOrFail($id);
+    $event = Event::where('active', true)->first();
+    $challenge = Challenge::where('event_id', $event->id)->findOrFail($id);
 
     return Inertia::render('admin/challenge/view', [
       'challenge' => [
@@ -39,7 +43,8 @@ class ChallengeController extends Controller {
   }
 
   public function viewChallengeSubmissions($id) {
-    $challenge = Challenge::findOrFail($id);
+    $event = Event::where('active', true)->first();
+    $challenge = Challenge::where('event_id', $event->id)->findOrFail($id);
     $submissions = Submission::with(['upload', 'challenge'])->where('challenge_id', $id)->orderBy('created_at', 'desc')->paginate(12);
 
     return Inertia::render('admin/challenge/submissions', [
@@ -66,14 +71,16 @@ class ChallengeController extends Controller {
         'points' => 'required|numeric|gt:0',
       ]);
 
-      Challenge::insert($data);
+      $challenge = Challenge::create($data);
+      Event::where('active', true)->first()->challenges()->save($challenge);
       return redirect()->route('challenges');
     }
   }
 
   public function editChallenge(Request $request, $id) {
     if($request->isMethod('get')) {
-      $challenge = Challenge::findOrFail($id);
+      $event = Event::where('active', true)->first();
+    $challenge = Challenge::where('event_id', $event->id)->findOrFail($id);
       return Inertia::render('admin/challenge/form', [
         'data' => [
           'id' => $challenge->id,
@@ -84,7 +91,8 @@ class ChallengeController extends Controller {
       ]);
     }
     elseif($request->isMethod('post')) {
-      $challenge = Challenge::findOrFail($id);
+      $event = Event::where('active', true)->first();
+    $challenge = Challenge::where('event_id', $event->id)->findOrFail($id);
 
       $data = $request->validate([
         'id' => 'required|exists:challenges',
@@ -101,7 +109,8 @@ class ChallengeController extends Controller {
 
   public function deleteChallenge(Request $request, $id) {
     if($request->isMethod('get')) {
-      $challenge = Challenge::findOrFail($id);
+      $event = Event::where('active', true)->first();
+    $challenge = Challenge::where('event_id', $event->id)->findOrFail($id);
       return Inertia::render('admin/challenge/delete', [
         'id' => $challenge->id,
         'name' => $challenge->name,
