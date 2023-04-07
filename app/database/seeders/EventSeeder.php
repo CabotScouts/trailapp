@@ -9,6 +9,8 @@ use App\Models\Event;
 use App\Models\Question;
 use App\Models\Challenge;
 use App\Models\Group;
+use App\Models\Team;
+use App\Models\Submission;
 
 class EventSeeder extends Seeder
 {
@@ -30,5 +32,7 @@ class EventSeeder extends Seeder
         Question::where('event_id', NULL)->update(['event_id' => $event->id]);
         Challenge::where('event_id', NULL)->update(['event_id' => $event->id]);
         Group::where('event_id', NULL)->update(['event_id' => $event->id]);
+        Team::where('event_id', NULL)->update(['event_id' => $event->id]);
+        Submission::where('event_id', NULL)->update(['event_id' => $event->id]);
     }
 }
