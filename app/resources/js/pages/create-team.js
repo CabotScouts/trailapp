@@ -48,7 +48,7 @@ const Start = (props) => {
 
         {(props.running == false) &&
           <Header title={props.name}>
-            <p>This event isn't running yet!</p>
+            <p>This event isn't currently running, come back later!</p>
           </Header>
         }
       </Frame>
