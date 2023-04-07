@@ -79,6 +79,8 @@ class TrailController extends Controller {
     $submission->answer = $request->answer;
     $submission->save();
     
+    $event->submissions()->save($submission);
+
     SubmissionReceived::dispatch($submission);
     return redirect()->route('trail');
   }
@@ -153,6 +155,8 @@ class TrailController extends Controller {
     );
     $upload->submission()->associate($submission);
     $upload->save();
+
+    $event->submissions()->save($submission);
 
     ProcessUpload::dispatch($upload);
     SubmissionReceived::dispatch($submission);

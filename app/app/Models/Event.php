@@ -22,4 +22,12 @@ class Event extends Model
         return $this->hasMany(Group::class);
     }
 
+    public function teams() {
+        return $this->hasMany(Team::class);
+    }
+
+    public function submissions() {
+        return $this->hasMany(Submission::class);
+    }
+
 }

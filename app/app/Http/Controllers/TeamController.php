@@ -50,6 +50,8 @@ class TeamController extends Controller {
       'join_token' => Str::random(100),
     ]);
 
+    $event->teams()->save($team);
+
     $team->generateQR();
 
     Auth::guard('team')->login($team, true);

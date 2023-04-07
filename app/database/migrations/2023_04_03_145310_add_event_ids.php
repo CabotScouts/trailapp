@@ -24,6 +24,14 @@ return new class extends Migration
         Schema::table('challenges', function (Blueprint $table) {
             $table->foreignId('event_id')->nullable()->constrained()->onDelete('cascade');
         });
+
+        Schema::table('teams', function (Blueprint $table) {
+            $table->foreignId('event_id')->nullable()->constrained()->onDelete('cascade');
+        });
+
+        Schema::table('submissions', function (Blueprint $table) {
+            $table->foreignId('event_id')->nullable()->constrained()->onDelete('cascade');
+        });
     }
 
     /**
@@ -44,6 +52,16 @@ return new class extends Migration
         });
 
         Schema::table('challenges', function (Blueprint $table) {
+            $table->dropForeign(['event_id']);
+            $table->dropColumn('event_id');
+        });
+
+        Schema::table('teams', function (Blueprint $table) {
+            $table->dropForeign(['event_id']);
+            $table->dropColumn('event_id');
+        });
+
+        Schema::table('submissions', function (Blueprint $table) {
             $table->dropForeign(['event_id']);
             $table->dropColumn('event_id');
         });
