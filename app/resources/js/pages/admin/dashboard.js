@@ -8,9 +8,7 @@ export default function Dashboard(props) {
     <Frame title="Dashboard" back="false">
       <Stripe>
         <div className="flex items-center">
-          <div className="flex-grow pr-5">
-            Current event: <span className="font-bold">{props.event.name}</span>
-          </div>
+          <div className="flex-grow pr-5 font-bold">{props.event.name}</div>
           <div className="flex-none">
             <Link href={route('toggle-event-running', props.event.id)}>
               {(props.event.running == true) &&
