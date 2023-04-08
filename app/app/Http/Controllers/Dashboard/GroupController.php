@@ -75,7 +75,7 @@ class GroupController extends Controller {
     }
     elseif($request->isMethod('post')) {
       $event = Event::where('active', true)->with('groups')->first();
-      $group= $event->groups()->findOrFail($id);
+      $group = $event->groups()->findOrFail($id);
 
       $data = $request->validate([
         'id' => 'required|exists:groups',
@@ -99,7 +99,7 @@ class GroupController extends Controller {
     }
     elseif($request->isMethod('post')) {
       $group = Event::where('active', true)->with('groups')->first()->groups()->findOrFail($id);
-      $groups->delete();
+      $group->delete();
       return redirect()->route('groups');
     }
   }
