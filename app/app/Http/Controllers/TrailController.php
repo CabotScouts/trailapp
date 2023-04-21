@@ -133,7 +133,7 @@ class TrailController extends Controller {
 
     Validator::make($request->all(),
       [
-        'challenge' => ['required', Rule::exists('questions', 'id')->where(fn ($query) => $query->where('event_id', $event->id))],
+        'challenge' => ['required', Rule::exists('challenges', 'id')->where(fn ($query) => $query->where('event_id', $event->id))],
         'photo' => 'required|image|max:12000',
       ],
       [
