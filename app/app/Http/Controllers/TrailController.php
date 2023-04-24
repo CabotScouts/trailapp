@@ -26,14 +26,14 @@ class TrailController extends Controller {
       'group' => $user->group->name,
       'points' => Helpers::points($user->points),
       'questions' => $event->questions()->orderBy('number')->get()
-        ->map(function($question) {
+        ->map(function($question) use ($user) {
           return [
             'id' => $question->id,
             'number' => $question->number,
             'name' => $question->name,
             'points' => $question->pointsLabel,
-            'submitted' => ($question->submissions->count() > 0),
-            'accepted' => ($question->submissions->where('accepted', true)->count() > 0),
+            'submitted' => ($question->submissions->where('team_id', $user->id)->count() > 0),
+            'accepted' => ($question->submissions->where('team_id', $user->id)->where('accepted', true)->count() > 0),
           ];
         }),
     ]);
@@ -42,7 +42,7 @@ class TrailController extends Controller {
   public function viewQuestion($id) {
     $event = Event::where('active', true)->with(['questions', 'questions.submissions' => function($query) { $query->where('team_id', Auth::user()->id); }])->first();
     $question = $event->questions()->findOrFail($id);
-    $submission = $question->submissions->first();
+    $submission = $question->submissions->where('team_id', Auth::user()->id)->first();
 
     return Inertia::render('question/view', [
       'question' => [
@@ -96,13 +96,13 @@ class TrailController extends Controller {
       'challenges' => $event->challenges()->orderBy('points', 'desc')
         ->orderBy('name')
         ->get()
-        ->map(function($challenge) {
+        ->map(function($challenge) use ($user) {
           return [
             'id' => $challenge->id,
             'name' => $challenge->name,
             'points' => $challenge->pointsLabel,
-            'submitted' => ($challenge->submissions->count() > 0),
-            'accepted' => ($challenge->submissions->where('accepted', true)->count() > 0),
+            'submitted' => ($challenge->submissions->where('team_id', $user->id)->count() > 0),
+            'accepted' => ($challenge->submissions->where('team_id', $user->id)->where('accepted', true)->count() > 0),
           ];
         }),
     ]);
@@ -111,7 +111,7 @@ class TrailController extends Controller {
   public function viewChallenge($id) {
     $event = Event::where('active', true)->with(['challenges', 'challenges.submissions' => function($query) { $query->where('team_id', Auth::user()->id); }])->first();
     $challenge = $event->challenges()->findOrFail($id);
-    $submission = $challenge->submissions->first();
+    $submission = $challenge->submissions->where('team_id', Auth::user()->id)->first();
 
     return Inertia::render('challenge/view', [
       'challenge' => [
