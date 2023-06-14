@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use chillerlan\QRCode\QRCode;
+use chillerlan\QRCode\{QRCode, QROptions};
 
 class Team extends Authenticatable {
 
@@ -24,8 +24,13 @@ class Team extends Authenticatable {
   }
   
   public function generateQR() {
+    $options = new QROptions([
+      'version' => 10,
+      'imageTransparent' => false,
+    ]);
+    $qr = new QRCode($options);
     $url = route('join-team', ['id' => $this->id, 'code' => $this->join_token]);
-    (new QRCode)->render($url, storage_path("app/qr/{$this->id}.png"));
+    $qr->render($url, storage_path("app/qr/{$this->id}.png"));
   }
 
 }
