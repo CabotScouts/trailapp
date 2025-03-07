@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   app:
     networks:
@@ -12,7 +10,7 @@ services:
   scheduler:
     networks:
       - database
-      
+
 networks:
   database:
     name: ${DOCKER_DB_NETWORK}
