@@ -64,22 +64,22 @@ internal_check_openssl() {
 
 internal_dcfiles() {
   # Build docker compose files string for current configuration
-  DCFILES="-f build/docker-compose.yml"
+  DCFILES="-f build/compose.yml"
 
   if [[ -z $DOCKER_INGRESS ]] || [[ "${DOCKER_INGRESS}" == "local" ]]; then
-    DCFILES="${DCFILES} -f build/docker-compose.local.yml"
+    DCFILES="${DCFILES} -f build/compose.local.yml"
     echo "[.] Using local ingress configuration"
   elif [[ "${DOCKER_INGRESS}" == "traefik" ]]; then
-    DCFILES="${DCFILES} -f build/docker-compose.traefik.yml"
+    DCFILES="${DCFILES} -f build/compose.traefik.yml"
     echo "[.] Using traefik ingress configuration"
   fi
 
   if [[ "${DOCKER_DB}" == "internal" ]]; then
     echo "[.] Using internal mysql container configuration"
-    DCFILES="${DCFILES} -f build/docker-compose.db-internal.yml"
+    DCFILES="${DCFILES} -f build/compose.db-internal.yml"
   elif [[ ! -z $DOCKER_DB_NETWORK ]]; then
     echo "[.] Using external database network configuration"
-    DCFILES="${DCFILES} -f build/docker-compose.db-network.yml"
+    DCFILES="${DCFILES} -f build/compose.db-network.yml"
   fi
 }
 
@@ -152,8 +152,8 @@ internal_build_react() {
   # Build react app files in node container
   echo "[.] Running react build in node build container"
 
-  ${DOCKERCOMPOSE} --env-file ./app/.env -f build/docker-compose.npm.yml run --rm build install
-  ${DOCKERCOMPOSE} --env-file ./app/.env -f build/docker-compose.npm.yml run --rm build run prod
+  ${DOCKERCOMPOSE} --env-file ./app/.env -f build/compose.npm.yml run --rm build install
+  ${DOCKERCOMPOSE} --env-file ./app/.env -f build/compose.npm.yml run --rm build run prod
 }
 
 internal_run_setup() {
