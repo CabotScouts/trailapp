@@ -1,29 +1,29 @@
-FROM php:8.0-apache
+FROM php:8.3-apache
 
 RUN apt update \
-        && apt install -y \
-            g++ \
-            libicu-dev \
-            libpq-dev \
-            libzip-dev \
-            zip \
-            zlib1g-dev \
-            libfreetype6-dev \
-		        libjpeg62-turbo-dev \
-		        libpng-dev \
-            mariadb-client \
-        && docker-php-ext-configure gd --with-freetype --with-jpeg \
-        && docker-php-ext-install \
-            -j$(nproc) gd \
-            intl \
-            opcache \
-            pdo \
-            pdo_mysql \
-            pdo_pgsql \
-            pgsql \
-            exif \
-        && pecl install redis \
-        && docker-php-ext-enable redis
+    && apt install -y \
+    g++ \
+    libicu-dev \
+    libpq-dev \
+    libzip-dev \
+    zip \
+    zlib1g-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libpng-dev \
+    mariadb-client \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install \
+    -j$(nproc) gd \
+    intl \
+    opcache \
+    pdo \
+    pdo_mysql \
+    pdo_pgsql \
+    pgsql \
+    exif \
+    && pecl install redis \
+    && docker-php-ext-enable redis
 
 WORKDIR /var/www
 
