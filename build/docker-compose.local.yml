@@ -1,8 +1,0 @@
-services:
-  app:
-    ports:
-      - ${APP_PORT}:80
-
-  websockets:
-    ports:
-      - ${APP_WEBSOCKET_PORT}:6001
