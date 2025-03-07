@@ -1,0 +1,17 @@
+services:
+  app:
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql
+    container_name: ${DOCKER_NAMESPACE}_mysql
+    user: "${DOCKER_UID}:${DOCKER_GID}"
+    restart: unless-stopped
+    networks:
+      - backend
+    volumes:
+      - ../mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}

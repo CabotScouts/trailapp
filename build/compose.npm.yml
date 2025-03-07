@@ -1,0 +1,9 @@
+services:
+  build:
+    image: node:current-alpine
+    working_dir: /app
+    environment:
+      - NODE_OPTIONS=--openssl-legacy-provider
+    volumes:
+      - ../app:/app
+    entrypoint: [ 'npm' ]
