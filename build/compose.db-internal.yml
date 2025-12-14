@@ -2,6 +2,8 @@ services:
   app:
     depends_on:
       - mysql
+    volumes:
+      - ./mysql-tls-conf.cnf:/etc/mysql/conf.d/mysql-tls-conf.cnf
 
   mysql:
     image: mysql
