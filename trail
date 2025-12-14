@@ -40,7 +40,7 @@ internal_resolve_docker() {
     exit 1
   fi
 
-  docker compose --help &> /dev/null
+  docker compose &> /dev/null
   if [[ $? -eq 0 ]]; then
     DOCKERCOMPOSE="docker compose"
   else
