@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Dashboard;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use App\Models\Group;
 use App\Models\Team;
 use App\Models\Submission;
 use App\Events\MessageToTeams;
@@ -60,6 +62,33 @@ class TeamController extends Controller {
       ],
       'submissions' => $submissions,
     ]);
+  }
+
+  public function editTeam(Request $request, $id) {
+    if($request->isMethod('get')) {
+      $event = Event::where('active', true)->with(['teams', 'groups'])->first();
+      $team = $event->teams()->findOrFail($id);
+      $groups = $event->groups()->orderBy('number')->orderBy('name')->get();
+
+      return Inertia::render('admin/team/edit', [
+        'team' => $team,
+        'groups' => $groups,
+      ]);
+    }
+    elseif($request->isMethod('post')) {
+      $event = Event::where('active', true)->with('teams')->first();
+      $team = $event->teams()->findOrFail($id);
+
+      $data = $request->validate([
+        'id' => 'required|exists:teams',
+        'name' => ['required', 'string', 'max:255', Rule::unique('teams')->where(fn ($query) => $query->where('event_id', $event->id))->ignore($team->id)],
+        'group' => 'required|exists:groups,id',
+      ]);
+
+      $team->group()->associate(Group::find($data['group']));
+      $team->update($data);
+      return redirect()->route('teams');
+    }
   }
 
   public function deleteTeam(Request $request, $id) {

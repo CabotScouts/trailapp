@@ -65,6 +65,7 @@ Route::prefix('dashboard')->middleware(['auth:user'])->group(function(){
     Route::match(['get', 'post'], '/broadcast', 'broadcast')->name('broadcast');
     Route::match(['get', 'post'], '/team/{id}/broadcast', 'broadcast')->name('broadcast-to-team');
     Route::get('/team/{id}/submissions', 'viewTeamSubmissions')->name('view-team-submissions');
+    Route::match(['get', 'post'], '/team/{id}/edit', 'editTeam')->name('edit-team');
     Route::match(['get', 'post'], '/team/{id}/delete', 'deleteTeam')->name('delete-team');
   });
 

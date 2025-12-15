@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from '@inertiajs/react';
 import Frame, { Stripe, Container } from '@/layouts/admin/frame';
 import ListItem from '@/components/admin/list-item';
-import { ChatIcon, XIcon } from '@heroicons/react/solid';
+import { ChatIcon, PencilIcon, XIcon } from '@heroicons/react/solid';
 
 export default function List({ title = "Teams", teams, children = false, simple = false }) {
   return (
@@ -35,6 +35,11 @@ export default function List({ title = "Teams", teams, children = false, simple 
                 <Link href={route('broadcast-to-team', teams[key].id)}>
                   <div className="w-8 rounded-xl text-center text-neutral-100 p-2 bg-blue-600 mr-1">
                     <ChatIcon />
+                  </div>
+                </Link>
+                <Link href={route('edit-team', teams[key].id)}>
+                  <div className="w-8 rounded-xl text-center text-neutral-100 p-2 bg-emerald-600 mr-1">
+                    <PencilIcon />
                   </div>
                 </Link>
                 <Link href={route('delete-team', teams[key].id)}>
