@@ -153,7 +153,7 @@ internal_build_react() {
   echo "[.] Running react build in node build container"
 
   ${DOCKERCOMPOSE} --env-file ./app/.env -f build/compose.npm.yml run --rm build install
-  ${DOCKERCOMPOSE} --env-file ./app/.env -f build/compose.npm.yml run --rm build run prod
+  ${DOCKERCOMPOSE} --env-file ./app/.env -f build/compose.npm.yml run --rm build run build
 }
 
 internal_run_setup() {
