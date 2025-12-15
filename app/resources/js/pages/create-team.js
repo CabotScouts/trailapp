@@ -37,7 +37,8 @@ const Start = (props) => {
             <Errors errors={errors} />
 
             <Group onSubmit={submit}>
-              <Select title="Group" name="group" placeholder="Select your group" onChange={handleChange} required>
+              <Select title="Group" name="group" onChange={handleChange} required>
+                <option value="-">Select your Group</option>
                 {props.groups.map(g => (<option key={g.id} value={g.id}>{g.name}</option>))}
               </Select>
               <Input type="text" title="Team Name" name="name" placeholder="Pick a team name" onChange={handleChange} required />

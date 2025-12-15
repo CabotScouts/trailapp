@@ -57,7 +57,8 @@ export default function AddEvent(props) {
               {(add == true) &&
                 <>
                   <Checkbox name="clone" label="Clone an existing event?" onChange={handleCheckbox} defaultChecked={data.clone} />
-                  <Select title="Event to clone" name="clone_event_id" placeholder="Choose an event" onChange={handleChange}>
+                  <Select title="Event to clone" name="clone_event_id" onChange={handleChange}>
+                    <option value="-">Select an Event</option>
                     {props.events.map(e => (<option key={e.id} value={e.id}>{e.name}</option>))}
                   </Select>
                   <Checkbox name="clone_questions" label="Clone questions" onChange={handleCheckbox} defaultChecked={data.clone_questions} />
