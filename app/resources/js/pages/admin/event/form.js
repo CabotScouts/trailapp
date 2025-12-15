@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from '@inertiajs/inertia-react';
-import { Head, useForm } from '@inertiajs/inertia-react';
+import { Link } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import { Modal } from '@/layouts/modal';
 import Group from '@/layouts/form/group';
 import Header from '@/components/form/header';

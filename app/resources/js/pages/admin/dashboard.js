@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from '@inertiajs/inertia-react';
+import { Link } from '@inertiajs/react';
 import Frame, { Container, Stripe } from '@/layouts/admin/frame';
 import { Grid, GridItem } from '@/components/grid';
 

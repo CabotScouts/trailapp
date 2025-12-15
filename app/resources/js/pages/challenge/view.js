@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Head, useForm } from '@inertiajs/inertia-react';
+import { Head, useForm } from '@inertiajs/react';
 import { CameraIcon } from '@heroicons/react/solid'
 import { Modal, Header } from '@/layouts/modal';
 import Errors from '@/components/form/errors';

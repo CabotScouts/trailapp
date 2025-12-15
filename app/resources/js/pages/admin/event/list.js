@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from '@inertiajs/inertia-react';
+import { Link } from '@inertiajs/react';
 import Frame, { Container } from '@/layouts/admin/frame';
 import ListItem from '@/components/admin/list-item';
 import { Button, ButtonBar } from '@/components/admin/button-bar';

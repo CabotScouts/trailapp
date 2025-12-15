@@ -1,5 +1,5 @@
 import React from 'react';
-import { Head, useForm } from '@inertiajs/inertia-react';
+import { Head, useForm } from '@inertiajs/react';
 import Frame from '@/layouts/form/frame';
 import Group from '@/layouts/form/group';
 import Header from '@/components/form/header';

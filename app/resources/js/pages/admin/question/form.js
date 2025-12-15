@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from '@inertiajs/inertia-react';
-import { Head, useForm } from '@inertiajs/inertia-react';
+import { Link } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import { Modal } from '@/layouts/modal';
 import Group from '@/layouts/form/group';
 import Header from '@/components/form/header';
@@ -28,7 +28,7 @@ export default function AddQuestion(props) {
 
   const submit = (e) => {
     e.preventDefault();
-    if(add) {
+    if (add) {
       post(route('add-question'));
     }
     else {
@@ -39,25 +39,25 @@ export default function AddQuestion(props) {
 
   return (
     <>
-      <Head title={`${ action } Question`} />
+      <Head title={`${action} Question`} />
       <Modal>
         <div className="p-10 pt-20">
           <div className="p-5 bg-white rounded-xl shadow-lg w-full">
-          <Header title={`${ action } Question`} />
-          <Errors errors={errors} />
+            <Header title={`${action} Question`} />
+            <Errors errors={errors} />
 
-          <Group onSubmit={ submit }>
-            <Input type="number" title="Question Number" name="number" placeholder="1" value={ data.number } onChange={ handleChange } required />
-            <Input type="text" title="Question Name" name="name" placeholder="Name" value={ data.name } onChange={ handleChange } required />
-            <Textarea title="Question" name="question" placeholder="What is the question?" value={ data.question } onChange={ handleChange } required />
-            <Input type="number" title="Points" name="points" placeholder="1" value={ data.points } onChange={ handleChange } required />
-            <Button processing={ processing }>{`${ action } Question`}</Button>
-          </Group>
-          { !add &&
-            <div className="pt-2">
-              <Link href={ route('delete-question', props.data.id) } type="button" className="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest">Delete Question</Link>
-            </div>
-          }
+            <Group onSubmit={submit}>
+              <Input type="number" title="Question Number" name="number" placeholder="1" value={data.number} onChange={handleChange} required />
+              <Input type="text" title="Question Name" name="name" placeholder="Name" value={data.name} onChange={handleChange} required />
+              <Textarea title="Question" name="question" placeholder="What is the question?" value={data.question} onChange={handleChange} required />
+              <Input type="number" title="Points" name="points" placeholder="1" value={data.points} onChange={handleChange} required />
+              <Button processing={processing}>{`${action} Question`}</Button>
+            </Group>
+            {!add &&
+              <div className="pt-2">
+                <Link href={route('delete-question', props.data.id)} type="button" className="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest">Delete Question</Link>
+              </div>
+            }
           </div>
         </div>
       </Modal>

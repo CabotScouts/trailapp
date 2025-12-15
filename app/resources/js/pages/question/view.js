@@ -1,5 +1,5 @@
 import React from 'react';
-import { Head, useForm } from '@inertiajs/inertia-react';
+import { Head, useForm } from '@inertiajs/react';
 import { Modal, Header } from '@/layouts/modal';
 import Errors from '@/components/form/errors';
 import TextSubmission from '@/components/text-submission';
