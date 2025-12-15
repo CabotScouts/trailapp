@@ -4,7 +4,7 @@ import { Link } from '@inertiajs/react';
 export default function ListItem({ type, data }) {
   return (
     <Link href={route(type, data.id)}>
-      <div className="p-5 flex items-center border border-b-slate-500">
+      <div className="p-5 flex items-center border-b-1 border-slate-500">
         <div className="flex-grow pr-5">
           <p className="text-medium text-lg text-slate-800">{data.number && (data.number + ' - ')}{data.name}</p>
         </div>
