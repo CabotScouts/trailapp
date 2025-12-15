@@ -18,9 +18,10 @@ export default function TeamList({ groups, teams, filter }) {
               name="group"
               className="border-slate-300 focus:border-purple-300 focus:ring focus:ring-purple-200 focus:ring-opacity-50 rounded-md shadow-sm text-black"
               onChange={setFilter}
+              defaultValue={filter || 'all'}
             >
-              <option key="all" value="" selected={(filter === false)}>Show all groups</option>
-              {groups.map(g => (<option key={g.id} value={g.id} selected={(g.id == filter)}>{g.name}</option>))}
+              <option key="all" value="">Show all groups</option>
+              {groups.map(g => (<option key={g.id} value={g.id}>{g.name}</option>))}
             </select>
           </form>
         </div>
