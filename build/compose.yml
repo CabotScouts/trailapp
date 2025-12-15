@@ -6,7 +6,7 @@ services:
     user: "${DOCKER_UID}:${DOCKER_GID}"
     restart: unless-stopped
     depends_on:
-      - redis
+      - websockets
     networks:
       - backend
     volumes:
