@@ -5,6 +5,8 @@ services:
     container_name: ${DOCKER_NAMESPACE}_app
     user: "${DOCKER_UID}:${DOCKER_GID}"
     restart: unless-stopped
+    depends_on:
+      - redis
     networks:
       - backend
     volumes:
@@ -49,9 +51,6 @@ services:
     restart: unless-stopped
     networks:
       - backend
-    depends_on:
-      - app
-      - queue
     volumes:
       - ../redis:/data
 
