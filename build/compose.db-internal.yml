@@ -5,6 +5,14 @@ services:
     volumes:
       - ./mysql-tls-conf.cnf:/etc/mysql/conf.d/mysql-tls-conf.cnf
 
+  queue:
+    volumes:
+      - ./mysql-tls-conf.cnf:/etc/mysql/conf.d/mysql-tls-conf.cnf
+
+  scheduler:
+    volumes:
+      - ./mysql-tls-conf.cnf:/etc/mysql/conf.d/mysql-tls-conf.cnf
+
   mysql:
     image: mysql
     container_name: ${DOCKER_NAMESPACE}_mysql
