@@ -3,6 +3,8 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\File;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
 
@@ -34,10 +36,13 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
+        $translations = lang_path(App::currentLocale() . ".json");
+
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
             ],
+            'translations' => File::exists($translations) ? File::json($translations) : [],
             'ziggy' => function () {
                 return (new Ziggy)->toArray();
             },

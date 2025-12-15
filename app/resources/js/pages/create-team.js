@@ -7,6 +7,7 @@ import Errors from '@/components/form/errors';
 import Input from '@/components/form/input';
 import Select from '@/components/form/select';
 import Button from '@/components/form/button';
+import { __ } from '@/composables/translations';
 
 const Start = (props) => {
 
@@ -26,30 +27,30 @@ const Start = (props) => {
 
   return (
     <>
-      <Head title="Create a team" />
+      <Head title={__("Create a team")} />
       <Frame>
         {(props.running == true) &&
           <>
             <Header title={props.name}>
-              <p>Pick your group and decide on a team name to start the trail</p>
+              <p>{__("pick_team_name")}</p>
             </Header>
 
             <Errors errors={errors} />
 
             <Group onSubmit={submit}>
-              <Select title="Group" name="group" onChange={handleChange} required>
-                <option value="-">Select your Group</option>
+              <Select title={__("Group")} name="group" onChange={handleChange} required>
+                <option value="-">{__("Select your Group")}</option>
                 {props.groups.map(g => (<option key={g.id} value={g.id}>{g.name}</option>))}
               </Select>
-              <Input type="text" title="Team Name" name="name" placeholder="Pick a team name" onChange={handleChange} required />
-              <Button processing={processing}>Start Trail</Button>
+              <Input type="text" title={__("Team Name")} name="name" placeholder={__("Pick a team name")} onChange={handleChange} required />
+              <Button processing={processing}>{__("Start Trail")}</Button>
             </Group>
           </>
         }
 
         {(props.running == false) &&
           <Header title={props.name}>
-            <p>This event isn't currently running, come back later!</p>
+            <p>{__("event_not_running")}</p>
           </Header>
         }
       </Frame>
