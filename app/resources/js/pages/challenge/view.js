@@ -49,7 +49,7 @@ export default function Challenge({ challenge, submission }) {
           </div>
         </div>
 
-        <div className="fixed bottom-0 h-32 w-full">
+        <div className="fixed left-0 bottom-0 h-32 w-full">
           {(submission.accepted == false) &&
             <div>
               <form>
