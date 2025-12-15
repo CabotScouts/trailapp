@@ -6,7 +6,7 @@ export default function ListFrame({ team, group, points, children }) {
   const { page, component } = usePage();
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-dvh flex flex-col">
       <div className="flex-none flex px-5 py-4 bg-purple-900 shadow-sm">
         <div className="flex-grow">
           <p className="font-medium text-3xl font-serif text-neutral-50">{team.name}</p>
