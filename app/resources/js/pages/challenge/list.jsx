@@ -1,5 +1,5 @@
 import React from 'react';
-import { Head, useForm } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import Global from '@/layouts/global';
 import ListFrame from '@/layouts/list-frame';
 import ListItem from '@/components/list-item';
