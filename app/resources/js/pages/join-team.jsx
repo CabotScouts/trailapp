@@ -1,9 +1,7 @@
 import React from 'react';
-import { Head, useForm } from '@inertiajs/react';
-import { Modal, Header } from '@/layouts/modal';
+import { Head } from '@inertiajs/react';
+import { Modal } from '@/layouts/modal';
 import Global from '@/layouts/global';
-import Errors from '@/components/form/errors';
-import TextSubmission from '@/components/text-submission';
 
 
 export default function Question({ team, src }) {
