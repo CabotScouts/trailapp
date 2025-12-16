@@ -26,13 +26,12 @@ class GroupController extends Controller {
 
   public function orderGroups(Request $request) {
     if($request->isMethod('get')) {
-      $event = Event::where('active', true)->with(['groups', 'groups.teams'])->first();
+      $event = Event::where('active', true)->with('groups')->first();
 
       return Inertia::render('admin/group/order', [
         'groups' => $event->groups()->orderBy('number')->orderBy('name')->get()->map(fn($group) => [
           'id' => $group->id,
-          'name' => $group->name,
-          'teams' => $group->teams()->count()
+          'name' => $group->name
         ]),
       ]);
     }
