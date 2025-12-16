@@ -9,6 +9,7 @@ export default function List({ groups }) {
   return (
     <Frame title="Groups">
       <ButtonBar>
+        <Button href={route('order-groups')}>Reorder Groups</Button>
         <Button href={route('add-group')}>Add Group</Button>
       </ButtonBar>
 

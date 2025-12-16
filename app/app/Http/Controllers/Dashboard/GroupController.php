@@ -24,6 +24,23 @@ class GroupController extends Controller {
     ]);
   }
 
+  public function orderGroups(Request $request) {
+    if($request->isMethod('get')) {
+      $event = Event::where('active', true)->with(['groups', 'groups.teams'])->first();
+
+      return Inertia::render('admin/group/order', [
+        'groups' => $event->groups()->orderBy('number')->orderBy('name')->get()->map(fn($group) => [
+          'id' => $group->id,
+          'name' => $group->name,
+          'teams' => $group->teams()->count()
+        ]),
+      ]);
+    }
+    elseif($request->isMethod('post')) {
+
+    }
+  }
+
   public function viewGroupTeams($id) {
     $event = Event::where('active', true)->with(['groups.teams' => function($query) use ($id) {
       $query->where('group_id', $id)->orderBy('name');

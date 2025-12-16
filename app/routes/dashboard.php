@@ -71,6 +71,7 @@ Route::prefix('dashboard')->middleware(['auth:user'])->group(function(){
 
   Route::controller(GroupController::class)->group(function() {
     Route::get('/groups', 'groups')->name('groups');
+    Route::match(['get', 'post'], '/groups/order', 'orderGroups')->name('order-groups');
     Route::get('/group/{id}/teams', 'viewGroupTeams')->name('view-group-teams');
     Route::match(['get', 'post'], '/group/new', 'addGroup')->name('add-group');
     Route::match(['get', 'post'], '/group/{id}/edit', 'editGroup')->name('edit-group');
