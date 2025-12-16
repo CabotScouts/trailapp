@@ -33,11 +33,6 @@ export default function AddGroup(props) {
 
   };
 
-  const deleteGroup = (e) => {
-    e.preventDefault();
-    post(route('delete-group', props.data.id));
-  }
-
   return (
     <>
       <Head title={`${action} Group`} />
