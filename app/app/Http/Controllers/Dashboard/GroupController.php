@@ -69,7 +69,6 @@ class GroupController extends Controller {
 
       $data = $request->validate([
         'name' => ['required', 'string', 'max:255', Rule::unique('groups')->where(fn ($query) => $query->where('event_id', $event->id))],
-        'number' => 'required|numeric',
       ]);
 
       $group = Group::create($data);
@@ -85,8 +84,7 @@ class GroupController extends Controller {
       return Inertia::render('admin/group/form', [
         'data' => [
           'id' => $group->id,
-          'name' => $group->name,
-          'number' => $group->number ],
+          'name' => $group->name ],
       ]);
     }
     elseif($request->isMethod('post')) {
@@ -96,7 +94,6 @@ class GroupController extends Controller {
       $data = $request->validate([
         'id' => 'required|exists:groups',
         'name' => ['required', 'string', 'max:255', Rule::unique('groups')->where(fn ($query) => $query->where('event_id', $event->id))->ignore($group->id)],
-        'number' => 'required|numeric',
       ]);
 
       $group->update($data);
