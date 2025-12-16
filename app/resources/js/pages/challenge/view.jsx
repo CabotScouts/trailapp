@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Head, useForm } from '@inertiajs/react';
 import { CameraIcon } from '@heroicons/react/solid'
+import Global from '@/layouts/global';
 import { Modal, Header } from '@/layouts/modal';
 import Errors from '@/components/form/errors';
 import PhotoSubmission from '@/components/photo-submission';
@@ -33,7 +34,7 @@ export default function Challenge({ challenge, submission }) {
   });
 
   return (
-    <>
+    <Global>
       <Head title={challenge.name} />
       <Modal back={route('trail-challenges')}>
         <Header data={challenge} />
@@ -71,6 +72,6 @@ export default function Challenge({ challenge, submission }) {
         </div>
 
       </Modal>
-    </>
+    </Global>
   );
 }

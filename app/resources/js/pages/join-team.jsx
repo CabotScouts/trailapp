@@ -1,6 +1,7 @@
 import React from 'react';
 import { Head, useForm } from '@inertiajs/react';
 import { Modal, Header } from '@/layouts/modal';
+import Global from '@/layouts/global';
 import Errors from '@/components/form/errors';
 import TextSubmission from '@/components/text-submission';
 
@@ -8,7 +9,7 @@ import TextSubmission from '@/components/text-submission';
 export default function Question({ team, src }) {
 
   return (
-    <>
+    <Global>
       <Head title="Join Team" />
       <Modal>
         <div className="px-10 py-20 text-white text-xl">
@@ -19,6 +20,6 @@ export default function Question({ team, src }) {
           </div>
         </div>
       </Modal>
-    </>
+    </Global>
   );
 }

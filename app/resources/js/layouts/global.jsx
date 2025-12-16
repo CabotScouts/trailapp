@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { usePage } from '@inertiajs/react';
 import { router } from '@inertiajs/react'
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -32,7 +32,7 @@ export default function Global(children) {
   }
 
   if (window.TeamListener === undefined) {
-    window.TeamListener = window.Echo.private(`team.${children.props.auth.user.id}`)
+    window.TeamListener = window.Echo.private(`team.${usePage().props.auth.user.id}`)
       .listen('SubmissionReceived', (submission) => {
         partialReload(submission.type);
       })
@@ -53,7 +53,7 @@ export default function Global(children) {
   return (
     <>
       <Toaster />
-      {children}
+      {children.children}
     </>
   );
 }

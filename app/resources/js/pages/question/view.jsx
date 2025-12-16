@@ -1,5 +1,6 @@
 import React from 'react';
 import { Head, useForm } from '@inertiajs/react';
+import Global from '@/layouts/global';
 import { Modal, Header } from '@/layouts/modal';
 import Errors from '@/components/form/errors';
 import TextSubmission from '@/components/text-submission';
@@ -21,7 +22,7 @@ export default function Question({ question, submission }) {
   }
 
   return (
-    <>
+    <Global>
       <Head title={question.name} />
       <Modal back={route('trail')}>
         <Header data={question} />
@@ -56,6 +57,6 @@ export default function Question({ question, submission }) {
           {(submission.accepted == true) && <TextSubmission submission={submission.answer} />}
         </div>
       </Modal>
-    </>
+    </Global>
   );
 }
