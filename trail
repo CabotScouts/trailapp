@@ -209,6 +209,18 @@ internal_isup() {
   fi
 }
 
+internal_isdown() {
+  # Check if docker containers are up before continuing
+  internal_loadenv
+
+  docker ps | grep ${DOCKER_NAMESPACE}_app &> /dev/null
+  if [[ $? -eq 0 ]]; then
+    echo "[!] The app is currently running - run '${0} stop' to bring it down first"
+    echo
+    exit 1
+  fi
+}
+
 internal_exec_postcheck() {
   # Test if docker exec commands failed (normally indicates app isn't running)
   if [[ $? -ne 0 ]]; then
@@ -287,19 +299,45 @@ build() {
 
   if [[ -z $OPTION ]]; then
     echo "[*] Building app..."
+    internal_isdown
     internal_build_env
     internal_build_image
+    internal_run_postbuild
+  elif [[ "${OPTION}" == "env" ]]; then
+    echo "[*] Building env files..."
+    internal_isdown
+    internal_build_env
     internal_run_postbuild
   elif [[ "${OPTION}" == "react" ]]; then
     echo "[*] Building react app..."
     internal_build_react
   elif [[ "${OPTION}" == "all" ]]; then
     echo "[*] Building everything..."
+    internal_isdown
     internal_build_env
     internal_build_image
     internal_build_react
     internal_run_postbuild
   fi
+
+  echo "[*] done."
+  internal_exit
+}
+
+clean() {
+  # Remove all build directories
+  internal_loadenv
+  internal_isdown
+  echo "[*] clearing all build files..."
+  echo "[!] this will remove *all* files created when building the app, including the database if you are using the internal database server!"
+  read -p "[!] enter \"y\" to continue: " confirm && [[ $confirm == [yY] || $confirm == [yY][eE][sS] ]] || exit 1
+
+  rm -rf mysql ||:
+  rm -rf redis ||:
+  rm -rf app/.env ||:
+  rm -rf app/node_modules ||:
+  rm -rf app/vendor ||:
+  rm -rf app/public/build ||:
 
   echo "[*] done."
   internal_exit
