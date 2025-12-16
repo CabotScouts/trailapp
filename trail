@@ -455,7 +455,7 @@ test() {
   internal_loadenv
   internal_resolve_docker
   internal_isup
-  docker exec -it ${DOCKER_NAMESPACE}_app php artisan test
+  docker exec -it ${DOCKER_NAMESPACE}_app php artisan test $1
   internal_exit
 }
 
