@@ -16,7 +16,6 @@ export default function AddGroup(props) {
   const { data, setData, post, processing, errors, reset } = useForm({
     id: props.data.id || '',
     name: props.data.name || '',
-    number: props.data.number || '',
   });
 
   const handleChange = (event) => {
@@ -49,7 +48,6 @@ export default function AddGroup(props) {
             <Errors errors={errors} />
 
             <Group onSubmit={submit}>
-              <Input type="number" title="Group Number" name="number" placeholder="Group Number" value={data.number} onChange={handleChange} required />
               <Input type="text" title="Group Name" name="name" placeholder="Group Name" value={data.name} onChange={handleChange} required />
               <Button processing={processing}>{`${action} Group`}</Button>
             </Group>
