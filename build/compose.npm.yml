@@ -2,6 +2,7 @@ services:
   build:
     image: node:current-alpine
     working_dir: /app
+    user: "${DOCKER_UID}:${DOCKER_GID}"
     environment:
       - NODE_OPTIONS=--openssl-legacy-provider
     volumes:
