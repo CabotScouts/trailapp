@@ -83,7 +83,3 @@ Variables to set:
 | `APP_HOST` | the domain the main app container should be reachable at |
 | `APP_WEBSOCKET_HOST` | the domain the websockets container should be reachable at |
 | `APP_WEBSOCKET_PORT` | the port traefik is listening on for the websocket container, unless you've added extra entry points you probably want to use web secure (443) |
-
-# Development
-Things to chip away at:
-* ~~Pagination of submissions page, to avoid killing the server (sorry Thursday teams...)~~
