@@ -239,6 +239,12 @@ internal_migrate_rollback() {
   internal_exec_postcheck
 }
 
+internal_seed_db() {
+  internal_isup
+  docker exec -it ${DOCKER_NAMESPACE}_app php artisan db:seed
+  internal_exec_postcheck
+}
+
 internal_add_user() {
   # Run laravel command to add a new user on app container
   if [[ ! -z $1 ]]; then
@@ -349,6 +355,16 @@ migrate() {
     internal_migrate_rollback
   fi
 
+  echo "[*] done."
+  internal_exit
+}
+
+seed() {
+  # Seed with initial event and user
+  internal_loadenv
+  internal_resolve_docker
+  echo "[*] seeding database..."
+  internal_seed_db
   echo "[*] done."
   internal_exit
 }

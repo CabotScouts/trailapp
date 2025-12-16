@@ -47,7 +47,7 @@ Want to jump straight into testing the app? Try running *quickstart*:
 - [Setup your container ingress method](#ingress-methods)
 - Build app: `./trail build all`
 - Run database migrations: `./trail migrate`
-- Create an initial user: `./trail add-user`
+- Create an initial event and user: `./trail seed`
 - Login to the dashboard and add your groups, questions, challenges, and other users.
 - Start your trail!
 
