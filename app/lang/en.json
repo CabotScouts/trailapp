@@ -1,10 +1,7 @@
 {
-    "The :attribute must contain at least one letter.": "The :attribute must contain at least one letter.",
-    "The :attribute must contain at least one number.": "The :attribute must contain at least one number.",
-    "The :attribute must contain at least one symbol.": "The :attribute must contain at least one symbol.",
-    "The :attribute must contain at least one uppercase and one lowercase letter.": "The :attribute must contain at least one uppercase and one lowercase letter.",
-    "The given :attribute has appeared in a data leak. Please choose a different :attribute.": "The given :attribute has appeared in a data leak. Please choose a different :attribute.",
     "pick_team_name": "Pick your group and decide on a team name to start the trail",
     "event_not_running": "This event isn't currently running, come back later!",
-    "join_team_qr": "Join :name by scanning the QR code below with your phone."
+    "join_team_qr": "Join :name by scanning the QR code below with your phone.",
+    "submission_accepted": "Your :type for :submission was accepted! 🥳",
+    "submission_rejected": "Your :type for :submission was rejected 😬"
 }

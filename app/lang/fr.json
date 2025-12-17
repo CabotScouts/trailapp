@@ -11,7 +11,12 @@
   "Join team": "Rejoindre une équipe",
   "Join a team": "Rejoindre une équipe",
   "join_team_qr": "Rejoindre :name en scannant le code QR ci-dessous avec votre téléphone.",
+  "A message from Trail HQ!": "Message du QG!",
+  "submission_accepted": "Votre :type pour :submission a été acceptée! 🥳",
+  "submission_rejected": "Votre :type pour :submission a été rejetée 😬",
   "Challenges": "Défis",
+  "answer": "réponse",
+  "challenge": "défi",
   "Enter your answer...": "Saisissez votre réponse...",
   "Submit answer": "Soumettre la réponse",
   "Update answer": "Mettre à jour la réponse"
