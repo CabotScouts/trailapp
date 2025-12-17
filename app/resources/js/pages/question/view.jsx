@@ -2,6 +2,7 @@ import React from 'react';
 import { Head, useForm } from '@inertiajs/react';
 import Global from '@/layouts/global';
 import { Modal, Header } from '@/layouts/modal';
+import { __ } from '@/composables/translations';
 import Errors from '@/components/form/errors';
 import TextSubmission from '@/components/text-submission';
 
@@ -41,7 +42,7 @@ export default function Question({ question, submission }) {
                 rows="5"
                 className="border-slate-300 focus:border-purple-300 focus:ring focus:ring-purple-200 focus:ring-opacity-50 rounded-md shadow-sm mt-1 block w-full"
                 required
-                placeholder="Enter your answer..."
+                placeholder={__("Enter your answer...")}
                 onChange={(e) => handleChange(e)}
               />
               <button
@@ -50,7 +51,7 @@ export default function Question({ question, submission }) {
                 font-semibold text-xs text-purple-900 uppercase tracking-widest active:bg-white transition ease-in-out duration-150 ${processing && 'opacity-25'}`}
                 disabled={processing}
               >
-                {(submission.answer == false) && 'Submit'}{(submission.answer != false) && 'Update'} answer
+                {(submission.answer == false) && __("Submit answer")}{(submission.answer != false) && __("Update answer")}
               </button>
             </form>
           }

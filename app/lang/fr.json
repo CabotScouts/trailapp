@@ -7,5 +7,12 @@
   "Team Name": "Nom de l'équipe",
   "Pick a team name": "Entrer votre nom d'équipe",
   "Start Trail": "Rejoindre l'événément",
-  "event_not_running": "Cet événement n'est pas en cours, revenez plus tard!"
+  "event_not_running": "Cet événement n'est pas en cours, revenez plus tard!",
+  "Join team": "Rejoindre une équipe",
+  "Join a team": "Rejoindre une équipe",
+  "join_team_qr": "Rejoindre :name en scannant le code QR ci-dessous avec votre téléphone.",
+  "Challenges": "Défis",
+  "Enter your answer...": "Saisissez votre réponse...",
+  "Submit answer": "Soumettre la réponse",
+  "Update answer": "Mettre à jour la réponse"
 }
