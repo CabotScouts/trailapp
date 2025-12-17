@@ -1,6 +1,8 @@
 import { usePage } from '@inertiajs/react';
+import reactStringReplace from 'react-string-replace';
 
-export function __(value) {
+export function __(value, attributes) {
   const array = usePage().props.translations;
-  return array[value] != null ? array[value] : value;
+  const string = array[value] != null ? array[value] : value;
+  return reactStringReplace(string, /(:[\w]+)/g, (m, _) => attributes[m.replace(":", "")] || m);
 }
