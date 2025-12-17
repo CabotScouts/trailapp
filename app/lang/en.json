@@ -3,5 +3,6 @@
     "event_not_running": "This event isn't currently running, come back later!",
     "join_team_qr": "Join :name by scanning the QR code below with your phone.",
     "submission_accepted": "Your :type for :submission was accepted! 🥳",
-    "submission_rejected": "Your :type for :submission was rejected 😬"
+    "submission_rejected": "Your :type for :submission was rejected 😬",
+    "photo_too_big": "The photo you tried to upload is too big (maximum size is 12MB)"
 }

@@ -7,6 +7,10 @@
   "Team Name": "Nom de l'équipe",
   "Pick a team name": "Entrer votre nom d'équipe",
   "Start Trail": "Rejoindre l'événément",
+  "You need to choose your group": "Vous devez choisir votre groupe",
+  "The group you've chosen doesn't exist": "Le groupe que vous avez choisi n'existe pas",
+  "You need to enter a team name": "Vous devez saisir un nom d'équipe",
+  "Someone in your group is already using this team name": "Quelqu'un de votre groupe utilise déjà ce nom d'équipe",
   "event_not_running": "Cet événement n'est pas en cours, revenez plus tard!",
   "Join team": "Rejoindre une équipe",
   "Join a team": "Rejoindre une équipe",
@@ -19,5 +23,8 @@
   "challenge": "défi",
   "Enter your answer...": "Saisissez votre réponse...",
   "Submit answer": "Soumettre la réponse",
-  "Update answer": "Mettre à jour la réponse"
+  "Update answer": "Mettre à jour la réponse",
+  "You need to give your answer": "Vous devez donner votre réponse",
+  "You need to select a photo to upload": "Vous devez sélectionner une photo à télécharger",
+  "photo_too_big": "La photo que vous avez essayé de télécharger est trop volumineuse (taille maximale: 12MB)."
 }
