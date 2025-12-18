@@ -57,12 +57,12 @@
   "Delete Team": "Supprimer l'équipe",
   "delete_team_check": "Êtes-vous sûr de vouloir supprimer l'équipe :team? Cela supprimera toutes les soumissions qui y sont associées.",
   "Add Question": "Ajouter une question",
+  "No questions": "Pas de questions",
   "Question Number": "Numéro de la question",
   "Question Name": "Nom de la question",
   "Name": "Nom",
   "What is the question?": "Quelle est la question?",
   "Edit Question": "Modifier la question",
   "Delete Question": "Supprimer la question",
-  "delete_question_check": "Êtes-vous sûr de vouloir supprimer la question :question? Cette opération supprimera également toutes les soumissions qui y sont associées.",
-  "submissions_for": "Soumissions pour :for"
+  "delete_question_check": "Êtes-vous sûr de vouloir supprimer la question :question? Cette opération supprimera également toutes les soumissions qui y sont associées."
 }
