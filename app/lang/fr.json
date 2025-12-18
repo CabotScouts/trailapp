@@ -104,5 +104,12 @@
   "stop_event_check": "Êtes-vous sûr de vouloir arrêter l'événement :event en cours?",
   "stop_event_outcome": "Cela mettra fin à l'événement, et toutes les équipes qui y participent actuellement seront exclues.",
   "Start Running Event": "Démarrer l'événement",
-  "start_event_check": "Êtes-vous sûr de vouloir démarrer l'événement :event?"
+  "start_event_check": "Êtes-vous sûr de vouloir démarrer l'événement :event?",
+  "Add User": "Ajouter un utilisateur",
+  "no_users": "Aucun utilisateur - si vous voyez cela, vous devez être le seul utilisateur",
+  "Edit User": "Editer l'utilisateur",
+  "Confirm Password": "Confirmer le mot de passe",
+  "Delete User": "Supprimer l'utilisateur",
+  "delete_user_check": "Êtes-vous sûr de vouloir supprimer l'utilisateur :username?",
+  "You cannot delete yourself!": "Vous ne pouvez pas vous supprimer vous-même!"
 }

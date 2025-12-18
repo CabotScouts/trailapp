@@ -21,5 +21,7 @@
     "change_active_outcome": "This will end the currently running event, any teams currently participating will be locked out of the event.",
     "stop_event_check": "Are you sure you want to stop running :event?",
     "stop_event_outcome": "This will end the event, any teams currently participating will be locked out.",
-    "start_event_check": "Are you sure you want to start running :event?"
+    "start_event_check": "Are you sure you want to start running :event?",
+    "no_users": "No users - if you're seeing this you must be the root user, congratulations!",
+    "delete_user_check": "Are you sure you want to delete user :username?"
 }
