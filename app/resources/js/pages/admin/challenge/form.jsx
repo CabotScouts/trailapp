@@ -8,11 +8,12 @@ import Errors from '@/components/form/errors';
 import Input from '@/components/form/input';
 import Textarea from '@/components/form/textarea';
 import Button from '@/components/form/button';
+import { __ } from '@/composables/translations';
 
 export default function AddChallenge(props) {
 
   const add = (props.data.name === null);
-  const action = add ? 'Add' : 'Edit';
+  const action = add ? __("Add Challenge") : __("Edit Challenge");
 
   const { data, setData, post, processing, errors, reset } = useForm({
     id: props.data.id || '',
@@ -38,22 +39,22 @@ export default function AddChallenge(props) {
 
   return (
     <>
-      <Head title={`${action} Challenge`} />
+      <Head title={action} />
       <Modal>
         <div className="p-10 pt-20">
           <div className="p-5 bg-white rounded-xl shadow-lg w-full">
-            <Header title={`${action} Challenge`} />
+            <Header title={action} />
             <Errors errors={errors} />
 
             <Group onSubmit={submit}>
-              <Input type="text" title="Challenge Name" name="name" placeholder="Name" value={data.name} onChange={handleChange} required />
-              <Textarea title="Description" name="description" placeholder="Describe the challenge" value={data.description} onChange={handleChange} required />
-              <Input type="number" title="Points" name="points" placeholder="1" value={data.points} onChange={handleChange} required />
-              <Button processing={processing}>{`${action} Challenge`}</Button>
+              <Input type="text" title={__("Challenge Name")} name="name" placeholder={__("Name")} value={data.name} onChange={handleChange} required />
+              <Textarea title={__("Description")} name="description" placeholder={__("Describe the challenge")} value={data.description} onChange={handleChange} required />
+              <Input type="number" title={__("Points")} name="points" placeholder="1" value={data.points} onChange={handleChange} required />
+              <Button processing={processing}>{action}</Button>
             </Group>
             {!add &&
               <div className="pt-2">
-                <Link href={route('delete-challenge', props.data.id)} type="button" className="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest">Delete Challenge</Link>
+                <Link href={route('delete-challenge', props.data.id)} type="button" className="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest">{__("Delete Challenge")}</Link>
               </div>
             }
           </div>

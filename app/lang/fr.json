@@ -64,5 +64,13 @@
   "What is the question?": "Quelle est la question?",
   "Edit Question": "Modifier la question",
   "Delete Question": "Supprimer la question",
-  "delete_question_check": "Êtes-vous sûr de vouloir supprimer la question :question? Cette opération supprimera également toutes les soumissions qui y sont associées."
+  "delete_question_check": "Êtes-vous sûr de vouloir supprimer la question :question? Cette opération supprimera également toutes les soumissions qui y sont associées.",
+  "submissions_for": "Soumissions pour :for",
+  "Add Challenge": "Ajouter un challenge",
+  "No challenges": "Pas de challenges",
+  "Edit Challenge": "Editer un challenge",
+  "Delete Challenge": "Supprimer Challenge",
+  "Challenge Name": "Nom du challenge",
+  "Describe the challenge": "Décrire le challenge",
+  "delete_challenge_check": "Êtes-vous sûr de vouloir supprimer le défi :challenge? Cela supprimera également toutes les soumissions qui y sont associées."
 }
