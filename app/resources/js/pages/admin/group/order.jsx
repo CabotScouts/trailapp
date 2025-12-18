@@ -4,6 +4,7 @@ import { DndContext, useDraggable, useDroppable } from '@dnd-kit/core';
 import Frame, { Container } from '@/layouts/admin/frame';
 import ListItem from '@/components/admin/list-item';
 import { Button, ButtonBar } from '@/components/admin/button-bar';
+import { __ } from '@/composables/translations';
 
 export default function List({ groups }) {
   const { data, setData, post, processing, errors, reset } = useForm({
@@ -15,10 +16,10 @@ export default function List({ groups }) {
   };
 
   return (
-    <Frame title="Groups">
+    <Frame title={__("Reorder Groups")}>
       <ButtonBar>
         <form onSubmit={submit}>
-          <Button processing={processing}>Save Order</Button>
+          <Button processing={processing}>{__("Save Order")}</Button>
         </form>
       </ButtonBar>
 
@@ -32,7 +33,7 @@ export default function List({ groups }) {
 
           {(groups.length === 0) &&
             <div className="p-5 text-center">
-              <p className="text-medium text-xl">No groups</p>
+              <p className="text-medium text-xl">{__("No groups")}</p>
             </div>
           }
         </Container>

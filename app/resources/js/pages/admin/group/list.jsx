@@ -10,7 +10,7 @@ export default function List({ groups }) {
   return (
     <Frame title={__("Groups")}>
       <ButtonBar>
-        <Button href={route('order-groups')}>Reorder Groups</Button>
+        <Button href={route('order-groups')}>{__("Reorder Groups")}</Button>
         <Button href={route('add-group')}>{__("Add Group")}</Button>
       </ButtonBar>
 

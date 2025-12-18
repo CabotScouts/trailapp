@@ -44,8 +44,8 @@ export default function AddGroup(props) {
             <Errors errors={errors} />
 
             <Group onSubmit={submit}>
-              <Input type="text" title="Group Name" name="name" placeholder="Group Name" value={data.name} onChange={handleChange} required />
-              <Button processing={processing}>{`${action} Group`}</Button>
+              <Input type="text" title={__("Group Name")} name="name" placeholder={__("Group Name")} value={data.name} onChange={handleChange} required />
+              <Button processing={processing}>{action}</Button>
             </Group >
             {!add &&
               <div className="pt-2">
