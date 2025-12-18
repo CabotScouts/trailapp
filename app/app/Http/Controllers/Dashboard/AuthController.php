@@ -27,7 +27,7 @@ class AuthController extends Controller {
         return redirect()->route('dashboard');
       }
 
-      return back()->withErrors(['username' => 'The username or password is incorrect']);
+      return back()->withErrors(['username' => __("The username or password is incorrect")]);
     }
   }
 

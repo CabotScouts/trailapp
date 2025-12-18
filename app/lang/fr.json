@@ -29,6 +29,7 @@
   "Login": "Connexion",
   "Username": "Nom d'utilisateur",
   "Password": "Mot de passe",
+  "The username or password is incorrect": "Le nom d'utilisateur ou le mot de passe est incorrect.",
   "Dashboard": "Tableau de bord",
   "Running": "En cours",
   "Not Running": "Pas en cours",
@@ -72,6 +73,7 @@
   "Challenge Name": "Nom du challenge",
   "Describe the challenge": "Décrire le challenge",
   "delete_challenge_check": "Êtes-vous sûr de vouloir supprimer le défi :challenge? Cela supprimera également toutes les soumissions qui y sont associées.",
+  "The challenge ID is invalid": "L'identifiant du défi est invalide",
   "Add Group": "Ajouter un groupe",
   "No groups": "Pas de groupes",
   "Edit Group": "Editer le groupe",
@@ -95,6 +97,7 @@
   "Delete Event": "Supprimer Événement",
   "delete_event_check": "Etes-vous sûr de vouloir supprimer l'événement :event?",
   "delete_event_outcome": "Cela supprimera toutes les questions, tous les défis, tous les groupes, toutes les équipes et toutes leurs contributions. Veuillez vous assurer que vous souhaitez effectuer cette opération!",
+  "You cannot delete the currently active event": "Vous ne pouvez pas supprimer l'événement actuellement actif",
   "Change Active Event": "Modifier l'événement actif",
   "change_active_check": "Êtes-vous sûr de vouloir d'activer l'événement :event?",
   "change_active_outcome": "Cela mettra fin à l'événement en cours, et toutes les équipes participantes seront exclues de l'événement.",
@@ -105,11 +108,13 @@
   "stop_event_outcome": "Cela mettra fin à l'événement, et toutes les équipes qui y participent actuellement seront exclues.",
   "Start Running Event": "Démarrer l'événement",
   "start_event_check": "Êtes-vous sûr de vouloir démarrer l'événement :event?",
+  "You cannot run an event that isn't the active event": "Vous ne pouvez pas exécuter un événement qui n'est pas l'événement actif",
   "Add User": "Ajouter un utilisateur",
   "no_users": "Aucun utilisateur - si vous voyez cela, vous devez être le seul utilisateur",
   "Edit User": "Editer l'utilisateur",
   "Confirm Password": "Confirmer le mot de passe",
   "Delete User": "Supprimer l'utilisateur",
   "delete_user_check": "Êtes-vous sûr de vouloir supprimer l'utilisateur :username?",
-  "You cannot delete yourself!": "Vous ne pouvez pas vous supprimer vous-même!"
+  "You cannot delete yourself!": "Vous ne pouvez pas vous supprimer vous-même!",
+  "The user ID is invalid": "L'identifiant utilisateur est invalide"
 }
