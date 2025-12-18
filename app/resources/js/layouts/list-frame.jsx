@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, usePage } from '@inertiajs/react';
 import { QrcodeIcon } from '@heroicons/react/solid';
+import { __ } from '@/composables/translations';
 
 export default function ListFrame({ team, group, points, children }) {
   const { page, component } = usePage();
@@ -29,13 +30,13 @@ export default function ListFrame({ team, group, points, children }) {
       <div className="flex-none w-full fixed flex items-stretch bottom-0 h-14 font-medium font-serif text-xl text-purple-900">
         <Link href={route('trail')} className={`flex-auto h-full ${component === 'question/list' ? 'bg-slate-800' : 'bg-neutral-100'}`} preserveScroll>
           <div className={`h-full w-full flex items-center border-transparent ${component === 'question/list' ? 'bg-neutral-100 rounded-b-lg' : 'bg-slate-800 rounded-tr-lg text-neutral-100'}`}>
-            <div className="mx-auto">Questions</div>
+            <div className="mx-auto">{__("Questions")}</div>
           </div>
         </Link>
 
         <Link href={route('trail-challenges')} className={`flex-auto h-full ${component === 'challenge/list' ? 'bg-slate-800' : 'bg-neutral-100'}`} preserveScroll>
           <div className={`h-full w-full flex items-center border-transparent ${component === 'challenge/list' ? 'bg-neutral-100 rounded-b-lg' : 'bg-slate-800 rounded-tl-lg text-neutral-100'}`}>
-            <div className="mx-auto">Challenges</div>
+            <div className="mx-auto">{__("Challenges")}</div>
           </div>
         </Link>
       </div>

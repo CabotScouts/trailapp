@@ -8,11 +8,12 @@ import Errors from '@/components/form/errors';
 import Input from '@/components/form/input';
 import Textarea from '@/components/form/textarea';
 import Button from '@/components/form/button';
+import { __ } from '@/composables/translations';
 
 export default function AddQuestion(props) {
 
   const add = (props.data.name === null);
-  const action = add ? 'Add' : 'Edit';
+  const action = add ? __("Add Question") : __("Edit Question");
 
   const { data, setData, post, processing, errors, reset } = useForm({
     id: props.data.id || '',
@@ -39,23 +40,23 @@ export default function AddQuestion(props) {
 
   return (
     <>
-      <Head title={`${action} Question`} />
+      <Head title={action} />
       <Modal>
         <div className="p-10 pt-20">
           <div className="p-5 bg-white rounded-xl shadow-lg w-full">
-            <Header title={`${action} Question`} />
+            <Header title={action} />
             <Errors errors={errors} />
 
             <Group onSubmit={submit}>
-              <Input type="number" title="Question Number" name="number" placeholder="1" value={data.number} onChange={handleChange} required />
-              <Input type="text" title="Question Name" name="name" placeholder="Name" value={data.name} onChange={handleChange} required />
-              <Textarea title="Question" name="question" placeholder="What is the question?" value={data.question} onChange={handleChange} required />
-              <Input type="number" title="Points" name="points" placeholder="1" value={data.points} onChange={handleChange} required />
-              <Button processing={processing}>{`${action} Question`}</Button>
+              <Input type="number" title={__("Question Number")} name="number" placeholder="1" value={data.number} onChange={handleChange} required />
+              <Input type="text" title={__("Question Name")} name="name" placeholder={__("Name")} value={data.name} onChange={handleChange} required />
+              <Textarea title={__("Question")} name="question" placeholder={__("What is the question?")} value={data.question} onChange={handleChange} required />
+              <Input type="number" title={__("Points")} name="points" placeholder="1" value={data.points} onChange={handleChange} required />
+              <Button processing={processing}>{action}</Button>
             </Group>
             {!add &&
               <div className="pt-2">
-                <Link href={route('delete-question', props.data.id)} type="button" className="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest">Delete Question</Link>
+                <Link href={route('delete-question', props.data.id)} type="button" className="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest">{__("Delete Question")}</Link>
               </div>
             }
           </div>

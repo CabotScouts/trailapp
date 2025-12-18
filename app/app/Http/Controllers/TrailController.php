@@ -66,7 +66,7 @@ class TrailController extends Controller {
         'answer' => 'required|string',
       ],
       [
-        'answer.required' => 'You need to give your answer',
+        'answer.required' => __("You need to give your answer"),
       ]
     )->validate();
 
@@ -137,9 +137,9 @@ class TrailController extends Controller {
         'photo' => 'required|image|max:12000',
       ],
       [
-        'photo.required' => 'You need to select a photo to upload',
-        'photo.image' => 'You need to select a photo to upload',
-        'photo.max' => 'The photo you tried to upload is too big (maximum size is 12MB)',
+        'photo.required' => __("You need to select a photo to upload"),
+        'photo.image' => __("You need to select a photo to upload"),
+        'photo.max' => __("photo_too_big"),
       ]
     )->validate();
 

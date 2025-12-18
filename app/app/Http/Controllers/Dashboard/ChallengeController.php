@@ -122,7 +122,7 @@ class ChallengeController extends Controller {
         return redirect()->route('challenges');
       }
       else {
-        return back()->withErrors(['id' => 'The challenge ID is invalid']);
+        return back()->withErrors(['id' => __("The challenge ID is invalid")]);
       }
     }
   }

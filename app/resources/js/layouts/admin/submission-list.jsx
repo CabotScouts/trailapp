@@ -5,6 +5,7 @@ import Paginator from '@/components/admin/paginator';
 import PhotoSubmission from '@/components/photo-submission';
 import TextSubmission from '@/components/text-submission';
 import { ThumbUpIcon, ThumbDownIcon } from '@heroicons/react/solid';
+import { __ } from '@/composables/translations';
 
 export default function List({ submissions, children }) {
 
@@ -27,7 +28,7 @@ export default function List({ submissions, children }) {
   }
 
   return (
-    <Frame title="Submissions">
+    <Frame title={__("Submissions")}>
       {children}
 
       <Container>
@@ -68,12 +69,13 @@ export default function List({ submissions, children }) {
           )}
         </div>
         <Paginator data={submissions} />
-        {(submissions.data.length === 0) &&
+        {
+          (submissions.data.length === 0) &&
           <div className="p-5 text-center">
-            <p className="text-medium text-xl">No submissions</p>
+            <p className="text-medium text-xl">{__("No submissions")}</p>
           </div>
         }
-      </Container>
-    </Frame>
+      </Container >
+    </Frame >
   )
 }

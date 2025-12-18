@@ -4,12 +4,13 @@ import Frame, { Container } from '@/layouts/admin/frame';
 import ListItem from '@/components/admin/list-item';
 import { Button, ButtonBar } from '@/components/admin/button-bar';
 import { PencilIcon } from '@heroicons/react/solid';
+import { __ } from '@/composables/translations';
 
 export default function List({ questions }) {
   return (
     <Frame title="Questions">
       <ButtonBar>
-        <Button href={route('add-question')}>Add Question</Button>
+        <Button href={route('add-question')}>{__("Add Question")}</Button>
       </ButtonBar>
 
       <Container>
@@ -36,7 +37,7 @@ export default function List({ questions }) {
 
         {(questions.length === 0) &&
           <div className="p-5 text-center">
-            <p className="text-medium text-xl">No questions</p>
+            <p className="text-medium text-xl">{__("No questions")}</p>
           </div>
         }
       </Container>

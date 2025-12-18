@@ -4,12 +4,13 @@ import Frame, { Container } from '@/layouts/admin/frame';
 import ListItem from '@/components/admin/list-item';
 import { Button, ButtonBar } from '@/components/admin/button-bar';
 import { PencilIcon } from '@heroicons/react/solid';
+import { __ } from '@/composables/translations';
 
 export default function List({ challenges }) {
   return (
-    <Frame title="Challenges">
+    <Frame title={__("Challenges")}>
       <ButtonBar>
-        <Button href={route('add-challenge')}>Add Challenge</Button>
+        <Button href={route('add-challenge')}>{__("Add Challenge")}</Button>
       </ButtonBar>
       <Container>
         {challenges.map((c) => <ListItem key={c.id}>
@@ -35,7 +36,7 @@ export default function List({ challenges }) {
 
         {(challenges.length === 0) &&
           <div className="p-5 text-center">
-            <p className="text-medium text-xl">No challenges</p>
+            <p className="text-medium text-xl">{__("No challenges")}</p>
           </div>
         }
       </Container>

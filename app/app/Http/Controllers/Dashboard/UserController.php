@@ -88,11 +88,11 @@ class UserController extends Controller {
           return redirect()->route('users');
         }
         else {
-          return back()->withErrors(['id' => 'You cannot delete yourself!']);
+          return back()->withErrors(['id' => __("You cannot delete yourself!")]);
         }
       }
       else {
-        return back()->withErrors(['id' => 'The user ID is invalid']);
+        return back()->withErrors(['id' => __("The user ID is invalid")]);
       }
     }
   }

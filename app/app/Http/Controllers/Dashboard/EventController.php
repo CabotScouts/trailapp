@@ -109,7 +109,7 @@ class EventController extends Controller {
       $event = Event::findOrFail($id);
 
       if($event->active) {
-        return back()->withErrors(['id' => 'You cannot delete the currently active event']);
+        return back()->withErrors(['id' => __("You cannot delete the currently active event")]);
       } else {
         $event->delete();
         return redirect()->route('events');
@@ -149,7 +149,7 @@ class EventController extends Controller {
       $event = Event::findOrFail($id);
 
       if(!$event->active) {
-        return back()->withErrors(['id' => 'You cannot run an event that isn\'t the active event']);
+        return back()->withErrors(['id' => __("You cannot run an event that isn't the active event")]);
       } else {
         $event->running = !$event->running;
         $event->save();
