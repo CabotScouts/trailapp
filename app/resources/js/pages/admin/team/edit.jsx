@@ -7,6 +7,7 @@ import Errors from '@/components/form/errors';
 import Input from '@/components/form/input';
 import Button from '@/components/form/button';
 import Select from '@/components/form/select';
+import { __ } from '@/composables/translations';
 
 export default function EditTeam(props) {
 
@@ -28,19 +29,19 @@ export default function EditTeam(props) {
 
   return (
     <>
-      <Head title="Edit Team" />
+      <Head title={__("Edit Team")} />
       <Modal>
         <div className="p-10 pt-20">
           <div className="p-5 bg-white rounded-xl shadow-lg w-full">
-            <Header title="Edit Team" />
+            <Header title={__("Edit Team")} />
             <Errors errors={errors} />
 
             <Group onSubmit={submit}>
-              <Input type="text" title="Team Name" name="name" value={data.name} onChange={handleChange} required />
-              <Select title="Group" name="group" defaultValue={data.group} onChange={handleChange}>
+              <Input type="text" title={__("Team Name")} name="name" value={data.name} onChange={handleChange} required />
+              <Select title={__("Group")} name="group" defaultValue={data.group} onChange={handleChange}>
                 {props.groups.map(g => (<option key={g.id} value={g.id}>{g.name}</option>))}
               </Select>
-              <Button processing={processing}>Edit Team</Button>
+              <Button processing={processing}>{__("Edit Team")}</Button>
             </Group>
           </div>
         </div>

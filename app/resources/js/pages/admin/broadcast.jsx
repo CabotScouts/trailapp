@@ -7,6 +7,7 @@ import Header from '@/components/form/header';
 import Errors from '@/components/form/errors';
 import Textarea from '@/components/form/textarea';
 import Button from '@/components/form/button';
+import { __ } from '@/composables/translations';
 
 export default function Broadcast(props) {
 
@@ -30,22 +31,22 @@ export default function Broadcast(props) {
     }
   };
 
-  const name = (props.name !== null) ? props.name : 'all teams';
-  const title = (props.name !== null) ? ` to ${props.name}` : '';
+  const title = (props.name !== null) ? __("broadcast_to", { team: props.name }) : __("Broadcast");
+  const placeholder = ((props.name !== null) ? __("send_to", { team: props.name }) : __("send_to", { team: __("all teams") })).join("");
 
   return (
     <>
-      <Head title="Broadcast" />
+      <Head title={__("Broadcast")} />
       <Modal>
         <div className="p-10 pt-20">
           <div className="p-5 bg-white rounded-xl shadow-lg w-full">
-            <Header title={`Broadcast${title}`}>
-              <p><span className="italic">Broadcast</span> instantly sends a message to teams - use with care, and check your message for mistakes!</p>
+            <Header title={title}>
+              <p>{__("broadcast_message")}</p>
             </Header>
             <Errors errors={errors} />
             <Group onSubmit={submit}>
-              <Textarea title="Message" name="message" placeholder={`Send a message to ${name}`} onChange={handleChange} required />
-              <Button processing={processing}>Broadcast</Button>
+              <Textarea title={__("Message")} name="message" placeholder={placeholder} onChange={handleChange} required />
+              <Button processing={processing}>{__("Send message")}</Button>
             </Group>
           </div>
         </div>

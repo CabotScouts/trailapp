@@ -6,6 +6,7 @@ import Header from '@/components/form/header';
 import Errors from '@/components/form/errors';
 import Input from '@/components/form/input';
 import Button from '@/components/form/button';
+import { __ } from '@/composables/translations';
 
 export default function Login(props) {
 
@@ -25,15 +26,15 @@ export default function Login(props) {
 
   return (
     <>
-      <Head title="Login" />
+      <Head title={__("Login")} />
       <div className="container max-w-screen-lg mx-auto">
         <Frame>
           <Header title={props.name} />
           <Errors errors={errors} />
           <Group onSubmit={submit}>
-            <Input type="text" title="Username" name="username" placeholder="Username" onChange={handleChange} required />
-            <Input type="password" title="Password" name="password" placeholder="Password" onChange={handleChange} required />
-            <Button processing={processing}>Login</Button>
+            <Input type="text" title={__("Username")} name="username" placeholder={__("Username")} onChange={handleChange} required />
+            <Input type="password" title={__("Password")} name="password" placeholder={__("Password")} onChange={handleChange} required />
+            <Button processing={processing}>{__("Login")}</Button>
           </Group>
         </Frame>
       </div>

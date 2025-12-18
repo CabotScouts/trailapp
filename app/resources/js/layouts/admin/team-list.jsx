@@ -3,8 +3,9 @@ import { Link } from '@inertiajs/react';
 import Frame, { Stripe, Container } from '@/layouts/admin/frame';
 import ListItem from '@/components/admin/list-item';
 import { ChatIcon, PencilIcon, XIcon } from '@heroicons/react/solid';
+import { __ } from '@/composables/translations';
 
-export default function List({ title = "Teams", teams, children = false, simple = false }) {
+export default function List({ title = __("Teams"), teams, children = false, simple = false }) {
   return (
     <Frame title={title}>
       {children &&
@@ -53,7 +54,7 @@ export default function List({ title = "Teams", teams, children = false, simple 
         </ListItem>)}
         {(Object.keys(teams).length === 0) &&
           <div className="p-5 text-center">
-            <p className="text-medium text-xl">No teams</p>
+            <p className="text-medium text-xl">{__("No teams")}</p>
           </div>
         }
       </Container>

@@ -4,5 +4,10 @@
     "join_team_qr": "Join :name by scanning the QR code below with your phone.",
     "submission_accepted": "Your :type for :submission was accepted! 🥳",
     "submission_rejected": "Your :type for :submission was rejected 😬",
-    "photo_too_big": "The photo you tried to upload is too big (maximum size is 12MB)"
+    "photo_too_big": "The photo you tried to upload is too big (maximum size is 12MB)",
+    "broadcast_to": "Broadcast to :team",
+    "broadcast_message": "Instantly send a message to teams - use with care, and check your message for mistakes!",
+    "send_to": "Send a message to :team",
+    "current_page": "Page :number",
+    "delete_team_check": "Are you sure you want to delete team :team? This will delete all submissions associated with it."
 }
