@@ -14,5 +14,12 @@
     "delete_question_check": "Are you sure you want to delete question :question? This will also delete all submissions associated with it.",
     "delete_challenge_check": "Are you sure you want to delete challenge :challenge? This will also delete all submissions associated with it.",
     "delete_group_check": "Are you sure you want to delete group :group? This will delete all teams (and all submissions) associated with it.",
-    "teams_in": "Teams in :group"
+    "teams_in": "Teams in :group",
+    "delete_event_check": "Are you sure you want to delete event :event?",
+    "delete_event_outcome": "This will delete all questions, challenges, groups, teams, and their submissions. Please make sure you want to do this!",
+    "change_active_check": "Are you sure you want to make :event the active event?",
+    "change_active_outcome": "This will end the currently running event, any teams currently participating will be locked out of the event.",
+    "stop_event_check": "Are you sure you want to stop running :event?",
+    "stop_event_outcome": "This will end the event, any teams currently participating will be locked out.",
+    "start_event_check": "Are you sure you want to start running :event?"
 }
