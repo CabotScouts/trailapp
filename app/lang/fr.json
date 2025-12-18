@@ -72,5 +72,13 @@
   "Delete Challenge": "Supprimer Challenge",
   "Challenge Name": "Nom du challenge",
   "Describe the challenge": "Décrire le challenge",
-  "delete_challenge_check": "Êtes-vous sûr de vouloir supprimer le défi :challenge? Cela supprimera également toutes les soumissions qui y sont associées."
+  "delete_challenge_check": "Êtes-vous sûr de vouloir supprimer le défi :challenge? Cela supprimera également toutes les soumissions qui y sont associées.",
+  "Add Group": "Ajouter un groupe",
+  "No groups": "Pas de groupes",
+  "Edit Group": "Editer le groupe",
+  "Delete Group": "Supprimer le groupe",
+  "Group Number": "Numéro du groupe",
+  "Group Name": "Nom du groupe",
+  "delete_group_check": "Êtes-vous sûr de vouloir supprimer le groupe :group? Cela supprimera toutes les équipes (et toutes les soumissions) qui y sont associées.",
+  "teams_in": "Equipes dans le groupe :group"
 }

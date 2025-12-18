@@ -12,5 +12,7 @@
     "submissions_for": "Submissions for :for",
     "delete_team_check": "Are you sure you want to delete team :team? This will delete all submissions associated with it.",
     "delete_question_check": "Are you sure you want to delete question :question? This will also delete all submissions associated with it.",
-    "delete_challenge_check": "Are you sure you want to delete challenge :challenge? This will also delete all submissions associated with it."
+    "delete_challenge_check": "Are you sure you want to delete challenge :challenge? This will also delete all submissions associated with it.",
+    "delete_group_check": "Are you sure you want to delete group :group? This will delete all teams (and all submissions) associated with it.",
+    "teams_in": "Teams in :group"
 }
