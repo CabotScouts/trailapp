@@ -1,3 +1,13 @@
+FROM composer:2.9 AS composer
+WORKDIR /app
+COPY ../app/composer.json ../app/composer.lock ./
+RUN composer install --no-dev --prefer-dist --optimize-autoloader
+COPY ../app .
+
+FROM node:latest-alpine AS react
+
+
+
 FROM php:8.3-apache
 
 RUN apt update \
@@ -23,7 +33,9 @@ RUN apt update \
     pgsql \
     exif \
     && pecl install redis \
-    && docker-php-ext-enable redis
+    && docker-php-ext-enable redis \
+    && apt clean \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /var/www
 
